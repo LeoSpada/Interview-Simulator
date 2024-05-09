@@ -25,6 +25,28 @@ public static class CVManager
         return loadedCV.cv;
     }
 
+    // MIA IMPLEMENTAZIONE: Simile a GetCV che restituisce una lista di CV
+    public static CVEntry GetCVEntry(string name, string surname)
+    {
+        if (!File.Exists(GetCVFilePath(name, surname)))
+        {
+            return null;
+        }
+
+        string json = File.ReadAllText(GetCVFilePath(name, surname));
+
+        Debug.Log("json:\n" + json);
+
+        var loadedCV = JsonConvert.DeserializeObject<CVList>(json);
+
+
+        Debug.Log("loaded:\n" + loadedCV);
+
+        DebugCV(loadedCV.cv[0]);
+
+        return loadedCV.cv[0];
+    }
+
     public static void AddCVEntry(string name, string surname)
     {
         var currentCV = GetCV(name, surname);
@@ -34,6 +56,8 @@ public static class CVManager
             name = name,
             surname = surname
         };
+
+        DebugCV(newEntry);
 
         currentCV.Add(newEntry);
 
@@ -53,7 +77,15 @@ public static class CVManager
 
         Debug.Log(json);
     }
+
+    // Usata per debug. Stampa a schermo il cv formattato.
+    public static void DebugCV(CVEntry cv)
+    {
+        Debug.Log("Nome: " + cv.name + "\nCognome: " + cv.surname);
+    }
 }
+
+
 
 [System.Serializable]
 public class CVList
