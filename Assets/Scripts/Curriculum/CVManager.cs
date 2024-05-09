@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Xml.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -47,19 +48,11 @@ public static class CVManager
         return loadedCV.cv[0];
     }
 
-    public static void AddCVEntry(string name, string surname)
+    public static void AddCVEntry(CVEntry cvEntry)
     {
-        var currentCV = GetCV(name, surname);
+        var currentCV = GetCV(cvEntry.name, cvEntry.surname);
 
-        var newEntry = new CVEntry
-        {
-            name = name,
-            surname = surname
-        };
-
-        DebugCV(newEntry);
-
-        currentCV.Add(newEntry);
+        currentCV.Add(cvEntry);
 
         //Salvataggio
         var toSave = new CVList
@@ -71,12 +64,47 @@ public static class CVManager
 
 
         File.WriteAllText(
-            (GetCVFilePath(name, surname)),
+            (GetCVFilePath(cvEntry.name, cvEntry.surname)),
             json
             );
 
         Debug.Log(json);
+
+
     }
+
+    // SOLO NOME E COGNOME
+
+    //public static void AddCVEntry(string name, string surname)
+    //{
+    //    var currentCV = GetCV(name, surname);
+
+    //    var newEntry = new CVEntry
+    //    {
+    //        name = name,
+    //        surname = surname
+    //    };
+
+    //    DebugCV(newEntry);
+
+    //    currentCV.Add(newEntry);
+
+    //    //Salvataggio
+    //    var toSave = new CVList
+    //    {
+    //        cv = currentCV
+    //    };
+
+    //    string json = JsonConvert.SerializeObject(toSave);
+
+
+    //    File.WriteAllText(
+    //        (GetCVFilePath(name, surname)),
+    //        json
+    //        );
+
+    //    Debug.Log(json);
+    //}
 
     // Usata per debug. Stampa a schermo il cv formattato.
     public static void DebugCV(CVEntry cv)
@@ -98,7 +126,8 @@ public class CVEntry
 {
     public string name;
     public string surname;
-    // AGGIUNGERE QUI TUTTI I CAMPI
+    public string job;
+    // AGGIUNGERE QUI TUTTI I CAMPI e rigenerare costruttore
     // VEDERE DATI_CURRICULUM e altri
 
 
@@ -107,13 +136,11 @@ public class CVEntry
 
     }
 
-    // CANCELLARE E USARE
-    // click destro su CVEntry / Azioni rapide e refactoring / Genera costruttore
-    // CON CAMPI AGGIORNATI
-    public CVEntry(string name, string surname)
+    public CVEntry(string name, string surname, string job)
     {
         this.name = name;
         this.surname = surname;
+        this.job = job;
     }
 }
 

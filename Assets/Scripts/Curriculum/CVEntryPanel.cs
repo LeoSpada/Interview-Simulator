@@ -5,11 +5,16 @@ public class CVEntryPanel : MonoBehaviour
 {
     public TMP_InputField nameInputField;
     public TMP_InputField surnameInputField;
+    public TMP_InputField jobInputField;
+
 
     public void Submit()
     {
-        if (AcceptInput(nameInputField) && AcceptInput(surnameInputField))
-            CVManager.AddCVEntry(nameInputField.text, surnameInputField.text);
+        if (AcceptInput(nameInputField) && AcceptInput(surnameInputField) && AcceptInput(jobInputField))
+        {
+            CVEntry CV = new(nameInputField.text, surnameInputField.text, jobInputField.text);
+            CVManager.AddCVEntry(CV);
+        }
         else Debug.Log("INSERIRE TUTTI I CAMPI");
     }
 
