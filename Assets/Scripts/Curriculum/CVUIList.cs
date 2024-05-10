@@ -12,8 +12,16 @@ public class CVUIList : MonoBehaviour
         foreach (var e in entries)
         {
             Debug.Log("e = " + e.name + " " + e.surname + " " + e.job);
-            //var newObj = Instantiate(entryPrefab, contentRoot);
-            //newObj.GetComponent<CVUIListEntry>().Setup(e);
+            var newObj = Instantiate(entryPrefab, contentRoot);
+            newObj.GetComponent<CVUIListEntry>().Setup(e);
+        }
+    }
+
+    public void DestroyList()
+    {
+        for (var i = contentRoot.transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(contentRoot.transform.GetChild(i).gameObject);
         }
     }
 }

@@ -5,9 +5,7 @@ public class CVUIListEntry : MonoBehaviour
 {
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI surnameText;
-
-    
-    
+        
     public void Setup(CVEntry entry)
     {
         nameText.text = entry.name;
