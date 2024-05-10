@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Xml.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -11,6 +10,31 @@ public static class CVManager
         string path = Path.Combine(Application.persistentDataPath, $"{name}_{surname}_CV.json");
         Debug.Log($"FilePath: {path}");
         return path;
+    }
+
+    // Restituisce la lista di tutti i CV nella cartella di salvataggio
+    public static List<CVEntry> GetAllCV()
+    {
+        //if (!File.Exists(Application.persistentDataPath))
+        //{
+        //    return null;
+        //}
+
+        List<CVEntry> list = new();
+        // Debug.Log("In All CV");
+        DirectoryInfo dir = new(Application.persistentDataPath);
+        FileInfo[] info = dir.GetFiles("*.json");
+        foreach (FileInfo f in info)
+        {
+            // Debug.Log(f.ToString());
+            string json = File.ReadAllText(f.ToString());
+            // Debug.Log("File atuale json: " + json);
+            var loadedCV = JsonConvert.DeserializeObject<CVList>(json);
+            // DebugCV(loadedCV.cv[0]);
+            list.Add(loadedCV.cv[0]);
+        }
+
+        return list;
     }
 
     public static List<CVEntry> GetCV(string name, string surname)
@@ -36,12 +60,12 @@ public static class CVManager
 
         string json = File.ReadAllText(GetCVFilePath(name, surname));
 
-        Debug.Log("json:\n" + json);
+        // Debug.Log("json:\n" + json);
 
         var loadedCV = JsonConvert.DeserializeObject<CVList>(json);
 
 
-        Debug.Log("loaded:\n" + loadedCV);
+        // Debug.Log("loaded:\n" + loadedCV);
 
         DebugCV(loadedCV.cv[0]);
 
@@ -109,7 +133,7 @@ public static class CVManager
     // Usata per debug. Stampa a schermo il cv formattato.
     public static void DebugCV(CVEntry cv)
     {
-        Debug.Log("Nome: " + cv.name + "\nCognome: " + cv.surname);
+        Debug.Log("Nome: " + cv.name + " " + cv.surname + "\nOccupazione desiderata: " + cv.job);
     }
 }
 
@@ -142,5 +166,9 @@ public class CVEntry
         this.surname = surname;
         this.job = job;
     }
+
+    public enum Lingua { Nessuno, Italiano, Inglese, Francese, Tedesco, Spagnolo, Portoghese }
+
+    public enum Patente { A, A1, A2, B, C, D, E }
 }
 

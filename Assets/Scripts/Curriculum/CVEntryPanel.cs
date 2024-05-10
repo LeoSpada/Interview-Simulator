@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CVEntryPanel : MonoBehaviour
 {
+    // FARE ARRAY DI INPUTFIELD?
+
     public TMP_InputField nameInputField;
     public TMP_InputField surnameInputField;
     public TMP_InputField jobInputField;
