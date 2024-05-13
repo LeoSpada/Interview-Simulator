@@ -19,6 +19,7 @@ public class CVLoadPanel : MonoBehaviour
 
         if (cv == null)
         {
+            Debug.Log("Nessun CV trovato");
             nameText.text = "Nessun cv trovato";
             surnameText.text = "Nessun cv trovato";
             jobText.text = "Nessun cv trovato";
@@ -27,10 +28,7 @@ public class CVLoadPanel : MonoBehaviour
         nameText.text = cv.name;
         surnameText.text = cv.surname;
         jobText.text = cv.job;
-    }
 
-    public void ShowAll()
-    {
-        CVManager.GetAllCV();
+        CVManager.DebugCV(cv);
     }
 }

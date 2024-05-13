@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Scena_Colloquio.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/CV_LoadTest_Scene.unity
+    guid: 50ae2f13d752fd249846463f1c8996e7
+  - enabled: 1
+    path: Assets/Scenes/CV_SaveTest_Scene.unity
+    guid: 573c05135dea45e448873fba3f1a7815
   m_configObjects: {}

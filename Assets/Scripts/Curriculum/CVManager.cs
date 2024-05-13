@@ -8,7 +8,7 @@ public static class CVManager
     static string GetCVFilePath(string name, string surname)
     {
         string path = Path.Combine(Application.persistentDataPath, $"{name}_{surname}_CV.json");
-        Debug.Log($"FilePath: {path}");
+        // Debug.Log($"FilePath: {path}");
         return path;
     }
 
