@@ -1579,18 +1579,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 38969590}
-        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
-        m_MethodName: set_text
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Caricato!
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1110682829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2352,9 +2340,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8136e7958b046e94a92a431abe9e2dfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameInputField: {fileID: 83622959}
-  surnameInputField: {fileID: 805582030}
-  jobInputField: {fileID: 2081194053}
+  InputFields:
+  - {fileID: 83622959}
+  - {fileID: 805582030}
+  - {fileID: 2081194053}
 --- !u!114 &2062761721
 MonoBehaviour:
   m_ObjectHideFlags: 0
