@@ -19,5 +19,7 @@ public class CVUIListEntry : MonoBehaviour
         // TEST
         // QUI VA INSERITA FUNZIONE CHE AVVIA SCENA DEL GIOCO CORRELATA AL CVENTRY SCELTO
         CVManager.DebugCV(CVEntry);
+        CVManager.currentCV = CVEntry;
+        GameManager.instance.LoadScene("Scena_Titolo");
     }
 }

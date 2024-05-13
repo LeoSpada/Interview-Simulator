@@ -5,6 +5,7 @@ using UnityEngine;
 
 public static class CVManager
 {
+    public static CVEntry currentCV = null;
     static string GetCVFilePath(string name, string surname)
     {
         string path = Path.Combine(Application.persistentDataPath, $"{name}_{surname}_CV.json");

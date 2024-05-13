@@ -1,20 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 public class Imposta_Testo : MonoBehaviour
 {
-    //public TextMeshProUGUI testoProva;
-    //Dati_Giocatore neededScript;
+    public TextMeshProUGUI testoProva;
 
-    /*void Start()
-    {
-        //neededScript = GameObject.FindGameObjectWithTag("TagProva").GetComponent<Dati_Giocatore>();
-    }
 
-    void Update()
+    void Start()
     {
-        
-    }*/
+        CVEntry loadedCV = CVManager.currentCV;
+        if (loadedCV != null)
+            testoProva.text = "Buongiorno Sig." + loadedCV.surname +" "+loadedCV.name+ "!";
+        else testoProva.text = "Caricare un profilo";
+    }   
 }
