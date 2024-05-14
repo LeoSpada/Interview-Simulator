@@ -18,5 +18,5 @@ public class Imposta_Testo : MonoBehaviour
         }
             
         else testoProva.text = "Caricare un profilo";
-    }   
+    }
 }

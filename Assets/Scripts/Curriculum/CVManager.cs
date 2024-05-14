@@ -16,22 +16,15 @@ public static class CVManager
     // Restituisce la lista di tutti i CV nella cartella di salvataggio
     public static List<CVEntry> GetAllCV()
     {
-        //if (!File.Exists(Application.persistentDataPath))
-        //{
-        //    return null;
-        //}
-
         List<CVEntry> list = new();
-        // Debug.Log("In All CV");
+
         DirectoryInfo dir = new(Application.persistentDataPath);
         FileInfo[] info = dir.GetFiles("*.json");
+
         foreach (FileInfo f in info)
         {
-            // Debug.Log(f.ToString());
             string json = File.ReadAllText(f.ToString());
-            // Debug.Log("File atuale json: " + json);
             var loadedCV = JsonConvert.DeserializeObject<CVList>(json);
-            // DebugCV(loadedCV.cv[0]);
             list.Add(loadedCV.cv[0]);
         }
 
@@ -61,14 +54,8 @@ public static class CVManager
 
         string json = File.ReadAllText(GetCVFilePath(name, surname));
 
-        // Debug.Log("json:\n" + json);
-
         var loadedCV = JsonConvert.DeserializeObject<CVList>(json);
-
-
-        // Debug.Log("loaded:\n" + loadedCV);
-
-        DebugCV(loadedCV.cv[0]);
+        // DebugCV(loadedCV.cv[0]);
 
         return loadedCV.cv[0];
     }
