@@ -152,6 +152,7 @@ public class CVEntry
     public string name;
     public string surname;
     public string job;
+    public Genere gender;
     // AGGIUNGERE QUI TUTTI I CAMPI e rigenerare costruttore
     // VEDERE DATI_CURRICULUM e altri
 
@@ -161,15 +162,18 @@ public class CVEntry
 
     }
 
-    public CVEntry(string name, string surname, string job)
+    public CVEntry(string name, string surname, string job, Genere gender)
     {
         this.name = name;
         this.surname = surname;
         this.job = job;
+        this.gender = gender;
     }
 
     public enum Lingua { Nessuno, Italiano, Inglese, Francese, Tedesco, Spagnolo, Portoghese }
 
     public enum Patente { A, A1, A2, B, C, D, E }
+
+    public enum Genere { M, F, Altro}
 }
 

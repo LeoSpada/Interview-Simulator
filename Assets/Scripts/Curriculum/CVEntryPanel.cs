@@ -1,17 +1,21 @@
+using System;
 using TMPro;
 using UnityEngine;
 
 public class CVEntryPanel : MonoBehaviour
 {
+    // Contiene i vari inputField
+    public TMP_InputField[] inputFields;
 
-    public TMP_InputField[] InputFields;
+    // Fare array di Dropdown?
+    public TMP_Dropdown genderDropdown;
 
     private bool allClear = true;
 
 
     public void Submit()
     {
-        foreach (TMP_InputField inputField in InputFields)
+        foreach (TMP_InputField inputField in inputFields)
         {
             if (!AcceptInput(inputField))
             {
@@ -26,23 +30,35 @@ public class CVEntryPanel : MonoBehaviour
             }
 
             else inputField.image.color = Color.white;
-
-
         }
+
+        // Debug.Log(genderDropdown.value);
+
+        // CONVERTIRE DA RIGA 38 a RIGA 55 per rendere generico
+
+        // Ottiene il valore del testo del dropdown
+        string genderText = genderDropdown.options[genderDropdown.value].text;
+        
+        // Debug.Log(genderText);
+
+        // Prova ad ottenere il valore enum corretto corrispondente alla stringa
+        CVEntry.Genere genere = new();
+        try
+        {
+            genere = (CVEntry.Genere)Enum.Parse(typeof(CVEntry.Genere), genderText);
+        }
+        catch (ArgumentException)
+        {
+            allClear = false;
+            genderDropdown.image.color = Color.red;
+            Debug.Log("Il genere del dropdown non è consentito nell'Enum.\nRicontrollare codice.");
+        }      
 
         if (allClear)
         {
-            CVEntry CV = new(InputFields[0].text, InputFields[1].text, InputFields[2].text);
+            CVEntry CV = new(inputFields[0].text, inputFields[1].text, inputFields[2].text, genere);
             CVManager.AddCVEntry(CV);
         }
-
-
-        //if (AcceptInput(nameInputField) && AcceptInput(surnameInputField) && AcceptInput(jobInputField))
-        //{
-        //    CVEntry CV = new(nameInputField.text, surnameInputField.text, jobInputField.text);
-        //    CVManager.AddCVEntry(CV);
-        //}
-        //else Debug.Log("INSERIRE TUTTI I CAMPI");
     }
 
     public bool AcceptInput(TMP_InputField inputField)
