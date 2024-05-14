@@ -10,7 +10,13 @@ public class Imposta_Testo : MonoBehaviour
     {
         CVEntry loadedCV = CVManager.currentCV;
         if (loadedCV != null)
-            testoProva.text = "Buongiorno Sig." + loadedCV.surname +" "+loadedCV.name+ "!";
+        {
+            string gender = loadedCV.gender.ToString();
+            if(gender.Equals("M")) testoProva.text = "Buongiorno Sig." + loadedCV.surname + " " + loadedCV.name + "!";
+            else if (gender.Equals("F")) testoProva.text = "Buongiorno Sig.ra " + loadedCV.surname + " " + loadedCV.name + "!";
+            else testoProva.text = "Buongiorno " + loadedCV.surname + " " + loadedCV.name + "!";
+        }
+            
         else testoProva.text = "Caricare un profilo";
     }   
 }
