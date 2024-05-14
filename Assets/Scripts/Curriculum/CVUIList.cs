@@ -10,8 +10,8 @@ public class CVUIList : MonoBehaviour
         var entries = CVManager.GetAllCV();
 
         foreach (var e in entries)
-        {
-            Debug.Log("e = " + e.name + " " + e.surname + " " + e.job);
+        {            
+            CVManager.DebugCV(e);
             var newObj = Instantiate(entryPrefab, contentRoot);
             newObj.GetComponent<CVUIListEntry>().Setup(e);
         }

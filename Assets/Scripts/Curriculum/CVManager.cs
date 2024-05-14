@@ -134,7 +134,7 @@ public static class CVManager
     // Usata per debug. Stampa a schermo il cv formattato.
     public static void DebugCV(CVEntry cv)
     {
-        Debug.Log("Nome: " + cv.name + " " + cv.surname + "\nOccupazione desiderata: " + cv.job);
+        Debug.Log("Nome: " + cv.name + " " + cv.surname + " , " + cv.gender + "\nOccupazione desiderata: " + cv.job);
     }
 }
 
@@ -174,6 +174,6 @@ public class CVEntry
 
     public enum Patente { A, A1, A2, B, C, D, E }
 
-    public enum Genere { M, F, Altro}
+    public enum Genere { M, F, Altro }
 }
 
