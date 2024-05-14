@@ -32,35 +32,19 @@ public class CVEntryPanel : MonoBehaviour
             else inputField.image.color = Color.white;
         }
 
-        // Debug.Log(genderDropdown.value);
-
-        // CONVERTIRE DA RIGA 38 a RIGA 55 per rendere generico
-
-        // Ottiene il valore del testo del dropdown
-        string genderText = genderDropdown.options[genderDropdown.value].text;
-        
-        // Debug.Log(genderText);
-
-        // Prova ad ottenere il valore enum corretto corrispondente alla stringa
-        CVEntry.Genere genere = new();
-        try
-        {
-            genere = (CVEntry.Genere)Enum.Parse(typeof(CVEntry.Genere), genderText);
-        }
-        catch (ArgumentException)
-        {
-            allClear = false;
-            genderDropdown.image.color = Color.red;
-            Debug.Log("Il genere del dropdown non è consentito nell'Enum.\nRicontrollare codice.");
-        }      
+        CVEntry.Genere genere = AcceptDropdown<CVEntry.Genere>(genderDropdown);
 
         if (allClear)
         {
             CVEntry CV = new(inputFields[0].text, inputFields[1].text, inputFields[2].text, genere);
             CVManager.AddCVEntry(CV);
         }
+
+        // Reimposta allClear a true per il prossimo submit
+        allClear = true;
     }
 
+    // Controlla che l'input field contenga dati utilizzabili
     public bool AcceptInput(TMP_InputField inputField)
     {
         if (string.IsNullOrWhiteSpace(inputField.text)) return false;
@@ -69,4 +53,33 @@ public class CVEntryPanel : MonoBehaviour
         // nameCompletionSource.SetResult(inputField.text);
     }
 
+    // Controlla che il valore del dropdown corrisponda ad un valore contenuto nell'enum
+    public T AcceptDropdown<T>(TMP_Dropdown dropdown)
+    {
+        // Ottiene il valore del testo del dropdown
+        string dropdownText = dropdown.options[dropdown.value].text;
+        // Debug.Log(dropdownText);
+
+        T enumObj;
+
+        // Prova ad ottenere il valore enum corretto corrispondente alla stringa
+        try
+        {
+            enumObj = (T)Enum.Parse(typeof(T), dropdownText);
+        }
+        catch (ArgumentException)
+        {
+            allClear = false;
+
+            dropdown.image.color = Color.red;
+            Debug.Log("Il valore del dropdown non è consentito nell'Enum.\nRicontrollare codice.");
+
+            return default;
+        }
+
+        dropdown.image.color = Color.white;
+
+        // Debug.Log("Enumobj: " + enumObj);
+        return enumObj;
+    }
 }

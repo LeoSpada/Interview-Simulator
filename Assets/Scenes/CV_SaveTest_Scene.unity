@@ -2209,6 +2209,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Altro
       m_Image: {fileID: 0}
+    - m_Text: Eccezione
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
