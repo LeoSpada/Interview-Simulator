@@ -85,6 +85,14 @@ public static class CVManager
 
     }
 
+    public static void RemoveCVEntry(CVEntry cvEntry)
+    {
+        if (!File.Exists(GetCVFilePath(cvEntry.name, cvEntry.surname))) 
+            return;
+        
+        File.Delete(GetCVFilePath(cvEntry.name,cvEntry.surname));
+    }
+
     // SOLO NOME E COGNOME
 
     //public static void AddCVEntry(string name, string surname)
