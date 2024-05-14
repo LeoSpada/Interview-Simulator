@@ -12,6 +12,8 @@ public class CVLoadPanel : MonoBehaviour
     public TMP_InputField nameInputField;
     public TMP_InputField surnameInputField;
 
+    public GameObject buttons;
+
 
     public void LoadCV()
     {
@@ -19,15 +21,21 @@ public class CVLoadPanel : MonoBehaviour
 
         if (cv == null)
         {
-            Debug.Log("Nessun CV trovato");
+            // Debug.Log("Nessun CV trovato");
             nameText.text = "Nessun cv trovato";
-            surnameText.text = "Nessun cv trovato";
-            jobText.text = "Nessun cv trovato";
+            surnameText.gameObject.SetActive(false);
+            jobText.gameObject.SetActive(false);
+            buttons.SetActive(false);
             return;
         }
+
         nameText.text = cv.name;
         surnameText.text = cv.surname;
         jobText.text = cv.job;
+
+        surnameText.gameObject.SetActive(true);
+        jobText.gameObject.SetActive(true);
+        buttons.SetActive(true);
 
         CVManager.DebugCV(cv);
     }

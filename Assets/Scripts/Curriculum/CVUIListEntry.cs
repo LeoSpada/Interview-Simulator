@@ -16,6 +16,12 @@ public class CVUIListEntry : MonoBehaviour
         surnameText.text = entry.surname;
     }
 
+    // Carica il CVEntry a partire dai campi nome e cognome già riempiti da CVLoadPanel 
+    public void SearchSetup()
+    {
+        CVEntry = CVManager.GetCVEntry(nameText.text, surnameText.text);
+    }
+
     //public void OnEntrySelect()
     //{
     //    // TEST
