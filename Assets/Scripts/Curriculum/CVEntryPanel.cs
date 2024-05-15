@@ -12,24 +12,25 @@ public class CVEntryPanel : MonoBehaviour
 
     private bool allClear = true;
 
+    private CVEntry CV;
+
+    public GameObject confirmPanel;
+
     private void Start()
     {
-        if (CVManager.editCurrent)
-        {
-            LoadCurrent();
-        }
-
-        //CVManager.editCurrent = false;
+        // Se in modalità modifica, carica il CV scelto
+        if (CVManager.editCurrent)       
+            LoadCurrent();      
     }
 
-
+    // Crea un CV a partire dai campi inseriti. Controlli su file esistenti e campi vuoti prima del salvataggio.
     public void Submit()
     {
         foreach (TMP_InputField inputField in inputFields)
         {
             if (!AcceptInput(inputField))
             {
-                Debug.Log("Campo inesistente");
+                // Debug.Log("Campo inesistente");
 
                 inputField.image.color = Color.red;
 
@@ -46,25 +47,19 @@ public class CVEntryPanel : MonoBehaviour
 
         if (allClear)
         {
-            CVEntry CV = new(inputFields[0].text, inputFields[1].text, inputFields[2].text, genere);
-            CVManager.AddCVEntry(CV);
-            Debug.Log("SALVATO CON SUCCESSO");
+            CV = new(inputFields[0].text, inputFields[1].text, inputFields[2].text, genere);
 
-            // Se l'operazione era una sovrascrittura
-            if (CVManager.editCurrent)
+            // Se un file con lo stesso nome è già presente, compare una finestra di conferma
+            if (CVManager.CheckEntry(CV))
             {
-                CVManager.editCurrent = false;
-
-                // Se il file durante la sovrascrittura ha cambiato nome
-                // MIGLIORARE CONTROLLO (Funzione di confronto in CVManager?)
-                if (!CVManager.IsCurrentCV(inputFields[0].text, inputFields[1].text))
-                {
-                    Debug.Log("Il CV è stato sovrascritto e il file rinominato.\nElimino vecchio file");
-                    CVManager.RemoveCVEntry(CVManager.currentCV);
-                }
+                // Debug.Log("CV già presente.");
+                confirmPanel.SetActive(true);
+            }
+            else
+            {
+                SaveCV();
             }
         }
-
         // Reimposta allClear a true per il prossimo submit
         allClear = true;
     }
@@ -108,18 +103,45 @@ public class CVEntryPanel : MonoBehaviour
         return enumObj;
     }
 
+    // Conferma il Submit
+    public void SaveCV()
+    {
+        CVManager.AddCVEntry(CV);
+        Debug.Log("SALVATO CON SUCCESSO");
+
+        // Se l'operazione era una sovrascrittura
+        if (CVManager.editCurrent)
+        {
+            CVManager.editCurrent = false;
+
+            // Se il file durante la sovrascrittura ha cambiato nome
+            if (!CVManager.IsCurrentCV(inputFields[0].text, inputFields[1].text))
+            {
+                Debug.Log("Il CV è stato sovrascritto e il file rinominato.\nElimino vecchio file");
+                CVManager.RemoveCVEntry(CVManager.currentCV);
+            }
+        }
+    }
+
+    // Carica il CV scelto e ne inserisce i dati nei campi di input per la modifica.
     public void LoadCurrent()
     {
-        CVEntry cv = CVManager.currentCV;
-        Debug.Log("MODALITA' MODIFICA -" + cv.name + " " + cv.surname);
-        
+        CVEntry currentCV = CVManager.currentCV;
+        Debug.Log("MODALITA' MODIFICA - " + currentCV.name + " " + currentCV.surname);
 
-        inputFields[0].text = cv.name;
-        inputFields[1].text = cv.surname;
-        inputFields[2].text = cv.job;
-        // Debug.Log(((int)cv.gender));
+
+        inputFields[0].text = currentCV.name;
+        inputFields[1].text = currentCV.surname;
+        inputFields[2].text = currentCV.job;
+        // Debug.Log(((int)currentCV.gender));
         // Viene sommato 1 perché il valore 0 del dropdown è la frase "Inserire Genere" (non compatibile con enum
         // Forse rimuovere inserire genere e +1 successivamente
-        genderDropdown.value = (int)cv.gender + 1;
+        genderDropdown.value = (int)currentCV.gender + 1;
+    }
+
+    // Se la schermata viene disattivata, si esce dalla modalità modifica
+    public void OnDisable()
+    {
+        CVManager.editCurrent = false;
     }
 }
