@@ -37,6 +37,6 @@ public class CVLoadPanel : MonoBehaviour
         jobText.gameObject.SetActive(true);
         buttons.SetActive(true);
 
-        CVManager.DebugCV(cv);
+        // CVManager.DebugCV(cv);
     }
 }

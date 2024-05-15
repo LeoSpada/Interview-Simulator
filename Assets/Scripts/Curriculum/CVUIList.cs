@@ -11,7 +11,7 @@ public class CVUIList : MonoBehaviour
 
         foreach (var e in entries)
         {            
-            CVManager.DebugCV(e);
+           // CVManager.DebugCV(e);
             var newObj = Instantiate(entryPrefab, contentRoot);
             newObj.GetComponent<CVUIListEntry>().Setup(e);
         }

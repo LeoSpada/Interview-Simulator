@@ -6,10 +6,11 @@ using UnityEngine;
 public static class CVManager
 {
     public static CVEntry currentCV = null;
+
+    public static bool editCurrent = false;
     static string GetCVFilePath(string name, string surname)
     {
         string path = Path.Combine(Application.persistentDataPath, $"{name}_{surname}_CV.json");
-        // Debug.Log($"FilePath: {path}");
         return path;
     }
 
@@ -31,21 +32,6 @@ public static class CVManager
         return list;
     }
 
-    //// Da rimuovere??
-    //public static List<CVEntry> GetCV(string name, string surname)
-    //{
-    //    if (!File.Exists(GetCVFilePath(name, surname)))
-    //    {
-    //        return new List<CVEntry>();
-    //    }
-
-    //    string json = File.ReadAllText(GetCVFilePath(name, surname));
-
-    //    var loadedCV = JsonConvert.DeserializeObject<CVList>(json);
-    //    return loadedCV.cv;
-    //}
-
-    // MIA IMPLEMENTAZIONE: Simile a GetCV che restituisce una lista di CV
     public static CVEntry GetCVEntry(string name, string surname)
     {
         if (!File.Exists(GetCVFilePath(name, surname)))
@@ -56,53 +42,22 @@ public static class CVManager
         string json = File.ReadAllText(GetCVFilePath(name, surname));
 
         var loadedCV = JsonConvert.DeserializeObject<CVEntry>(json);
-        // DebugCV(loadedCV.cv[0]);
 
         return loadedCV;
     }
 
-    // Da rimuovere??
-    //public static void AddCVEntry(CVEntry cvEntry)
-    //{
-    //    var currentCV = GetCV(cvEntry.name, cvEntry.surname);
-
-    //    currentCV.Add(cvEntry);
-
-    //    //Salvataggio
-    //    var toSave = new CVList
-    //    {
-    //        cv = currentCV
-    //    };
-
-    //    string json = JsonConvert.SerializeObject(toSave);
-
-
-    //    File.WriteAllText(
-    //        (GetCVFilePath(cvEntry.name, cvEntry.surname)),
-    //        json
-    //        );
-
-    //    Debug.Log(json);
-
-
-    //}
-
     public static void AddCVEntry(CVEntry cvEntry)
     {
-        // var toSave = cvEntry;
-        if (CheckEntry(cvEntry))
-        {
-            Debug.Log("Sovrascrittura di");
-            DebugCV(cvEntry);
-        }
+        //if (CheckEntry(cvEntry))
+        //{
+        //   // Debug.Log("Sovrascrittura di");
+        //   // DebugCV(cvEntry);
+
+        //    // AGGIUNGERE MESSAGGIO / CONFERMA DI SOVRASCRITTURA
+        //}
 
         string json = JsonConvert.SerializeObject(cvEntry);
-        File.WriteAllText(
-        (GetCVFilePath(cvEntry.name, cvEntry.surname)),
-            json
-            );
-
-        Debug.Log(json);
+        File.WriteAllText((GetCVFilePath(cvEntry.name, cvEntry.surname)), json);
     }
 
     public static void RemoveCVEntry(CVEntry cvEntry)
@@ -111,46 +66,22 @@ public static class CVManager
             File.Delete(GetCVFilePath(cvEntry.name, cvEntry.surname));
     }
 
-    // SOLO NOME E COGNOME
-
-    //public static void AddCVEntry(string name, string surname)
-    //{
-    //    var currentCV = GetCV(name, surname);
-
-    //    var newEntry = new CVEntry
-    //    {
-    //        name = name,
-    //        surname = surname
-    //    };
-
-    //    DebugCV(newEntry);
-
-    //    currentCV.Add(newEntry);
-
-    //    //Salvataggio
-    //    var toSave = new CVList
-    //    {
-    //        cv = currentCV
-    //    };
-
-    //    string json = JsonConvert.SerializeObject(toSave);
-
-
-    //    File.WriteAllText(
-    //        (GetCVFilePath(name, surname)),
-    //        json
-    //        );
-
-    //    Debug.Log(json);
-    //}
-
-
-    // METTERE IN TUTTE?
     public static bool CheckEntry(CVEntry cvEntry)
     {
         if (!File.Exists(GetCVFilePath(cvEntry.name, cvEntry.surname)))
             return false;
         return true;
+    }
+
+    public static bool IsCurrentCV(string name, string surname)
+    {
+        if (currentCV.name != name || currentCV.surname != surname)
+        {
+            Debug.Log(name + "non corrisponde");
+            return false;
+        }
+            
+        else return true;
     }
 
 
@@ -161,15 +92,6 @@ public static class CVManager
     }
 }
 
-
-
-
-
-//[System.Serializable]
-//public class CVList
-//{
-//    public List<CVEntry> cv;
-//}
 
 [System.Serializable]
 public class CVEntry

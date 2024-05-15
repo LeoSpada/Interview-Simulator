@@ -12,6 +12,16 @@ public class CVEntryPanel : MonoBehaviour
 
     private bool allClear = true;
 
+    private void Start()
+    {
+        if (CVManager.editCurrent)
+        {
+            LoadCurrent();
+        }
+
+        //CVManager.editCurrent = false;
+    }
+
 
     public void Submit()
     {
@@ -38,6 +48,21 @@ public class CVEntryPanel : MonoBehaviour
         {
             CVEntry CV = new(inputFields[0].text, inputFields[1].text, inputFields[2].text, genere);
             CVManager.AddCVEntry(CV);
+            Debug.Log("SALVATO CON SUCCESSO");
+
+            // Se l'operazione era una sovrascrittura
+            if (CVManager.editCurrent)
+            {
+                CVManager.editCurrent = false;
+
+                // Se il file durante la sovrascrittura ha cambiato nome
+                // MIGLIORARE CONTROLLO (Funzione di confronto in CVManager?)
+                if (!CVManager.IsCurrentCV(inputFields[0].text, inputFields[1].text))
+                {
+                    Debug.Log("Il CV è stato sovrascritto e il file rinominato.\nElimino vecchio file");
+                    CVManager.RemoveCVEntry(CVManager.currentCV);
+                }
+            }
         }
 
         // Reimposta allClear a true per il prossimo submit
@@ -81,5 +106,20 @@ public class CVEntryPanel : MonoBehaviour
 
         // Debug.Log("Enumobj: " + enumObj);
         return enumObj;
+    }
+
+    public void LoadCurrent()
+    {
+        CVEntry cv = CVManager.currentCV;
+        Debug.Log("MODALITA' MODIFICA -" + cv.name + " " + cv.surname);
+        
+
+        inputFields[0].text = cv.name;
+        inputFields[1].text = cv.surname;
+        inputFields[2].text = cv.job;
+        // Debug.Log(((int)cv.gender));
+        // Viene sommato 1 perché il valore 0 del dropdown è la frase "Inserire Genere" (non compatibile con enum
+        // Forse rimuovere inserire genere e +1 successivamente
+        genderDropdown.value = (int)cv.gender + 1;
     }
 }

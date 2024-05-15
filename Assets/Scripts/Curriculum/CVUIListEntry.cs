@@ -22,20 +22,18 @@ public class CVUIListEntry : MonoBehaviour
         CVEntry = CVManager.GetCVEntry(nameText.text, surnameText.text);
     }
 
-    //public void OnEntrySelect()
-    //{
-    //    // TEST
-    //    // QUI VA INSERITA FUNZIONE CHE AVVIA SCENA DEL GIOCO CORRELATA AL CVENTRY SCELTO
-        
-
-    // //   entryPanel.gameObject.SetActive(true);
-    //}
-
     public void LoadEntryScene()
     {
-        CVManager.DebugCV(CVEntry);
+       // CVManager.DebugCV(CVEntry);
         CVManager.currentCV = CVEntry;
         GameManager.instance.LoadScene("Scena_Titolo");
+    }
+
+    public void EditEntry()
+    {
+        CVManager.editCurrent = true;
+        CVManager.currentCV = CVEntry;
+        GameManager.instance.LoadScene("CV_SaveTest_Scene");
     }
 
     public void DeleteEntry()
