@@ -24,25 +24,26 @@ public static class CVManager
         foreach (FileInfo f in info)
         {
             string json = File.ReadAllText(f.ToString());
-            var loadedCV = JsonConvert.DeserializeObject<CVList>(json);
-            list.Add(loadedCV.cv[0]);
+            var loadedCV = JsonConvert.DeserializeObject<CVEntry>(json);
+            list.Add(loadedCV);
         }
 
         return list;
     }
 
-    public static List<CVEntry> GetCV(string name, string surname)
-    {
-        if (!File.Exists(GetCVFilePath(name, surname)))
-        {
-            return new List<CVEntry>();
-        }
+    //// Da rimuovere??
+    //public static List<CVEntry> GetCV(string name, string surname)
+    //{
+    //    if (!File.Exists(GetCVFilePath(name, surname)))
+    //    {
+    //        return new List<CVEntry>();
+    //    }
 
-        string json = File.ReadAllText(GetCVFilePath(name, surname));
+    //    string json = File.ReadAllText(GetCVFilePath(name, surname));
 
-        var loadedCV = JsonConvert.DeserializeObject<CVList>(json);
-        return loadedCV.cv;
-    }
+    //    var loadedCV = JsonConvert.DeserializeObject<CVList>(json);
+    //    return loadedCV.cv;
+    //}
 
     // MIA IMPLEMENTAZIONE: Simile a GetCV che restituisce una lista di CV
     public static CVEntry GetCVEntry(string name, string surname)
@@ -54,43 +55,60 @@ public static class CVManager
 
         string json = File.ReadAllText(GetCVFilePath(name, surname));
 
-        var loadedCV = JsonConvert.DeserializeObject<CVList>(json);
+        var loadedCV = JsonConvert.DeserializeObject<CVEntry>(json);
         // DebugCV(loadedCV.cv[0]);
 
-        return loadedCV.cv[0];
+        return loadedCV;
     }
+
+    // Da rimuovere??
+    //public static void AddCVEntry(CVEntry cvEntry)
+    //{
+    //    var currentCV = GetCV(cvEntry.name, cvEntry.surname);
+
+    //    currentCV.Add(cvEntry);
+
+    //    //Salvataggio
+    //    var toSave = new CVList
+    //    {
+    //        cv = currentCV
+    //    };
+
+    //    string json = JsonConvert.SerializeObject(toSave);
+
+
+    //    File.WriteAllText(
+    //        (GetCVFilePath(cvEntry.name, cvEntry.surname)),
+    //        json
+    //        );
+
+    //    Debug.Log(json);
+
+
+    //}
 
     public static void AddCVEntry(CVEntry cvEntry)
     {
-        var currentCV = GetCV(cvEntry.name, cvEntry.surname);
-
-        currentCV.Add(cvEntry);
-
-        //Salvataggio
-        var toSave = new CVList
+        // var toSave = cvEntry;
+        if (CheckEntry(cvEntry))
         {
-            cv = currentCV
-        };
+            Debug.Log("Sovrascrittura di");
+            DebugCV(cvEntry);
+        }
 
-        string json = JsonConvert.SerializeObject(toSave);
-
-
+        string json = JsonConvert.SerializeObject(cvEntry);
         File.WriteAllText(
-            (GetCVFilePath(cvEntry.name, cvEntry.surname)),
+        (GetCVFilePath(cvEntry.name, cvEntry.surname)),
             json
             );
 
         Debug.Log(json);
-
-
     }
 
     public static void RemoveCVEntry(CVEntry cvEntry)
     {
-        if (!File.Exists(GetCVFilePath(cvEntry.name, cvEntry.surname))) 
-            return;
-        
-        File.Delete(GetCVFilePath(cvEntry.name,cvEntry.surname));
+        if (CheckEntry(cvEntry))
+            File.Delete(GetCVFilePath(cvEntry.name, cvEntry.surname));
     }
 
     // SOLO NOME E COGNOME
@@ -126,6 +144,16 @@ public static class CVManager
     //    Debug.Log(json);
     //}
 
+
+    // METTERE IN TUTTE?
+    public static bool CheckEntry(CVEntry cvEntry)
+    {
+        if (!File.Exists(GetCVFilePath(cvEntry.name, cvEntry.surname)))
+            return false;
+        return true;
+    }
+
+
     // Usata per debug. Stampa a schermo il cv formattato.
     public static void DebugCV(CVEntry cv)
     {
@@ -135,11 +163,13 @@ public static class CVManager
 
 
 
-[System.Serializable]
-public class CVList
-{
-    public List<CVEntry> cv;
-}
+
+
+//[System.Serializable]
+//public class CVList
+//{
+//    public List<CVEntry> cv;
+//}
 
 [System.Serializable]
 public class CVEntry
