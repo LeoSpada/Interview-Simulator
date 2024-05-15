@@ -24,4 +24,9 @@ public class CVUIList : MonoBehaviour
             Destroy(contentRoot.transform.GetChild(i).gameObject);
         }
     }
+
+    private void OnDisable()
+    {
+        DestroyList();
+    }
 }
