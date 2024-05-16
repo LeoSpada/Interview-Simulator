@@ -3035,7 +3035,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 2062761720}
         m_TargetAssemblyTypeName: CVEntryPanel, Assembly-CSharp
-        m_MethodName: AcceptSubmit
+        m_MethodName: SaveCV
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
