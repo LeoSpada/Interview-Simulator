@@ -257,6 +257,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 158758896}
   m_CullTransparentMesh: 1
+--- !u!1 &348128338
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 348128340}
+  - component: {fileID: 348128339}
+  m_Layer: 0
+  m_Name: Audio_Manager_Globale
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &348128339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348128338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 392deb86b08119b45b2cf7a64640d62e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &348128340
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348128338}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 907.51544, y: 533.0405, z: -31.705093}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &359108604
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,6 +804,7 @@ GameObject:
   - component: {fileID: 856410864}
   - component: {fileID: 856410863}
   - component: {fileID: 856410862}
+  - component: {fileID: 856410865}
   m_Layer: 5
   m_Name: PULSANTE_Esci
   m_TagString: Untagged
@@ -881,6 +926,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 856410860}
   m_CullTransparentMesh: 1
+--- !u!114 &856410865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856410860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b4d04947b684a043b0e41b9cdfc688f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  suono_click: {fileID: 8300000, guid: 57331635957d1a74d9167e8751892c36, type: 3}
+  suono_seleziona: {fileID: 8300000, guid: 0fb85d20c96926146b34b1eb842ec38e, type: 3}
 --- !u!1 &1115999599
 GameObject:
   m_ObjectHideFlags: 0
@@ -1363,6 +1422,7 @@ GameObject:
   - component: {fileID: 1690796188}
   - component: {fileID: 1690796187}
   - component: {fileID: 1690796186}
+  - component: {fileID: 1690796189}
   m_Layer: 5
   m_Name: PULSANTE_Curriculum
   m_TagString: Untagged
@@ -1484,6 +1544,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1690796184}
   m_CullTransparentMesh: 1
+--- !u!114 &1690796189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690796184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b4d04947b684a043b0e41b9cdfc688f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  suono_click: {fileID: 8300000, guid: 57331635957d1a74d9167e8751892c36, type: 3}
+  suono_seleziona: {fileID: 8300000, guid: 0fb85d20c96926146b34b1eb842ec38e, type: 3}
 --- !u!1 &1801344876
 GameObject:
   m_ObjectHideFlags: 0
@@ -1496,6 +1570,7 @@ GameObject:
   - component: {fileID: 1801344880}
   - component: {fileID: 1801344879}
   - component: {fileID: 1801344878}
+  - component: {fileID: 1801344881}
   m_Layer: 5
   m_Name: PULSANTE_Inizia
   m_TagString: Untagged
@@ -1617,6 +1692,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1801344876}
   m_CullTransparentMesh: 1
+--- !u!114 &1801344881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801344876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b4d04947b684a043b0e41b9cdfc688f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  suono_click: {fileID: 8300000, guid: 57331635957d1a74d9167e8751892c36, type: 3}
+  suono_seleziona: {fileID: 8300000, guid: 0fb85d20c96926146b34b1eb842ec38e, type: 3}
 --- !u!1 &1814675796
 GameObject:
   m_ObjectHideFlags: 0
@@ -1763,6 +1852,7 @@ GameObject:
   - component: {fileID: 1836920969}
   - component: {fileID: 1836920968}
   - component: {fileID: 1836920967}
+  - component: {fileID: 1836920970}
   m_Layer: 5
   m_Name: PULSANTE_Impostazioni
   m_TagString: Untagged
@@ -1884,6 +1974,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1836920965}
   m_CullTransparentMesh: 1
+--- !u!114 &1836920970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836920965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b4d04947b684a043b0e41b9cdfc688f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  suono_click: {fileID: 8300000, guid: 57331635957d1a74d9167e8751892c36, type: 3}
+  suono_seleziona: {fileID: 8300000, guid: 0fb85d20c96926146b34b1eb842ec38e, type: 3}
 --- !u!1 &1868069469
 GameObject:
   m_ObjectHideFlags: 0
@@ -1982,6 +2086,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1868069472}
   - {fileID: 801602403}
+  - {fileID: 348128340}
   - {fileID: 1322590264}
   - {fileID: 675953018}
   - {fileID: 359108608}
