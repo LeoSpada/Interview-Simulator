@@ -33,7 +33,7 @@ public class CVUIListEntry : MonoBehaviour
     {
         CVManager.editCurrent = true;
         CVManager.currentCV = CVEntry;
-        GameManager.instance.LoadScene("CV_SaveTest_Scene");
+        GameManager.instance.LoadScene("Scena_Curriculum");
     }
 
     public void DeleteEntry()
