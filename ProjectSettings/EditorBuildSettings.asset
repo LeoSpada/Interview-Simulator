@@ -24,6 +24,6 @@ EditorBuildSettings:
     path: Assets/Scenes/CV_LoadTest_Scene.unity
     guid: 50ae2f13d752fd249846463f1c8996e7
   - enabled: 1
-    path: Assets/Scenes/CV_SaveTest_Scene.unity
+    path: Assets/Scenes/Scena_Lista_CV.unity
     guid: 573c05135dea45e448873fba3f1a7815
   m_configObjects: {}

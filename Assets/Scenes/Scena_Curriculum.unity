@@ -15147,6 +15147,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: LoadScene
       objectReference: {fileID: 0}
+    - target: {fileID: 6751007718297998086, guid: 04642d72648f3c14eae8a80ef328c5a6, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Scena_Lista_CV
+      objectReference: {fileID: 0}
     - target: {fileID: 8484944484769609104, guid: 04642d72648f3c14eae8a80ef328c5a6, type: 3}
       propertyPath: m_Pivot.x
       value: 0
