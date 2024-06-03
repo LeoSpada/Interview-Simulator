@@ -39,5 +39,6 @@ public class CVUIListEntry : MonoBehaviour
     public void DeleteEntry()
     {
         CVManager.RemoveCVEntry(CVEntry);
+        GameManager.instance.LoadScene("Scena_Lista_CV");
     }
 }
