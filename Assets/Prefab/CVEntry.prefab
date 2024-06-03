@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 8586376540302336844}
   - component: {fileID: 8302802587217465170}
   - component: {fileID: 1272955850989150064}
+  - component: {fileID: 1231510687789624006}
   m_Layer: 5
   m_Name: CVEntry
   m_TagString: Untagged
@@ -193,6 +194,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameText: {fileID: 1355828532102726590}
   surnameText: {fileID: 1079217368734661295}
+--- !u!114 &1231510687789624006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485612872808706091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: 200
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &2419922693671513356
 GameObject:
   m_ObjectHideFlags: 0
