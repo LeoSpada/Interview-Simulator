@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -22,12 +18,6 @@ public class QuestionCreator : MonoBehaviour
         if (CVManager.currentCV != null)
             titleText.text = CVManager.currentCV.job.ToString();
         else titleText.text = "CARICARE CV!!!";
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     // Crea un CV a partire dai campi inseriti. Controlli su file esistenti e campi vuoti prima del salvataggio.
@@ -136,19 +126,6 @@ public class QuestionCreator : MonoBehaviour
     public void SaveQuestion()
     {
         InterviewManager.AddQuestion(question);
-        Debug.Log("SALVATO CON SUCCESSO");
-
-        // Se l'operazione era una sovrascrittura
-        //if (CVManager.editCurrent)
-        //{
-        //    CVManager.editCurrent = false;
-
-        //    // Se il file durante la sovrascrittura ha cambiato nome
-        //    if (!CVManager.IsCurrentCV(inputFields[0].text, inputFields[1].text))
-        //    {
-        //        Debug.Log("Il CV è stato sovrascritto e il file rinominato.\nElimino vecchio file");
-        //        CVManager.RemoveCVEntry(CVManager.currentCV);
-        //    }
-        //}
+        Debug.Log("SALVATO CON SUCCESSO");        
     }
 }

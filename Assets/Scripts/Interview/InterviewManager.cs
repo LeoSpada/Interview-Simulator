@@ -6,40 +6,18 @@ using static CVEntry;
 
 public static class InterviewManager
 {
-   // private static CVEntry loadedCV;
-
     public static TextMeshProUGUI text;
 
     public static int score = 0;
 
+    private const string saveFolder = "Questions";
+
     static string GetJobQuestionFilePath()
     {
         var cv = CVManager.currentCV;
-               
-
-        Debug.Log(cv);
-
-        Debug.Log("Cerco file per " + cv.job);
-        string path = Path.Combine(Application.persistentDataPath, "Questions",$"job_{cv.job}_questions.json");
-        Debug.Log("Path: " + path);
+        string path = Path.Combine(Application.persistentDataPath, saveFolder, $"job_{cv.job}_questions.json");
         return path;
     }
-    // Start is called before the first frame update
-    //void Start()
-    //{
-
-    //    loadedCV = CVManager.currentCV;
-
-    //    if (loadedCV == null) Debug.Log("Nessun CV caricato. ERRORE");
-
-    //   else if (loadedCV.job == 0) Debug.Log("Sviluppatore");
-    //}
-
-    //// Update is called once per frame
-    //void Update()
-    //{
-    //    text.text = loadedCV.name;
-    //}
 
     public static void LoadQuestion()
     {
@@ -56,17 +34,10 @@ public static class InterviewManager
         //    // AGGIUNGERE MESSAGGIO / CONFERMA DI SOVRASCRITTURA
         //}
 
-
-
-        Debug.Log("TEST AGGIUNTA " + question);
-
         string json = JsonConvert.SerializeObject(question);
-
         Debug.Log(json);
-
         File.WriteAllText(GetJobQuestionFilePath(), json);
     }
-
 
     [System.Serializable]
     public class Question
@@ -90,7 +61,5 @@ public static class InterviewManager
             }
             else return false;
         }
-
-
     }
 }
