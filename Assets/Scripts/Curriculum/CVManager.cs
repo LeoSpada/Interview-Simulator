@@ -10,7 +10,7 @@ public static class CVManager
     public static bool editCurrent = false;
     static string GetCVFilePath(string name, string surname)
     {
-        string path = Path.Combine(Application.persistentDataPath, $"{name}_{surname}_CV.json");
+        string path = Path.Combine(Application.persistentDataPath, "Saves", $"{name}_{surname}_CV.json");
         return path;
     }
 
@@ -19,7 +19,7 @@ public static class CVManager
     {
         List<CVEntry> list = new();
 
-        DirectoryInfo dir = new(Application.persistentDataPath);
+        DirectoryInfo dir = new(Path.Combine(Application.persistentDataPath, "Saves"));
         FileInfo[] info = dir.GetFiles("*.json");
 
         foreach (FileInfo f in info)

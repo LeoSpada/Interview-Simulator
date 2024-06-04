@@ -20,7 +20,7 @@ public static class InterviewManager
         Debug.Log(cv);
 
         Debug.Log("Cerco file per " + cv.job);
-        string path = Path.Combine(Application.persistentDataPath, $"job_{cv.job}_questions.json");
+        string path = Path.Combine(Application.persistentDataPath, "Questions",$"job_{cv.job}_questions.json");
         Debug.Log("Path: " + path);
         return path;
     }
