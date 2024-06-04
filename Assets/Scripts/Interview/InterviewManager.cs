@@ -12,10 +12,10 @@ public static class InterviewManager
 
     private const string saveFolder = "Questions";
 
-    static string GetJobQuestionFilePath()
+    static string GetJobQuestionFilePath(string job)
     {
-        var cv = CVManager.currentCV;
-        string path = Path.Combine(Application.persistentDataPath, saveFolder, $"job_{cv.job}_questions.json");
+        // var cv = CVManager.currentCV;
+        string path = Path.Combine(Application.persistentDataPath, saveFolder, $"job_{job}_questions.json");
         return path;
     }
 
@@ -24,7 +24,7 @@ public static class InterviewManager
 
     }
 
-    public static void AddQuestion(Question question)
+    public static void AddQuestion(Question question, string job)
     {
         //if (CheckEntry(cvEntry))
         //{
@@ -36,7 +36,7 @@ public static class InterviewManager
 
         string json = JsonConvert.SerializeObject(question);
         Debug.Log(json);
-        File.WriteAllText(GetJobQuestionFilePath(), json);
+        File.WriteAllText(GetJobQuestionFilePath(job), json);
     }
 
     [System.Serializable]

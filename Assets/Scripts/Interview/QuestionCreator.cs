@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -5,20 +6,22 @@ public class QuestionCreator : MonoBehaviour
 {
     private InterviewManager.Question question;
 
-    public TextMeshProUGUI titleText;
+   // public TextMeshProUGUI titleText;
 
     public TMP_InputField[] inputFields;
 
     public TMP_Dropdown correctIndex;
 
+    public TMP_Dropdown jobDropdown;
+
     private bool allClear = true;
     // Start is called before the first frame update
-    void Start()
-    {
-        if (CVManager.currentCV != null)
-            titleText.text = CVManager.currentCV.job.ToString();
-        else titleText.text = "CARICARE CV!!!";
-    }
+    //void Start()
+    //{
+    //    if (CVManager.currentCV != null)
+    //        titleText.text = CVManager.currentCV.job.ToString();
+    //    else titleText.text = "CARICARE CV!!!";
+    //}
 
     // Crea un CV a partire dai campi inseriti. Controlli su file esistenti e campi vuoti prima del salvataggio.
     public void Submit()
@@ -42,6 +45,8 @@ public class QuestionCreator : MonoBehaviour
 
         // AGGIUNGERE CONTROLLO SU Dropdown di correctIndex
 
+        CVEntry.Occupazione occupazione = AcceptDropdown<CVEntry.Occupazione>(jobDropdown);
+
 
         if (allClear)
         {
@@ -58,7 +63,9 @@ public class QuestionCreator : MonoBehaviour
             //}
             //else
             //{
-            SaveQuestion();
+            string job = occupazione.ToString();
+
+            SaveQuestion(job);
             //}
         }
         // Reimposta allClear a true per il prossimo submit
@@ -93,39 +100,39 @@ public class QuestionCreator : MonoBehaviour
     }
 
     // Controlla che il valore del dropdown corrisponda ad un valore contenuto nell'enum
-    //public T AcceptDropdown<T>(TMP_Dropdown dropdown)
-    //{
-    //    // Ottiene il valore del testo del dropdown
-    //    string dropdownText = dropdown.options[dropdown.value].text;
-    //    // Debug.Log(dropdownText);
+    public T AcceptDropdown<T>(TMP_Dropdown dropdown)
+    {
+        // Ottiene il valore del testo del dropdown
+        string dropdownText = dropdown.options[dropdown.value].text;
+        // Debug.Log(dropdownText);
 
-    //    T enumObj;
+        T enumObj;
 
-    //    // Prova ad ottenere il valore enum corretto corrispondente alla stringa
-    //    try
-    //    {
-    //        enumObj = (T)Enum.Parse(typeof(T), dropdownText);
-    //    }
-    //    catch (ArgumentException)
-    //    {
-    //        allClear = false;
+        // Prova ad ottenere il valore enum corretto corrispondente alla stringa
+        try
+        {
+            enumObj = (T)Enum.Parse(typeof(T), dropdownText);
+        }
+        catch (ArgumentException)
+        {
+            allClear = false;
 
-    //        dropdown.image.color = Color.red;
-    //        Debug.Log("Il valore del dropdown non è consentito nell'Enum.\nRicontrollare codice.");
+            dropdown.image.color = Color.red;
+            Debug.Log("Il valore del dropdown non è consentito nell'Enum.\nRicontrollare codice.");
 
-    //        return default;
-    //    }
+            return default;
+        }
 
-    //    dropdown.image.color = Color.white;
+        dropdown.image.color = Color.white;
 
-    //    // Debug.Log("Enumobj: " + enumObj);
-    //    return enumObj;
-    //}
+        // Debug.Log("Enumobj: " + enumObj);
+        return enumObj;
+    }
 
     // Conferma il Submit
-    public void SaveQuestion()
+    public void SaveQuestion(string job)
     {
-        InterviewManager.AddQuestion(question);
+        InterviewManager.AddQuestion(question, job);
         Debug.Log("SALVATO CON SUCCESSO");        
     }
 }
