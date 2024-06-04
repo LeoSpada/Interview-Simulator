@@ -1,27 +1,67 @@
+using System.IO;
 using TMPro;
 using UnityEngine;
+using static CVEntry;
 
-public class InterviewManager : MonoBehaviour
+public static class InterviewManager
 {
-    private CVEntry loadedCV;
+    private static CVEntry loadedCV;
 
-    public TextMeshProUGUI text;
+    public static TextMeshProUGUI text;
 
-    public int score = 0;
-    // Start is called before the first frame update
-    void Start()
+    public static int score = 0;
+
+    static string GetJobQuestionFilePath(CVEntry cv)
     {
-        
-        loadedCV = CVManager.currentCV;
+        string path = Path.Combine(Application.persistentDataPath, $"job_{cv.job}_questions.json");
+        return path;
+    }
+    // Start is called before the first frame update
+    //void Start()
+    //{
 
-        if (loadedCV == null) Debug.Log("Nessun CV caricato. ERRORE");
+    //    loadedCV = CVManager.currentCV;
 
-       else if (loadedCV.job == 0) Debug.Log("Sviluppatore");
+    //    if (loadedCV == null) Debug.Log("Nessun CV caricato. ERRORE");
+
+    //   else if (loadedCV.job == 0) Debug.Log("Sviluppatore");
+    //}
+
+    //// Update is called once per frame
+    //void Update()
+    //{
+    //    text.text = loadedCV.name;
+    //}
+
+    public static void LoadQuestion()
+    {
+
     }
 
-    // Update is called once per frame
-    void Update()
+
+    [System.Serializable]
+    public class Question
     {
-        text.text = loadedCV.name;
+        public string question;
+        public string[] answers;
+        public int correctIndex;
+
+        public Question(string question, string[] answers, int correctIndex)
+        {
+            this.question = question;
+            this.answers = answers;
+            this.correctIndex = correctIndex;
+        }
+
+        public bool CheckAnswer(int index)
+        {
+            if(index == correctIndex)
+            {
+                return true;
+            }
+            else return false;
+        }
+
+
     }
 }
