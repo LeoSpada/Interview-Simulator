@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.IO;
 using TMPro;
 using UnityEngine;
@@ -13,7 +14,9 @@ public static class InterviewManager
 
     static string GetJobQuestionFilePath(CVEntry cv)
     {
+        Debug.Log("Cerco file per " + cv.job);
         string path = Path.Combine(Application.persistentDataPath, $"job_{cv.job}_questions.json");
+        Debug.Log("Path: " + path);
         return path;
     }
     // Start is called before the first frame update
@@ -38,6 +41,22 @@ public static class InterviewManager
 
     }
 
+    public static void AddQuestion(Question question)
+    {
+        //if (CheckEntry(cvEntry))
+        //{
+        //   // Debug.Log("Sovrascrittura di");
+        //   // DebugCV(cvEntry);
+
+        //    // AGGIUNGERE MESSAGGIO / CONFERMA DI SOVRASCRITTURA
+        //}
+
+        Debug.Log("TEST AGGIUNTA " + question.question);
+
+        string json = JsonConvert.SerializeObject(question);
+        File.WriteAllText(GetJobQuestionFilePath(loadedCV), json);
+    }
+
 
     [System.Serializable]
     public class Question
@@ -55,7 +74,7 @@ public static class InterviewManager
 
         public bool CheckAnswer(int index)
         {
-            if(index == correctIndex)
+            if (index == correctIndex)
             {
                 return true;
             }
