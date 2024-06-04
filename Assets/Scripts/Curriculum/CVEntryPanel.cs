@@ -49,6 +49,7 @@ public class CVEntryPanel : MonoBehaviour
         // Cambia il tipo di variabile, trovare soluzione
 
         CVEntry.Genere genere = AcceptDropdown<CVEntry.Genere>(dropdowns[0]);
+
         CVEntry.Occupazione occupazione = AcceptDropdown<CVEntry.Occupazione>(dropdowns[1]);
 
         if (allClear)
