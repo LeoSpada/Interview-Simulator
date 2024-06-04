@@ -3892,7 +3892,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1128237508}
         m_TargetAssemblyTypeName: QuestionCreator, Assembly-CSharp
-        m_MethodName: SaveQuestion
+        m_MethodName: Submit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

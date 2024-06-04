@@ -6,14 +6,19 @@ using static CVEntry;
 
 public static class InterviewManager
 {
-    private static CVEntry loadedCV;
+   // private static CVEntry loadedCV;
 
     public static TextMeshProUGUI text;
 
     public static int score = 0;
 
-    static string GetJobQuestionFilePath(CVEntry cv)
+    static string GetJobQuestionFilePath()
     {
+        var cv = CVManager.currentCV;
+               
+
+        Debug.Log(cv);
+
         Debug.Log("Cerco file per " + cv.job);
         string path = Path.Combine(Application.persistentDataPath, $"job_{cv.job}_questions.json");
         Debug.Log("Path: " + path);
@@ -51,10 +56,15 @@ public static class InterviewManager
         //    // AGGIUNGERE MESSAGGIO / CONFERMA DI SOVRASCRITTURA
         //}
 
-        Debug.Log("TEST AGGIUNTA " + question.question);
+
+
+        Debug.Log("TEST AGGIUNTA " + question);
 
         string json = JsonConvert.SerializeObject(question);
-        File.WriteAllText(GetJobQuestionFilePath(loadedCV), json);
+
+        Debug.Log(json);
+
+        File.WriteAllText(GetJobQuestionFilePath(), json);
     }
 
 
