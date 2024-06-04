@@ -80,7 +80,7 @@ public static class CVManager
             Debug.Log(name + "non corrisponde");
             return false;
         }
-            
+
         else return true;
     }
 
@@ -98,7 +98,7 @@ public class CVEntry
 {
     public string name;
     public string surname;
-    public string job;
+    public Occupazione job;
     public Genere gender;
     // AGGIUNGERE QUI TUTTI I CAMPI e rigenerare costruttore
     // VEDERE DATI_CURRICULUM e altri
@@ -109,7 +109,7 @@ public class CVEntry
 
     }
 
-    public CVEntry(string name, string surname, string job, Genere gender)
+    public CVEntry(string name, string surname, Occupazione job, Genere gender)
     {
         this.name = name;
         this.surname = surname;
@@ -122,5 +122,7 @@ public class CVEntry
     public enum Patente { A, A1, A2, B, C, D, E }
 
     public enum Genere { M, F, Altro }
+
+    public enum Occupazione { Sviluppatore, Medico };
 }
 

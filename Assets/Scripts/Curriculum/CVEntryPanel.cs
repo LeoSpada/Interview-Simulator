@@ -7,8 +7,10 @@ public class CVEntryPanel : MonoBehaviour
     // Contiene i vari inputField
     public TMP_InputField[] inputFields;
 
-    // Fare array di Dropdown?
-    public TMP_Dropdown genderDropdown;
+    
+    // public TMP_Dropdown genderDropdown;
+    
+    public TMP_Dropdown[] dropdowns;
 
     private bool allClear = true;
 
@@ -43,11 +45,15 @@ public class CVEntryPanel : MonoBehaviour
             else inputField.image.color = Color.white;
         }
 
-        CVEntry.Genere genere = AcceptDropdown<CVEntry.Genere>(genderDropdown);
+        // Possibile usare foreach??
+        // Cambia il tipo di variabile, trovare soluzione
+
+        CVEntry.Genere genere = AcceptDropdown<CVEntry.Genere>(dropdowns[0]);
+        CVEntry.Occupazione occupazione = AcceptDropdown<CVEntry.Occupazione>(dropdowns[1]);
 
         if (allClear)
         {
-            CV = new(inputFields[0].text, inputFields[1].text, inputFields[2].text, genere);
+            CV = new(inputFields[0].text, inputFields[1].text, occupazione, genere);
 
             // Se un file con lo stesso nome è già presente, compare una finestra di conferma
             if (CVManager.CheckEntry(CV))
@@ -132,11 +138,14 @@ public class CVEntryPanel : MonoBehaviour
 
         inputFields[0].text = currentCV.name;
         inputFields[1].text = currentCV.surname;
-        inputFields[2].text = currentCV.job;
+       // inputFields[2].text = currentCV.job;
+        
         // Debug.Log(((int)currentCV.gender));
         // Viene sommato 1 perché il valore 0 del dropdown è la frase "Inserire Genere" (non compatibile con enum
         // Forse rimuovere inserire genere e +1 successivamente
-        genderDropdown.value = (int)currentCV.gender + 1;
+        
+        dropdowns[0].value = (int)currentCV.gender + 1;
+        dropdowns[1].value = (int)currentCV.job + 1;
     }
 
     // Se la schermata viene disattivata, si esce dalla modalità modifica
