@@ -1,8 +1,8 @@
 using Newtonsoft.Json;
+using System;
 using System.IO;
 using TMPro;
 using UnityEngine;
-using static CVEntry;
 
 public static class InterviewManager
 {
@@ -12,10 +12,28 @@ public static class InterviewManager
 
     private const string saveFolder = "Questions";
 
-    static string GetJobQuestionFilePath(string job)
+
+    public static string GetJobQuestionFilePath(string job, int id)
     {
-        // var cv = CVManager.currentCV;
-        string path = Path.Combine(Application.persistentDataPath, saveFolder, $"job_{job}_questions.json");
+        string folder = Path.Combine(Application.persistentDataPath, saveFolder, job);
+        try
+        {
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
+            }
+
+        }
+        catch (IOException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+        // Guid guid = Guid.NewGuid();
+
+
+
+        string path = Path.Combine(folder, $"question_{id}.json");
         return path;
     }
 
@@ -36,7 +54,9 @@ public static class InterviewManager
 
         string json = JsonConvert.SerializeObject(question);
         Debug.Log(json);
-        File.WriteAllText(GetJobQuestionFilePath(job), json);
+        File.WriteAllText(GetJobQuestionFilePath(job, question.id), json);
+
+
     }
 
     [System.Serializable]
@@ -46,11 +66,18 @@ public static class InterviewManager
         public string[] answers;
         public int correctIndex;
 
+        public int id;
+
+        // Viene resettato ad ogni esecuzione del codice
+        // Trovare soluzione alternativa: data / ora?
+        public static int q_id = 0;
+
         public Question(string question, string[] answers, int correctIndex)
         {
             this.question = question;
             this.answers = answers;
             this.correctIndex = correctIndex;
+            id = q_id++;
         }
 
         public bool CheckAnswer(int index)
@@ -60,6 +87,11 @@ public static class InterviewManager
                 return true;
             }
             else return false;
+        }
+
+        public int GetLastID()
+        {
+            return id;
         }
     }
 }
