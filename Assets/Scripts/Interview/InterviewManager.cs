@@ -101,7 +101,7 @@ public static class InterviewManager
 
             id = q_id;
 
-            Debug.Log("Q_ID attuale:" + id);
+           // Debug.Log("Q_ID attuale:" + id);
             SaveLastID();
         }
 
