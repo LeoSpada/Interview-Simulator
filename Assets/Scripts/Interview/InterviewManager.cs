@@ -18,7 +18,6 @@ public static class InterviewManager
         return Path.Combine(Application.persistentDataPath, saveFolder, job);
     }
 
-
     public static string GetQuestionFilePath(string job, int id)
     {
         string folder = GetJobFolder(job);
@@ -72,23 +71,13 @@ public static class InterviewManager
         var question = JsonConvert.DeserializeObject<Question>(json);
 
         return question;
-    }    
+    }
 
     public static void AddQuestion(Question question, string job)
     {
-        //if (CheckEntry(cvEntry))
-        //{
-        //   // Debug.Log("Sovrascrittura di");
-        //   // DebugCV(cvEntry);
-
-        //    // AGGIUNGERE MESSAGGIO / CONFERMA DI SOVRASCRITTURA
-        //}
-
         string json = JsonConvert.SerializeObject(question);
         Debug.Log(json);
         File.WriteAllText(GetQuestionFilePath(job, question.id), json);
-
-
     }
 
     [System.Serializable]
@@ -99,9 +88,7 @@ public static class InterviewManager
         public int correctIndex;
 
         public int id;
-
-        // Viene resettato ad ogni esecuzione del codice
-        // Trovare soluzione alternativa: data / ora?
+                
         public static int q_id = 0;
 
         public Question(string question, string[] answers, int correctIndex)
@@ -109,7 +96,13 @@ public static class InterviewManager
             this.question = question;
             this.answers = answers;
             this.correctIndex = correctIndex;
-            id = q_id++;
+
+            q_id = GetLastID() + 1;
+
+            id = q_id;
+
+            Debug.Log("Q_ID attuale:" + id);
+            SaveLastID();
         }
 
         public bool CheckAnswer(int index)
@@ -121,9 +114,15 @@ public static class InterviewManager
             else return false;
         }
 
-        public int GetLastID()
+        public static void SaveLastID()
         {
-            return id;
+            PlayerPrefs.SetInt("q_id", q_id);
+        }
+
+        public static int GetLastID()
+        {
+            if (PlayerPrefs.HasKey("q_id")) return PlayerPrefs.GetInt("q_id");
+            else return 0;
         }
     }
 }
