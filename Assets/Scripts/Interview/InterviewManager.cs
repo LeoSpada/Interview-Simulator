@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
@@ -12,10 +13,15 @@ public static class InterviewManager
 
     private const string saveFolder = "Questions";
 
-
-    public static string GetJobQuestionFilePath(string job, int id)
+    public static string GetJobFolder(string job)
     {
-        string folder = Path.Combine(Application.persistentDataPath, saveFolder, job);
+        return Path.Combine(Application.persistentDataPath, saveFolder, job);
+    }
+
+
+    public static string GetQuestionFilePath(string job, int id)
+    {
+        string folder = GetJobFolder(job);
         try
         {
             if (!Directory.Exists(folder))
@@ -37,10 +43,36 @@ public static class InterviewManager
         return path;
     }
 
-    public static void LoadQuestion()
+    public static List<Question> GetAllQuestionsInFolder(string job)
     {
+        List<Question> list = new();
 
+        DirectoryInfo dir = new(GetJobFolder(job));
+        FileInfo[] info = dir.GetFiles("*.json");
+
+        foreach (FileInfo f in info)
+        {
+            string json = File.ReadAllText(f.ToString());
+            var question = JsonConvert.DeserializeObject<Question>(json);
+            list.Add(question);
+        }
+
+        return list;
     }
+
+    public static Question GetQuestion(string job, int id)
+    {
+        if (!File.Exists(GetQuestionFilePath(job, id)))
+        {
+            return null;
+        }
+
+        string json = File.ReadAllText(GetQuestionFilePath(job, id));
+
+        var question = JsonConvert.DeserializeObject<Question>(json);
+
+        return question;
+    }    
 
     public static void AddQuestion(Question question, string job)
     {
@@ -54,7 +86,7 @@ public static class InterviewManager
 
         string json = JsonConvert.SerializeObject(question);
         Debug.Log(json);
-        File.WriteAllText(GetJobQuestionFilePath(job, question.id), json);
+        File.WriteAllText(GetQuestionFilePath(job, question.id), json);
 
 
     }
