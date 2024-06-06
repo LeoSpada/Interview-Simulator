@@ -48,11 +48,12 @@ public class QuestionPanel : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    //void Start()
-    //{
-    //    Setup(RandomQuestion("Sviluppatore"));
-    //}
+   
+    void Start()
+    {
+        CountFolder();
+        CountQuestions(true);
+    }
 
     // Update is called once per frame
     //void Update()

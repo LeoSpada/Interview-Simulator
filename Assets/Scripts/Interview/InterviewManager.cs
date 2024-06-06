@@ -23,6 +23,38 @@ public static class InterviewManager
         return GetAllQuestionsInFolder(job).Count;
     }
 
+    public static DirectoryInfo[] GetFoldersInfo()
+    {
+        DirectoryInfo mainDir = new(Path.Combine(Application.persistentDataPath, saveFolder));
+        var dirs = mainDir.GetDirectories();
+        return dirs;
+    }
+
+    public static int CountFolder()
+    {
+        var dirs = GetFoldersInfo();
+
+        Debug.Log("Numero di cartelle: " + dirs.Length);
+
+        return dirs.Length;
+    }
+
+    public static int CountQuestions(bool log)
+    {
+        var dirs = GetFoldersInfo();
+
+        int sum = 0;
+
+        foreach (DirectoryInfo dir in dirs)
+        {
+            sum += GetAllQuestionsInFolder(dir.Name).Count;
+           if(log) Debug.Log(dir.Name + " ha " + GetAllQuestionsInFolder(dir.Name).Count + " domande.");
+        }
+
+        Debug.Log("Somma: " + sum);
+        return sum;
+    }
+
     public static string GetQuestionFilePath(string job, int id)
     {
         string folder = GetJobFolder(job);
@@ -138,7 +170,15 @@ public static class InterviewManager
 
         public static int GetLastID()
         {
-            if (PlayerPrefs.HasKey("q_id")) return PlayerPrefs.GetInt("q_id");
+            if (PlayerPrefs.HasKey("q_id"))
+            {
+                if (CountQuestions(false) == 0)
+                {                    
+                    Debug.Log("Nessuna domanda trovata. Azzero q_id in PlayerPrefs.");
+                    return -1;
+                }
+                return PlayerPrefs.GetInt("q_id");
+            }
             else return -1;
         }
     }

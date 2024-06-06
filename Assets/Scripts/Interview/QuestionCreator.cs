@@ -53,7 +53,7 @@ public class QuestionCreator : MonoBehaviour
             question = new(inputFields[0].text, FilterAnswers(inputFields), correctIndex.value);
 
 
-            Debug.Log("All clear: " + question);
+            // Debug.Log("All clear: " + question);
 
             //// Se un file con lo stesso nome è già presente, compare una finestra di conferma
             //if (CVManager.CheckEntry(CV))
@@ -91,10 +91,10 @@ public class QuestionCreator : MonoBehaviour
             answers[i - 1] = inputs[i].text;
         }
 
-        foreach (string s in answers)
-        {
-            Debug.Log(s);
-        }
+        //foreach (string s in answers)
+        //{
+        //    Debug.Log(s);
+        //}
 
         return answers;
     }
