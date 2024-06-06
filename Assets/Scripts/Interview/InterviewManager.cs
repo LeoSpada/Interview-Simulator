@@ -59,6 +59,13 @@ public static class InterviewManager
         return list;
     }
 
+    public static Question GetRandomQuestionInFolder(string job)
+    {
+        List<Question> list = GetAllQuestionsInFolder(job);
+
+        return list[UnityEngine.Random.Range(0, list.Count)];
+    }
+
     public static Question GetQuestion(string job, int id)
     {
         if (!File.Exists(GetQuestionFilePath(job, id)))
