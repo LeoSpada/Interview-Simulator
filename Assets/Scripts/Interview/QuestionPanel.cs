@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,8 @@ public class QuestionPanel : MonoBehaviour
     public Button[] ansButtons;
     private Question question;
 
+    private List<int> prevID = new();
+
     // public Canvas entryPanel;
 
     // Rimettere question come argomento funzione
@@ -17,6 +20,18 @@ public class QuestionPanel : MonoBehaviour
     {
         // Domanda di prova
         // Question q = GetQuestion("Sviluppatore", 0);
+
+        if (q == null)
+        {
+            questionText.text = "Domande finite";
+            foreach (Button button in ansButtons)
+            {
+                TextMeshProUGUI buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
+                buttonText.text = "---";
+            }
+            return;
+        }
+
 
         question = q;
         questionText.text = q.question;
@@ -57,8 +72,34 @@ public class QuestionPanel : MonoBehaviour
 
     public Question RandomQuestion(string job)
     {
-        return GetRandomQuestionInFolder(job);
+        int i = 0;
+
+
+
+        Debug.Log($"Domande in {job}: " + GetJobFolderSize(job));
+
+        while (i <= GetJobFolderSize(job))
+        {
+            Question rand = GetRandomQuestionInFolder(job);
+            if (!prevID.Contains(rand.id))
+            {
+                prevID.Add(rand.id);
+
+                //Debug.Log("Elenco già uscite: ");
+                //foreach (int id in prevID) Debug.Log(id + "\t");
+
+                i++;
+                // Debug.Log("I = " + i);
+                return rand;
+
+            }
+            else
+            {
+                //  Debug.Log($"Domanda {rand.id} già uscita");
+                i++;
+            }
+        }
+
+        return null;
     }
-    // Fare LoadRandom qui o in InterviewManager per restituire una domanda a caso del lavoro scelto
-    // Parti dalla lista ottenuta da GetAll
 }

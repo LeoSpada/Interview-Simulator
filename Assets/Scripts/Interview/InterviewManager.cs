@@ -18,6 +18,11 @@ public static class InterviewManager
         return Path.Combine(Application.persistentDataPath, saveFolder, job);
     }
 
+    public static int GetJobFolderSize(string job)
+    {
+        return GetAllQuestionsInFolder(job).Count;
+    }
+
     public static string GetQuestionFilePath(string job, int id)
     {
         string folder = GetJobFolder(job);
@@ -95,8 +100,13 @@ public static class InterviewManager
         public int correctIndex;
 
         public int id;
-                
+
         public static int q_id;
+
+        public Question()
+        {
+
+        }
 
         public Question(string question, string[] answers, int correctIndex)
         {
@@ -106,9 +116,9 @@ public static class InterviewManager
 
             q_id = GetLastID();
 
-            id = q_id + 1;            
+            id = ++q_id;
 
-           // Debug.Log("Q_ID attuale:" + id);
+            // Debug.Log("Q_ID attuale:" + id);
             SaveLastID();
         }
 
