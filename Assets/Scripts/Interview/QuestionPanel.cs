@@ -6,24 +6,24 @@ using static InterviewManager;
 
 public class QuestionPanel : MonoBehaviour
 {
-
     public TextMeshProUGUI questionText;
     public Button[] ansButtons;
     private Question question;
 
+    int points = 0;
+
     private List<int> prevID = new();
 
-    // public Canvas entryPanel;
+    // Potrebbe essere necessario un metodo (da collegare ai pulsanti) che carica la prossima domanda
 
-    // Rimettere question come argomento funzione
     public void Setup(Question q)
     {
-        // Domanda di prova
-        // Question q = GetQuestion("Sviluppatore", 0);
-
+        // Se q è null, le domande sono finite.
+        // Rimpiazzare questa parte con caricamento scena di calcolo punteggio??
+     
         if (q == null)
         {
-            questionText.text = "Domande finite";
+            questionText.text = "Domande finite.\nPunteggio: " + points;
             foreach (Button button in ansButtons)
             {
                 TextMeshProUGUI buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
@@ -48,7 +48,7 @@ public class QuestionPanel : MonoBehaviour
         }
     }
 
-   
+
     void Start()
     {
         CountFolder();
@@ -102,5 +102,38 @@ public class QuestionPanel : MonoBehaviour
         }
 
         return null;
+    }
+
+
+    public void NextQuestion()
+    {
+        // Messo medico per test: inserire in seguito variabile a questionPanel forse per memorizzare il lavoro
+        // OPPURE (MEGLIO) leggere da CurrentCV
+        foreach (Button button in ansButtons)
+        {
+            button.image.color = Color.white;
+        }
+
+        Setup(RandomQuestion("Medico"));
+    }
+
+    public void OnButtonClick(Button button)
+    {
+        Debug.Log("Clicc di " + button.name);
+
+        if (button.name.Contains(question.correctIndex.ToString()))
+        {
+            Debug.Log("Risposta corretta");
+            points++;
+            button.image.color = Color.green;
+        }
+        else
+        {
+            Debug.Log("Risposta errata");
+            button.image.color = Color.red;
+
+            ansButtons[question.correctIndex].image.color = Color.green;
+        }
+        Invoke(nameof(NextQuestion), 2.5f);
     }
 }
