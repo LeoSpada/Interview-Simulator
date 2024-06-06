@@ -16,7 +16,7 @@ public class QuestionPanel : MonoBehaviour
     public void Setup()
     {
         // Domanda di prova
-        Question q = GetQuestion("Medico", 1);
+        Question q = GetQuestion("Sviluppatore", 0);
 
         question = q;
         questionText.text = q.question;
@@ -42,4 +42,7 @@ public class QuestionPanel : MonoBehaviour
     {
 
     }
+
+    // Fare LoadRandom qui o in InterviewManager per restituire una domanda a caso del lavoro scelto
+    // Parti dalla lista ottenuta da GetAll
 }

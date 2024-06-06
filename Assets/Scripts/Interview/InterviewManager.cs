@@ -89,7 +89,7 @@ public static class InterviewManager
 
         public int id;
                 
-        public static int q_id = 0;
+        public static int q_id;
 
         public Question(string question, string[] answers, int correctIndex)
         {
@@ -97,9 +97,9 @@ public static class InterviewManager
             this.answers = answers;
             this.correctIndex = correctIndex;
 
-            q_id = GetLastID() + 1;
+            q_id = GetLastID();
 
-            id = q_id;
+            id = q_id + 1;            
 
            // Debug.Log("Q_ID attuale:" + id);
             SaveLastID();
@@ -122,7 +122,7 @@ public static class InterviewManager
         public static int GetLastID()
         {
             if (PlayerPrefs.HasKey("q_id")) return PlayerPrefs.GetInt("q_id");
-            else return 0;
+            else return -1;
         }
     }
 }
