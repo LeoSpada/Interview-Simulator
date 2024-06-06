@@ -20,12 +20,14 @@ public class QuestionPanel : MonoBehaviour
     {
         // Se q è null, le domande sono finite.
         // Rimpiazzare questa parte con caricamento scena di calcolo punteggio??
-     
+
         if (q == null)
         {
+            question = null;
             questionText.text = "Domande finite.\nPunteggio: " + points;
             foreach (Button button in ansButtons)
             {
+                button.name = "EmptyAns";
                 TextMeshProUGUI buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
                 buttonText.text = "---";
             }
@@ -92,7 +94,6 @@ public class QuestionPanel : MonoBehaviour
                 i++;
                 // Debug.Log("I = " + i);
                 return rand;
-
             }
             else
             {
@@ -103,7 +104,6 @@ public class QuestionPanel : MonoBehaviour
 
         return null;
     }
-
 
     public void NextQuestion()
     {
@@ -120,20 +120,20 @@ public class QuestionPanel : MonoBehaviour
     public void OnButtonClick(Button button)
     {
         Debug.Log("Clicc di " + button.name);
+        if (question != null)
+            if (button.name.Contains(question.correctIndex.ToString()))
+            {
+                Debug.Log("Risposta corretta");
+                points++;
+                button.image.color = Color.green;
+            }
+            else
+            {
+                Debug.Log("Risposta errata");
+                button.image.color = Color.red;
 
-        if (button.name.Contains(question.correctIndex.ToString()))
-        {
-            Debug.Log("Risposta corretta");
-            points++;
-            button.image.color = Color.green;
-        }
-        else
-        {
-            Debug.Log("Risposta errata");
-            button.image.color = Color.red;
-
-            ansButtons[question.correctIndex].image.color = Color.green;
-        }
+                ansButtons[question.correctIndex].image.color = Color.green;
+            }
         Invoke(nameof(NextQuestion), 2.5f);
     }
 }
