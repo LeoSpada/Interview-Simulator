@@ -10,7 +10,7 @@ public class QuestionPanel : MonoBehaviour
     public Button[] ansButtons;
     private Question question;
 
-    int points = 0;
+    float points = 0;
 
     private List<int> prevID = new();
 
@@ -40,13 +40,14 @@ public class QuestionPanel : MonoBehaviour
 
         for (int i = 0; i < ansButtons.Length; i++)
         {
-            ansButtons[i].name = $"Ans{i}";
+            ansButtons[i].name = question.answers[i].points.ToString();
+            
             // Test indice corretto: Trovare come rendere la corretta quella che dà punti
-            if (i == q.correctIndex) ansButtons[i].name += " [CORRETTA]";
+            // if (i == q.correctIndex) ansButtons[i].name += " [CORRETTA]";
 
 
             TextMeshProUGUI buttonText = ansButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-            buttonText.text = q.answers[i];
+            buttonText.text = q.answers[i].text;
         }
     }
 
@@ -109,10 +110,11 @@ public class QuestionPanel : MonoBehaviour
     {
         // Messo medico per test: inserire in seguito variabile a questionPanel forse per memorizzare il lavoro
         // OPPURE (MEGLIO) leggere da CurrentCV
-        foreach (Button button in ansButtons)
-        {
-            button.image.color = Color.white;
-        }
+
+        //foreach (Button button in ansButtons)
+        //{
+        //    button.image.color = Color.white;
+        //}
 
         Setup(RandomQuestion("Medico"));
     }
@@ -121,19 +123,34 @@ public class QuestionPanel : MonoBehaviour
     {
         Debug.Log("Clicc di " + button.name);
         if (question != null)
-            if (button.name.Contains(question.correctIndex.ToString()))
-            {
-                Debug.Log("Risposta corretta");
-                points++;
-                button.image.color = Color.green;
-            }
-            else
-            {
-                Debug.Log("Risposta errata");
-                button.image.color = Color.red;
-
-                ansButtons[question.correctIndex].image.color = Color.green;
-            }
-        Invoke(nameof(NextQuestion), 2.5f);
+        {
+            Debug.Log("Punteggio pre-risposta: " + points);
+            points += float.Parse(button.name);
+            Debug.Log("Aggiungo punti " + float.Parse(button.name));
+            Debug.Log("Punteggio post-risposta: " + points);
+        }
+        Invoke(nameof(NextQuestion), 1f);
     }
+
+    // Versione vecchia con solo una risposta corretta
+
+    //public void OnButtonClick(Button button)
+    //{
+    //    Debug.Log("Clicc di " + button.name);
+    //    if (question != null)
+    //        if (button.name.Contains(question.correctIndex.ToString()))
+    //        {
+    //            Debug.Log("Risposta corretta");
+    //            points++;
+    //            button.image.color = Color.green;
+    //        }
+    //        else
+    //        {
+    //            Debug.Log("Risposta errata");
+    //            button.image.color = Color.red;
+
+    //            ansButtons[question.correctIndex].image.color = Color.green;
+    //        }
+    //    Invoke(nameof(NextQuestion), 2.5f);
+    //}
 }

@@ -128,10 +128,15 @@ public static class InterviewManager
     public class Question
     {
         public string question;
-        public string[] answers;
-        public int correctIndex;
+        public Answer[] answers;        
 
         public int id;
+
+        public struct Answer
+        {
+            public string text;
+            public float points;
+        }
 
         public static int q_id;
 
@@ -140,11 +145,11 @@ public static class InterviewManager
 
         }
 
-        public Question(string question, string[] answers, int correctIndex)
+        public Question(string question, Answer[] answers)
         {
             this.question = question;
             this.answers = answers;
-            this.correctIndex = correctIndex;
+           // this.correctIndex = correctIndex;
 
             q_id = GetLastID();
 
@@ -154,14 +159,14 @@ public static class InterviewManager
             SaveLastID();
         }
 
-        public bool CheckAnswer(int index)
-        {
-            if (index == correctIndex)
-            {
-                return true;
-            }
-            else return false;
-        }
+        //public bool CheckAnswer(int index)
+        //{
+        //    if (index == correctIndex)
+        //    {
+        //        return true;
+        //    }
+        //    else return false;
+        //}
 
         public static void SaveLastID()
         {
