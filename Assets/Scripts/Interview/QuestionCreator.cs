@@ -7,23 +7,12 @@ public class QuestionCreator : MonoBehaviour
 {
     private InterviewManager.Question question;
 
-    // public TextMeshProUGUI titleText;
-
     public TMP_InputField[] inputFields;
     public TMP_InputField[] points;
-
-    // public TMP_Dropdown correctIndex;
 
     public TMP_Dropdown jobDropdown;
 
     private bool allClear = true;
-    // Start is called before the first frame update
-    //void Start()
-    //{
-    //    if (CVManager.currentCV != null)
-    //        titleText.text = CVManager.currentCV.job.ToString();
-    //    else titleText.text = "CARICARE CV!!!";
-    //}
 
     public void Start()
     {
@@ -34,8 +23,6 @@ public class QuestionCreator : MonoBehaviour
             value += 0.25f;
         }
     }
-
-
 
     // Crea un CV a partire dai campi inseriti. Controlli su file esistenti e campi vuoti prima del salvataggio.
     public void Submit()
@@ -49,9 +36,6 @@ public class QuestionCreator : MonoBehaviour
                 inputField.image.color = Color.red;
 
                 allClear = false;
-
-                // Rimettere break riduce i controlli ma non fa colorare di rosso tutti i campi (solo il primo non valido)
-                // break;
             }
 
             else inputField.image.color = Color.white;
@@ -73,42 +57,25 @@ public class QuestionCreator : MonoBehaviour
 
             else point.image.color = Color.white;
         }
-        // AGGIUNGERE CONTROLLO SU Dropdown di correctIndex
 
         CVEntry.Occupazione occupazione = AcceptDropdown<CVEntry.Occupazione>(jobDropdown);
-
 
         if (allClear)
         {
             Answer[] answers = FilterAnswers(inputFields);
 
-
             // Assegnazione punti corretti
             for (int i = 0; i < answers.Length; i++)
             {
-
                 Debug.Log("Assegnazione punti");
                 answers[i].points = float.Parse(points[i].text);
-
             }
 
             question = new(inputFields[0].text, answers);
 
-
-            // Debug.Log("All clear: " + question);
-
-            //// Se un file con lo stesso nome è già presente, compare una finestra di conferma
-            //if (CVManager.CheckEntry(CV))
-            //{
-            //    // Debug.Log("CV già presente.");
-            //    confirmPanel.SetActive(true);
-            //}
-            //else
-            //{
             string job = occupazione.ToString();
 
             SaveQuestion(job);
-            //}
 
             // Reimposta allClear a true per il prossimo submit
             allClear = true;
@@ -120,8 +87,6 @@ public class QuestionCreator : MonoBehaviour
     {
         if (string.IsNullOrWhiteSpace(inputField.text)) return false;
         else return true;
-
-        // nameCompletionSource.SetResult(inputField.text);
     }
 
     // FUNZIONE CHE RIMUOVE IL PRIMO CAMPO?? ( La domanda vera e propria)
@@ -132,14 +97,7 @@ public class QuestionCreator : MonoBehaviour
         for (int i = 1; i < inputs.Length; i++)
         {
             answers[i - 1].text = inputs[i].text;
-            // answers[i - 1].points = UnityEngine.Random.Range(0, 1f);
         }
-
-        //foreach (string s in answers)
-        //{
-        //    Debug.Log(s);
-        //}
-
         return answers;
     }
 

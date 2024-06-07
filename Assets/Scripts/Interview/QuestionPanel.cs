@@ -12,9 +12,7 @@ public class QuestionPanel : MonoBehaviour
 
     float points = 0;
 
-    private List<int> prevID = new();
-
-    // Potrebbe essere necessario un metodo (da collegare ai pulsanti) che carica la prossima domanda
+    private readonly List<int> prevID = new();
 
     public void Setup(Question q)
     {
@@ -34,18 +32,12 @@ public class QuestionPanel : MonoBehaviour
             return;
         }
 
-
         question = q;
         questionText.text = q.question;
 
         for (int i = 0; i < ansButtons.Length; i++)
         {
             ansButtons[i].name = question.answers[i].points.ToString();
-            
-            // Test indice corretto: Trovare come rendere la corretta quella che dà punti
-            // if (i == q.correctIndex) ansButtons[i].name += " [CORRETTA]";
-
-
             TextMeshProUGUI buttonText = ansButtons[i].GetComponentInChildren<TextMeshProUGUI>();
             buttonText.text = q.answers[i].text;
         }
@@ -57,12 +49,6 @@ public class QuestionPanel : MonoBehaviour
         CountFolder();
         CountQuestions(true);
     }
-
-    // Update is called once per frame
-    //void Update()
-    //{
-
-    //}
 
     public void RandomMedicoQuestion()
     {
@@ -88,21 +74,13 @@ public class QuestionPanel : MonoBehaviour
             if (!prevID.Contains(rand.id))
             {
                 prevID.Add(rand.id);
-
-                //Debug.Log("Elenco già uscite: ");
-                //foreach (int id in prevID) Debug.Log(id + "\t");
-
-                i++;
-                // Debug.Log("I = " + i);
                 return rand;
             }
             else
             {
-                //  Debug.Log($"Domanda {rand.id} già uscita");
                 i++;
             }
         }
-
         return null;
     }
 
@@ -110,11 +88,6 @@ public class QuestionPanel : MonoBehaviour
     {
         // Messo medico per test: inserire in seguito variabile a questionPanel forse per memorizzare il lavoro
         // OPPURE (MEGLIO) leggere da CurrentCV
-
-        //foreach (Button button in ansButtons)
-        //{
-        //    button.image.color = Color.white;
-        //}
 
         Setup(RandomQuestion("Medico"));
     }
@@ -131,26 +104,4 @@ public class QuestionPanel : MonoBehaviour
         }
         Invoke(nameof(NextQuestion), 1f);
     }
-
-    // Versione vecchia con solo una risposta corretta
-
-    //public void OnButtonClick(Button button)
-    //{
-    //    Debug.Log("Clicc di " + button.name);
-    //    if (question != null)
-    //        if (button.name.Contains(question.correctIndex.ToString()))
-    //        {
-    //            Debug.Log("Risposta corretta");
-    //            points++;
-    //            button.image.color = Color.green;
-    //        }
-    //        else
-    //        {
-    //            Debug.Log("Risposta errata");
-    //            button.image.color = Color.red;
-
-    //            ansButtons[question.correctIndex].image.color = Color.green;
-    //        }
-    //    Invoke(nameof(NextQuestion), 2.5f);
-    //}
 }

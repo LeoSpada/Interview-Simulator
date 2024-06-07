@@ -71,10 +71,6 @@ public static class InterviewManager
             Console.WriteLine(ex.Message);
         }
 
-        // Guid guid = Guid.NewGuid();
-
-
-
         string path = Path.Combine(folder, $"question_{id}.json");
         return path;
     }
@@ -148,8 +144,7 @@ public static class InterviewManager
         public Question(string question, Answer[] answers)
         {
             this.question = question;
-            this.answers = answers;
-           // this.correctIndex = correctIndex;
+            this.answers = answers;           
 
             q_id = GetLastID();
 
@@ -158,15 +153,6 @@ public static class InterviewManager
             // Debug.Log("Q_ID attuale:" + id);
             SaveLastID();
         }
-
-        //public bool CheckAnswer(int index)
-        //{
-        //    if (index == correctIndex)
-        //    {
-        //        return true;
-        //    }
-        //    else return false;
-        //}
 
         public static void SaveLastID()
         {
