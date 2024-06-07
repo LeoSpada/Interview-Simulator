@@ -12,7 +12,7 @@ public class QuestionCreator : MonoBehaviour
 
     public TMP_Dropdown jobDropdown;
 
-    private bool allClear = true;
+    // private bool allClear = true;
 
     public void Start()
     {
@@ -29,13 +29,13 @@ public class QuestionCreator : MonoBehaviour
     {
         foreach (TMP_InputField inputField in inputFields)
         {
-            if (!AcceptInput(inputField))
+            if (!InputPanel.AcceptInput(inputField))
             {
                 // Debug.Log("Campo inesistente");
 
                 inputField.image.color = Color.red;
 
-                allClear = false;
+                InputPanel.allClear = false;
             }
 
             else inputField.image.color = Color.white;
@@ -43,13 +43,13 @@ public class QuestionCreator : MonoBehaviour
 
         foreach (TMP_InputField point in points)
         {
-            if (!AcceptInput(point))
+            if (!InputPanel.AcceptInput(point))
             {
                 // Debug.Log("Campo inesistente");
 
                 point.image.color = Color.red;
 
-                allClear = false;
+                InputPanel.allClear = false;
 
                 // Rimettere break riduce i controlli ma non fa colorare di rosso tutti i campi (solo il primo non valido)
                 // break;
@@ -58,16 +58,18 @@ public class QuestionCreator : MonoBehaviour
             else point.image.color = Color.white;
         }
 
-        CVEntry.Occupazione occupazione = AcceptDropdown<CVEntry.Occupazione>(jobDropdown);
+        CVEntry.Occupazione occupazione = InputPanel.AcceptDropdown<CVEntry.Occupazione>(jobDropdown);
 
-        if (allClear)
+        //  if (occupazione == default) allClear = false;
+
+        if (InputPanel.allClear)
         {
             Answer[] answers = FilterAnswers(inputFields);
 
             // Assegnazione punti corretti
             for (int i = 0; i < answers.Length; i++)
             {
-                Debug.Log("Assegnazione punti");
+                // Debug.Log("Assegnazione punti");
                 answers[i].points = float.Parse(points[i].text);
             }
 
@@ -76,17 +78,9 @@ public class QuestionCreator : MonoBehaviour
             string job = occupazione.ToString();
 
             SaveQuestion(job);
-
-            // Reimposta allClear a true per il prossimo submit
-            allClear = true;
         }
-    }
-
-    // Controlla che l'input field contenga dati utilizzabili
-    public bool AcceptInput(TMP_InputField inputField)
-    {
-        if (string.IsNullOrWhiteSpace(inputField.text)) return false;
-        else return true;
+        // Reimposta allClear a true per il prossimo submit
+        InputPanel.allClear = true;
     }
 
     // FUNZIONE CHE RIMUOVE IL PRIMO CAMPO?? ( La domanda vera e propria)
@@ -99,36 +93,6 @@ public class QuestionCreator : MonoBehaviour
             answers[i - 1].text = inputs[i].text;
         }
         return answers;
-    }
-
-    // Controlla che il valore del dropdown corrisponda ad un valore contenuto nell'enum
-    public T AcceptDropdown<T>(TMP_Dropdown dropdown)
-    {
-        // Ottiene il valore del testo del dropdown
-        string dropdownText = dropdown.options[dropdown.value].text;
-        // Debug.Log(dropdownText);
-
-        T enumObj;
-
-        // Prova ad ottenere il valore enum corretto corrispondente alla stringa
-        try
-        {
-            enumObj = (T)Enum.Parse(typeof(T), dropdownText);
-        }
-        catch (ArgumentException)
-        {
-            allClear = false;
-
-            dropdown.image.color = Color.red;
-            Debug.Log("Il valore del dropdown non è consentito nell'Enum.\nRicontrollare codice.");
-
-            return default;
-        }
-
-        dropdown.image.color = Color.white;
-
-        // Debug.Log("Enumobj: " + enumObj);
-        return enumObj;
     }
 
     // Conferma il Submit

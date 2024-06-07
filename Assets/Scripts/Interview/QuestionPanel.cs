@@ -16,6 +16,21 @@ public class QuestionPanel : MonoBehaviour
 
     private readonly List<int> prevID = new();
 
+    void Start()
+    {
+       // CountFolder();
+       // CountQuestions(true);
+
+        // Se è stato caricato correttamente un CV
+        if (CVManager.currentCV != null)
+        {
+            currentJob = CVManager.currentCV.job.ToString();
+            LoadNewQuestion();
+        }
+
+        else Debug.Log("Nessun CV attualmente caricato. Caricare domanda tramite pulsanti.");
+    }
+
     public void Setup(Question q)
     {
         // Se q è null, le domande sono finite.
@@ -43,22 +58,7 @@ public class QuestionPanel : MonoBehaviour
             TextMeshProUGUI buttonText = ansButtons[i].GetComponentInChildren<TextMeshProUGUI>();
             buttonText.text = q.answers[i].text;
         }
-    }
-
-
-    void Start()
-    {
-        CountFolder();
-        CountQuestions(true);
-
-        if (CVManager.currentCV != null)
-        {
-            currentJob = CVManager.currentCV.job.ToString();
-            LoadNewQuestion();
-        }
-            
-        else Debug.Log("Nessun CV attualmente caricato. Caricare domanda tramite pulsanti.");
-    }
+    }   
 
     public void  LoadNewQuestion()
     {

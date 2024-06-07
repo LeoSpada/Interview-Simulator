@@ -12,7 +12,7 @@ public class CVEntryPanel : MonoBehaviour
     
     public TMP_Dropdown[] dropdowns;
 
-    private bool allClear = true;
+   // private bool allClear = true;
 
     private CVEntry CV;
 
@@ -30,13 +30,13 @@ public class CVEntryPanel : MonoBehaviour
     {
         foreach (TMP_InputField inputField in inputFields)
         {
-            if (!AcceptInput(inputField))
+            if (!InputPanel.AcceptInput(inputField))
             {
                 // Debug.Log("Campo inesistente");
 
                 inputField.image.color = Color.red;
 
-                allClear = false;
+                InputPanel.allClear = false;
 
                 // Rimettere break riduce i controlli ma non fa colorare di rosso tutti i campi (solo il primo non valido)
                 // break;
@@ -48,11 +48,15 @@ public class CVEntryPanel : MonoBehaviour
         // Possibile usare foreach??
         // Cambia il tipo di variabile, trovare soluzione
 
-        CVEntry.Genere genere = AcceptDropdown<CVEntry.Genere>(dropdowns[0]);
+        CVEntry.Genere genere = InputPanel.AcceptDropdown<CVEntry.Genere>(dropdowns[0]);
 
-        CVEntry.Occupazione occupazione = AcceptDropdown<CVEntry.Occupazione>(dropdowns[1]);
+        // if (genere == default) allClear = false;
 
-        if (allClear)
+        CVEntry.Occupazione occupazione = InputPanel.AcceptDropdown<CVEntry.Occupazione>(dropdowns[1]);
+
+       // if (occupazione == default) allClear = false;
+
+        if (InputPanel.allClear)
         {
             CV = new(inputFields[0].text, inputFields[1].text, occupazione, genere);
 
@@ -68,46 +72,7 @@ public class CVEntryPanel : MonoBehaviour
             }
         }
         // Reimposta allClear a true per il prossimo submit
-        allClear = true;
-    }
-
-    // Controlla che l'input field contenga dati utilizzabili
-    public bool AcceptInput(TMP_InputField inputField)
-    {
-        if (string.IsNullOrWhiteSpace(inputField.text)) return false;
-        else return true;
-
-        // nameCompletionSource.SetResult(inputField.text);
-    }
-
-    // Controlla che il valore del dropdown corrisponda ad un valore contenuto nell'enum
-    public T AcceptDropdown<T>(TMP_Dropdown dropdown)
-    {
-        // Ottiene il valore del testo del dropdown
-        string dropdownText = dropdown.options[dropdown.value].text;
-        // Debug.Log(dropdownText);
-
-        T enumObj;
-
-        // Prova ad ottenere il valore enum corretto corrispondente alla stringa
-        try
-        {
-            enumObj = (T)Enum.Parse(typeof(T), dropdownText);
-        }
-        catch (ArgumentException)
-        {
-            allClear = false;
-
-            dropdown.image.color = Color.red;
-            Debug.Log("Il valore del dropdown non è consentito nell'Enum.\nRicontrollare codice.");
-
-            return default;
-        }
-
-        dropdown.image.color = Color.white;
-
-        // Debug.Log("Enumobj: " + enumObj);
-        return enumObj;
+        InputPanel.allClear = true;
     }
 
     // Conferma il Submit
