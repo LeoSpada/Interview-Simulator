@@ -12,6 +12,8 @@ public class QuestionPanel : MonoBehaviour
 
     float points = 0;
 
+    private string currentJob;
+
     private readonly List<int> prevID = new();
 
     public void Setup(Question q)
@@ -48,25 +50,33 @@ public class QuestionPanel : MonoBehaviour
     {
         CountFolder();
         CountQuestions(true);
+
+        if (CVManager.currentCV != null)
+        {
+            currentJob = CVManager.currentCV.job.ToString();
+            LoadNewQuestion();
+        }
+            
+        else Debug.Log("Nessun CV attualmente caricato. Caricare domanda tramite pulsanti.");
     }
 
-    public void RandomMedicoQuestion()
+    public void  LoadNewQuestion()
     {
-        Setup(RandomQuestion("Medico"));
+        Setup(GetRandomQuestion(currentJob));
     }
 
-    public void RandomSviluppatoreQuestion()
+    public void LoadNewQuestion(string job)
     {
-        Setup(RandomQuestion("Sviluppatore"));
+        Setup(GetRandomQuestion(job));
     }
+    
+    
 
-    public Question RandomQuestion(string job)
+    public Question GetRandomQuestion(string job)
     {
         int i = 0;
 
-
-
-        Debug.Log($"Domande in {job}: " + GetJobFolderSize(job));
+       // Debug.Log($"Domande in {job}: " + GetJobFolderSize(job));
 
         while (i <= GetJobFolderSize(job))
         {
@@ -84,24 +94,24 @@ public class QuestionPanel : MonoBehaviour
         return null;
     }
 
-    public void NextQuestion()
-    {
-        // Messo medico per test: inserire in seguito variabile a questionPanel forse per memorizzare il lavoro
-        // OPPURE (MEGLIO) leggere da CurrentCV
+    //public void NextQuestion()
+    //{
+    //    // Messo medico per test: inserire in seguito variabile a questionPanel forse per memorizzare il lavoro
+    //    // OPPURE (MEGLIO) leggere da CurrentCV
 
-        Setup(RandomQuestion("Medico"));
-    }
+    //    Setup(GetRandomQuestion("Medico"));
+    //}
 
     public void OnButtonClick(Button button)
     {
-        Debug.Log("Clicc di " + button.name);
+       // Debug.Log("Click di " + button.name);
         if (question != null)
         {
-            Debug.Log("Punteggio pre-risposta: " + points);
+           // Debug.Log("Punteggio pre-risposta: " + points);
             points += float.Parse(button.name);
-            Debug.Log("Aggiungo punti " + float.Parse(button.name));
-            Debug.Log("Punteggio post-risposta: " + points);
+         //   Debug.Log("Aggiungo punti " + float.Parse(button.name));
+         //   Debug.Log("Punteggio post-risposta: " + points);
         }
-        Invoke(nameof(NextQuestion), 1f);
+        Invoke(nameof(LoadNewQuestion), 1f);
     }
 }
