@@ -132,6 +132,8 @@ public class QuestionPanel : MonoBehaviour
          //   Debug.Log("Aggiungo punti " + float.Parse(button.name));
          //   Debug.Log("Punteggio post-risposta: " + points);
         }
-        Invoke(nameof(LoadNewQuestion), 1f);
+
+      //  Invoke(nameof(LoadNewQuestion), 1f);
+      Invoke(nameof(LoadFromInput), 1f);
     }
 }
