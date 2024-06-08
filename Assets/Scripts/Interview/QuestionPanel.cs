@@ -10,6 +10,8 @@ public class QuestionPanel : MonoBehaviour
     public Button[] ansButtons;
     private Question question;
 
+    public TMP_InputField folderInputField;
+
     float points = 0;
 
     private string currentJob;
@@ -68,6 +70,24 @@ public class QuestionPanel : MonoBehaviour
     public void LoadNewQuestion(string job)
     {
         Setup(GetRandomQuestion(job));
+    }
+
+    public void LoadFromInput()
+    {
+        if(folderInputField != null)
+        InputPanel.AcceptInputField(folderInputField);
+        else
+        {
+            Debug.Log("Nessun input field caricato.");
+            return;
+        }
+
+        if (InputPanel.fieldsClear)
+        {
+            Setup(GetRandomQuestion(folderInputField.text));
+        }
+
+        InputPanel.ClearAll();
     }
     
     
