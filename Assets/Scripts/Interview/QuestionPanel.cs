@@ -172,6 +172,7 @@ public class QuestionPanel : MonoBehaviour
 
     public void ResetInterview()
     {
+        CVManager.UnloadCurrentCV();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

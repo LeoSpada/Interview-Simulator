@@ -103,6 +103,11 @@ public static class CVManager
         else return true;
     }
 
+    public static void UnloadCurrentCV()
+    {
+        currentCV = null;
+    }
+
 
     // Usata per debug. Stampa a schermo il cv formattato.
     public static void DebugCV(CVEntry cv)
