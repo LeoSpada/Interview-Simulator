@@ -18,8 +18,6 @@ public class QuestionCreator : MonoBehaviour
 
     private string folder = "";
 
-    // private bool allClear = true;
-
     public void Start()
     {
         float value = 0.25f;
@@ -47,98 +45,63 @@ public class QuestionCreator : MonoBehaviour
     // Crea un CV a partire dai campi inseriti. Controlli su file esistenti e campi vuoti prima del salvataggio.
     public void Submit()
     {
-        foreach (TMP_InputField inputField in inputFields)
-        {
-            if (!InputPanel.AcceptInput(inputField))
-            {
-                // Debug.Log("Campo inesistente");
+        InputPanel.AcceptInputFields(inputFields);
+        InputPanel.AcceptInputFields(points);
 
-                inputField.image.color = Color.red;
+        // Se il dropdown è impostato su custom, controlla che il nome cartella inserito da utente sia valido
+        if (customActive) InputPanel.AcceptInputField(customFolder);
 
-                InputPanel.fieldsClear = false;
-            }
-
-            else inputField.image.color = Color.white;
-        }
-
-        foreach (TMP_InputField point in points)
-        {
-            if (!InputPanel.AcceptInput(point))
-            {
-                // Debug.Log("Campo inesistente");
-
-                point.image.color = Color.red;
-
-                InputPanel.fieldsClear = false;
-
-                // Rimettere break riduce i controlli ma non fa colorare di rosso tutti i campi (solo il primo non valido)
-                // break;
-            }
-
-            else point.image.color = Color.white;
-        }
-
-
-
-        if (customActive)
-        {
-            folder = customFolder.text;
-            Debug.Log("Custom concesso: salvataggio andrà in " + folder);
-        }
         else
         {
-
-
             CVEntry.Occupazione occupazione = InputPanel.AcceptDropdown<CVEntry.Occupazione>(folderDropdown, false, true);
 
+            // Se il dropdown non corrisponde ad una occupazione, usa il valore del dropdown come nome cartella
             if (!InputPanel.dropdownsClear)
             {
-
                 folder = folderDropdown.captionText.text;
                 Debug.Log("Non è custom, ma " + folder);
-                // Debug.Log(folder);
-                //if (folder.Equals("Custom"))
-                //{
-                //    customFolder.gameObject.SetActive(true);
-                //}
-                // InputPanel.allClear = true;
             }
             else folder = occupazione.ToString();
         }
 
-        //  if (occupazione == default) allClear = false;
-
         if (InputPanel.fieldsClear)
         {
-            Answer[] answers = FilterAnswers(inputFields);
+            // Separa la domanda dalle risposte
+            Answer[] answers = CreateAnswers(inputFields);
 
-            // Assegnazione punti corretti
-            for (int i = 0; i < answers.Length; i++)
-            {
-                // Debug.Log("Assegnazione punti");
-                answers[i].points = float.Parse(points[i].text);
-            }
+
 
             question = new(inputFields[0].text, answers);
 
-            // string folder = occupazione.ToString();
+            // Se il dropdown è impostato su custom, usa il valore dell'input field come nome cartella
+            if (customActive)
+            {
+                folder = customFolder.text;
+                Debug.Log("Custom concesso: salvataggio andrà in " + folder);
+            }
 
             SaveQuestion(folder);
         }
+
         // Reimposta allClear a true per il prossimo submit
-        InputPanel.fieldsClear = true;
-        InputPanel.dropdownsClear = true;
+        InputPanel.ClearAll();
     }
 
-    // FUNZIONE CHE RIMUOVE IL PRIMO CAMPO?? ( La domanda vera e propria)
-    public Answer[] FilterAnswers(TMP_InputField[] inputs)
+    // Formatta il contenuto degli input field per diventare delle Answer compatibili con Question, con testo e punti
+
+    // ATTENZIONE: Attualmente prende tutti gli input field, anche quello della domanda (valore 0). Modificare se si decide di separare il singolo inputField della question dalle altre
+    public Answer[] CreateAnswers(TMP_InputField[] inputs)
     {
         Answer[] answers = new Answer[inputs.Length - 1];
 
         for (int i = 1; i < inputs.Length; i++)
         {
             answers[i - 1].text = inputs[i].text;
+
+            // Assegnazione punti corretti
+            answers[i - 1].points = float.Parse(points[i - 1].text);
         }
+
         return answers;
     }
 

@@ -7,12 +7,7 @@ public class CVEntryPanel : MonoBehaviour
     // Contiene i vari inputField
     public TMP_InputField[] inputFields;
 
-    
-    // public TMP_Dropdown genderDropdown;
-    
     public TMP_Dropdown[] dropdowns;
-
-   // private bool allClear = true;
 
     private CVEntry CV;
 
@@ -21,40 +16,22 @@ public class CVEntryPanel : MonoBehaviour
     private void Start()
     {
         // Se in modalità modifica, carica il CV scelto
-        if (CVManager.editCurrent)       
-            LoadCurrent();      
+        if (CVManager.editCurrent)
+            LoadCurrent();
     }
 
     // Crea un CV a partire dai campi inseriti. Controlli su file esistenti e campi vuoti prima del salvataggio.
     public void Submit()
     {
-        foreach (TMP_InputField inputField in inputFields)
-        {
-            if (!InputPanel.AcceptInput(inputField))
-            {
-                // Debug.Log("Campo inesistente");
+        InputPanel.AcceptInputFields(inputFields);
 
-                inputField.image.color = Color.red;
-
-                InputPanel.fieldsClear = false;
-
-                // Rimettere break riduce i controlli ma non fa colorare di rosso tutti i campi (solo il primo non valido)
-                // break;
-            }
-
-            else inputField.image.color = Color.white;
-        }
-
-        // Possibile usare foreach??
-        // Cambia il tipo di variabile, trovare soluzione
+        // Trovare modo di migliorare leggibilità per il programmatore
+        // Possibile mettere un identificativo migliore senza rimuovere array?
+        // Genderdropdown anziché dropdowns[0]
 
         CVEntry.Genere genere = InputPanel.AcceptDropdown<CVEntry.Genere>(dropdowns[0]);
-
-        // if (genere == default) allClear = false;
-
         CVEntry.Occupazione occupazione = InputPanel.AcceptDropdown<CVEntry.Occupazione>(dropdowns[1]);
 
-       // if (occupazione == default) allClear = false;
 
         if (InputPanel.fieldsClear && InputPanel.dropdownsClear)
         {
@@ -72,8 +49,7 @@ public class CVEntryPanel : MonoBehaviour
             }
         }
         // Reimposta allClear a true per il prossimo submit
-        InputPanel.fieldsClear = true;
-        InputPanel.dropdownsClear = true;
+        InputPanel.ClearAll();
     }
 
     // Conferma il Submit
@@ -105,12 +81,12 @@ public class CVEntryPanel : MonoBehaviour
 
         inputFields[0].text = currentCV.name;
         inputFields[1].text = currentCV.surname;
-       // inputFields[2].text = currentCV.job;
-        
+        // inputFields[2].text = currentCV.job;
+
         // Debug.Log(((int)currentCV.gender));
         // Viene sommato 1 perché il valore 0 del dropdown è la frase "Inserire Genere" (non compatibile con enum
         // Forse rimuovere inserire genere e +1 successivamente
-        
+
         dropdowns[0].value = (int)currentCV.gender + 1;
         dropdowns[1].value = (int)currentCV.job + 1;
     }

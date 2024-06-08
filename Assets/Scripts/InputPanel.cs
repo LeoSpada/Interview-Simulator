@@ -10,11 +10,33 @@ public static class InputPanel
     public static bool dropdownsClear = true;
 
     // Controlla che l'input field contenga dati utilizzabili
-    public static bool AcceptInput(TMP_InputField inputField)
+    public static bool CheckInputField(TMP_InputField inputField)
     {
         if (string.IsNullOrWhiteSpace(inputField.text)) return false;
         else return true;
     }
+
+    public static void AcceptInputField(TMP_InputField inputField, bool canColor = true, bool canBreak = true)
+    {
+        if (!InputPanel.CheckInputField(inputField))
+        {
+            // Debug.Log("Campo inesistente");
+
+            if (canColor) inputField.image.color = Color.red;
+
+            if (canBreak) InputPanel.fieldsClear = false;
+        }
+
+        else if (canColor) inputField.image.color = Color.white;
+    }
+
+    public static void AcceptInputFields(TMP_InputField[] inputFields, bool canColor = true, bool canBreak = true)
+    {
+        foreach (TMP_InputField inputField in inputFields)
+        {
+           AcceptInputField(inputField, canColor, canBreak);
+        }
+    }   
 
     // Controlla che il valore del dropdown corrisponda ad un valore contenuto nell'enum
     public static T AcceptDropdown<T>(TMP_Dropdown dropdown, bool canColor = true, bool canBreak = true)
@@ -35,21 +57,27 @@ public static class InputPanel
             if (canColor)
             {
                 dropdown.image.color = Color.red;
-                     
+
             }
 
             if (canBreak)
             {
                 dropdownsClear = false;
                 Debug.Log("Il valore del dropdown non è consentito nell'Enum.\nRicontrollare codice.");
-            }            
+            }
             return default;
         }
 
-        if(canColor)
-        dropdown.image.color = Color.white;
+        if (canColor)
+            dropdown.image.color = Color.white;
 
         // Debug.Log("Enumobj: " + enumObj);
         return enumObj;
+    }
+
+    public static void ClearAll()
+    {
+        fieldsClear = true;
+        dropdownsClear = true;
     }
 }
