@@ -3979,13 +3979,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df58cc4b170d34e45a6ca8dc2d1a286e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputFields:
-  - {fileID: 92081841}
+  questionField: {fileID: 92081841}
+  answerFields:
   - {fileID: 1763090017}
   - {fileID: 1188874295}
   - {fileID: 586162620}
   - {fileID: 490217034}
-  points:
+  pointFields:
   - {fileID: 1612380429}
   - {fileID: 1429940892}
   - {fileID: 720705149}
