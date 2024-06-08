@@ -1871,7 +1871,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2015770972}
         m_TargetAssemblyTypeName: QuestionPanel, Assembly-CSharp
-        m_MethodName: LoadFromInput
+        m_MethodName: SubmitFolderInput
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

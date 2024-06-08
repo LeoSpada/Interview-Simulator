@@ -24,27 +24,31 @@ public class QuestionPanel : MonoBehaviour
 
     public int questionNumber = 0;
 
-    private string currentJob;
+    public string currentJob;
+
+    private bool cvLoaded = false;
 
     private readonly List<int> prevID = new();
 
     void Start()
     {
-        if(interviewInfo)
-        interviewInfo.gameObject.SetActive(false);
+        if (interviewInfo)
+            interviewInfo.gameObject.SetActive(false);
 
-        if(cvInfo)
+        if (cvInfo)
             cvInfo.gameObject.SetActive(false);
 
         // Se è stato caricato correttamente un CV
         if (CVManager.currentCV != null)
         {
+            cvLoaded = true;
             currentJob = CVManager.currentCV.job.ToString();
+
             if (cvInfo)
             {
                 cvInfo.gameObject.SetActive(true);
                 cvInfo.reloadInfo();
-            }               
+            }
             LoadNewQuestion();
         }
 
@@ -83,14 +87,17 @@ public class QuestionPanel : MonoBehaviour
     public void LoadNewQuestion()
     {
         Setup(GetRandomQuestion(currentJob));
+        SetupInterviewInfo(currentJob);
     }
 
     public void LoadNewQuestion(string job)
     {
         Setup(GetRandomQuestion(job));
+        SetupInterviewInfo(job);
+
     }
 
-    public void LoadFromInput()
+    public void SubmitFolderInput()
     {
         if (folderInputField != null)
             InputPanel.AcceptInputField(folderInputField);
@@ -102,16 +109,22 @@ public class QuestionPanel : MonoBehaviour
 
         if (InputPanel.fieldsClear)
         {
-            Setup(GetRandomQuestion(folderInputField.text));
-            questionNumber = GetJobFolderSize(folderInputField.text);
-            if (interviewInfo)
-            {
-                interviewInfo.gameObject.SetActive(true);
-                interviewInfo.ReloadInfo();
-            }
+            currentJob = folderInputField.text;
+            LoadNewQuestion();
         }
 
         InputPanel.ClearAll();
+    }
+
+
+    public void SetupInterviewInfo(string job)
+    {
+        questionNumber = GetJobFolderSize(job);
+        if (interviewInfo)
+        {
+            interviewInfo.gameObject.SetActive(true);
+            interviewInfo.ReloadInfo();
+        }
     }
 
     public Question GetRandomQuestion(string job)
@@ -144,17 +157,13 @@ public class QuestionPanel : MonoBehaviour
             answered++;
 
             average = points / answered;
-            Invoke(nameof(LoadFromInput), 1f);
+
+            Invoke(nameof(LoadNewQuestion), 1f);
         }
         else
         {
             Invoke(nameof(ResetInterview), 1f);
         }
-
-        //  Invoke(nameof(LoadNewQuestion), 1f);
-
-
-       
     }
 
     public void ResetInterview()
