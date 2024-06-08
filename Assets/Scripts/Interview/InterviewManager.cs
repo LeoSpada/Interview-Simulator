@@ -30,7 +30,7 @@ public static class InterviewManager
         return dirs;
     }
 
-    public static int CountFolder()
+    public static int CountFolders()
     {
         var dirs = GetFoldersInfo();
 

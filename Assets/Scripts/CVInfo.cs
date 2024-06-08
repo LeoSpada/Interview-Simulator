@@ -18,5 +18,12 @@ public class CVInfo : MonoBehaviour
             jobField.text = CVManager.currentCV.job.ToString();
             genderField.text = CVManager.currentCV.gender.ToString();
         }
+        else
+        {
+            nameField.text = "NO CV";
+            surnameField.text = "NO CV";
+            jobField.text = "NO CV";
+            genderField.text = "NO CV";
+        }
     }
 }
