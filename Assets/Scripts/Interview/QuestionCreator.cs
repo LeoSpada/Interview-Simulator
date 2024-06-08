@@ -35,7 +35,7 @@ public class QuestionCreator : MonoBehaviour
 
                 inputField.image.color = Color.red;
 
-                InputPanel.allClear = false;
+                InputPanel.fieldsClear = false;
             }
 
             else inputField.image.color = Color.white;
@@ -49,7 +49,7 @@ public class QuestionCreator : MonoBehaviour
 
                 point.image.color = Color.red;
 
-                InputPanel.allClear = false;
+                InputPanel.fieldsClear = false;
 
                 // Rimettere break riduce i controlli ma non fa colorare di rosso tutti i campi (solo il primo non valido)
                 // break;
@@ -58,11 +58,21 @@ public class QuestionCreator : MonoBehaviour
             else point.image.color = Color.white;
         }
 
-        CVEntry.Occupazione occupazione = InputPanel.AcceptDropdown<CVEntry.Occupazione>(jobDropdown);
+        CVEntry.Occupazione occupazione = InputPanel.AcceptDropdown<CVEntry.Occupazione>(jobDropdown, false, true);
+
+        string job = "";
+
+        if(!InputPanel.dropdownsClear)
+        {
+            job = jobDropdown.captionText.text;
+            Debug.Log(job);
+           // InputPanel.allClear = true;
+        }
+        else job = occupazione.ToString();
 
         //  if (occupazione == default) allClear = false;
 
-        if (InputPanel.allClear)
+        if (InputPanel.fieldsClear)
         {
             Answer[] answers = FilterAnswers(inputFields);
 
@@ -75,12 +85,13 @@ public class QuestionCreator : MonoBehaviour
 
             question = new(inputFields[0].text, answers);
 
-            string job = occupazione.ToString();
+            // string job = occupazione.ToString();
 
             SaveQuestion(job);
         }
         // Reimposta allClear a true per il prossimo submit
-        InputPanel.allClear = true;
+        InputPanel.fieldsClear = true;
+        InputPanel.dropdownsClear = true;
     }
 
     // FUNZIONE CHE RIMUOVE IL PRIMO CAMPO?? ( La domanda vera e propria)

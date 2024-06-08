@@ -5,7 +5,9 @@ using UnityEngine;
 public static class InputPanel
 {
 
-    public static bool allClear = true;
+    // public static bool allClear = true;
+    public static bool fieldsClear = true;
+    public static bool dropdownsClear = true;
 
     // Controlla che l'input field contenga dati utilizzabili
     public static bool AcceptInput(TMP_InputField inputField)
@@ -15,7 +17,7 @@ public static class InputPanel
     }
 
     // Controlla che il valore del dropdown corrisponda ad un valore contenuto nell'enum
-    public static T AcceptDropdown<T>(TMP_Dropdown dropdown)
+    public static T AcceptDropdown<T>(TMP_Dropdown dropdown, bool canColor = true, bool canBreak = true)
     {
         // Ottiene il valore del testo del dropdown
         string dropdownText = dropdown.options[dropdown.value].text;
@@ -30,12 +32,21 @@ public static class InputPanel
         }
         catch (ArgumentException)
         {
-            dropdown.image.color = Color.red;
-            Debug.Log("Il valore del dropdown non è consentito nell'Enum.\nRicontrollare codice.");
-            allClear = false;
+            if (canColor)
+            {
+                dropdown.image.color = Color.red;
+                     
+            }
+
+            if (canBreak)
+            {
+                dropdownsClear = false;
+                Debug.Log("Il valore del dropdown non è consentito nell'Enum.\nRicontrollare codice.");
+            }            
             return default;
         }
 
+        if(canColor)
         dropdown.image.color = Color.white;
 
         // Debug.Log("Enumobj: " + enumObj);

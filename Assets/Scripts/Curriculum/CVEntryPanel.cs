@@ -36,7 +36,7 @@ public class CVEntryPanel : MonoBehaviour
 
                 inputField.image.color = Color.red;
 
-                InputPanel.allClear = false;
+                InputPanel.fieldsClear = false;
 
                 // Rimettere break riduce i controlli ma non fa colorare di rosso tutti i campi (solo il primo non valido)
                 // break;
@@ -56,7 +56,7 @@ public class CVEntryPanel : MonoBehaviour
 
        // if (occupazione == default) allClear = false;
 
-        if (InputPanel.allClear)
+        if (InputPanel.fieldsClear && InputPanel.dropdownsClear)
         {
             CV = new(inputFields[0].text, inputFields[1].text, occupazione, genere);
 
@@ -72,7 +72,8 @@ public class CVEntryPanel : MonoBehaviour
             }
         }
         // Reimposta allClear a true per il prossimo submit
-        InputPanel.allClear = true;
+        InputPanel.fieldsClear = true;
+        InputPanel.dropdownsClear = true;
     }
 
     // Conferma il Submit
