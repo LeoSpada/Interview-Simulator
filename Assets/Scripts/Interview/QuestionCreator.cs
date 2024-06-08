@@ -7,8 +7,9 @@ public class QuestionCreator : MonoBehaviour
 {
     private InterviewManager.Question question;
 
-    public TMP_InputField[] inputFields;
-    public TMP_InputField[] points;
+    public TMP_InputField questionField;
+    public TMP_InputField[] answerFields;
+    public TMP_InputField[] pointFields;
 
     public TMP_InputField customFolder;
 
@@ -21,7 +22,7 @@ public class QuestionCreator : MonoBehaviour
     public void Start()
     {
         float value = 0.25f;
-        foreach (var point in points)
+        foreach (var point in pointFields)
         {
             point.text = value.ToString();
             value += 0.25f;
@@ -45,8 +46,9 @@ public class QuestionCreator : MonoBehaviour
     // Crea un CV a partire dai campi inseriti. Controlli su file esistenti e campi vuoti prima del salvataggio.
     public void Submit()
     {
-        InputPanel.AcceptInputFields(inputFields);
-        InputPanel.AcceptInputFields(points);
+        InputPanel.AcceptInputField(questionField);
+        InputPanel.AcceptInputFields(answerFields);
+        InputPanel.AcceptInputFields(pointFields);
 
         // Se il dropdown è impostato su custom, controlla che il nome cartella inserito da utente sia valido
         if (customActive) InputPanel.AcceptInputField(customFolder);
@@ -66,12 +68,10 @@ public class QuestionCreator : MonoBehaviour
 
         if (InputPanel.fieldsClear)
         {
-            // Separa la domanda dalle risposte
-            Answer[] answers = CreateAnswers(inputFields);
+            // Formatta correttamente le risposte e assegna i punti
+            Answer[] answers = CreateAnswers(answerFields);
 
-
-
-            question = new(inputFields[0].text, answers);
+            question = new(questionField.text, answers);
 
             // Se il dropdown è impostato su custom, usa il valore dell'input field come nome cartella
             if (customActive)
@@ -88,18 +88,16 @@ public class QuestionCreator : MonoBehaviour
     }
 
     // Formatta il contenuto degli input field per diventare delle Answer compatibili con Question, con testo e punti
-
-    // ATTENZIONE: Attualmente prende tutti gli input field, anche quello della domanda (valore 0). Modificare se si decide di separare il singolo inputField della question dalle altre
     public Answer[] CreateAnswers(TMP_InputField[] inputs)
     {
-        Answer[] answers = new Answer[inputs.Length - 1];
+        Answer[] answers = new Answer[inputs.Length];
 
-        for (int i = 1; i < inputs.Length; i++)
+        for (int i = 0; i < inputs.Length; i++)
         {
-            answers[i - 1].text = inputs[i].text;
+            answers[i].text = inputs[i].text;
 
             // Assegnazione punti corretti
-            answers[i - 1].points = float.Parse(points[i - 1].text);
+            answers[i].points = float.Parse(pointFields[i].text);
         }
 
         return answers;
