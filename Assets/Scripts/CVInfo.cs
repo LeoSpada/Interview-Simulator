@@ -9,7 +9,7 @@ public class CVInfo : MonoBehaviour
     public TextMeshProUGUI genderField;
 
     // Update is called once per frame
-    void Update()
+    public void reloadInfo()
     {
         if (CVManager.currentCV != null)
         {

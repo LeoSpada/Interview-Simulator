@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static InterviewManager;
 
@@ -10,9 +11,18 @@ public class QuestionPanel : MonoBehaviour
     public Button[] ansButtons;
     private Question question;
 
+    public InterviewInfo interviewInfo;
+    public CVInfo cvInfo;
+
     public TMP_InputField folderInputField;
 
-    float points = 0;
+    public float points = 0;
+
+    public int answered = 0;
+
+    public float average = 0f;
+
+    public int questionNumber = 0;
 
     private string currentJob;
 
@@ -20,13 +30,21 @@ public class QuestionPanel : MonoBehaviour
 
     void Start()
     {
-       // CountFolder();
-       // CountQuestions(true);
+        if(interviewInfo)
+        interviewInfo.gameObject.SetActive(false);
+
+        if(cvInfo)
+            cvInfo.gameObject.SetActive(false);
 
         // Se è stato caricato correttamente un CV
         if (CVManager.currentCV != null)
         {
             currentJob = CVManager.currentCV.job.ToString();
+            if (cvInfo)
+            {
+                cvInfo.gameObject.SetActive(true);
+                cvInfo.reloadInfo();
+            }               
             LoadNewQuestion();
         }
 
@@ -46,7 +64,7 @@ public class QuestionPanel : MonoBehaviour
             {
                 button.name = "EmptyAns";
                 TextMeshProUGUI buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
-                buttonText.text = "---";
+                buttonText.text = "-Reset-";
             }
             return;
         }
@@ -60,9 +78,9 @@ public class QuestionPanel : MonoBehaviour
             TextMeshProUGUI buttonText = ansButtons[i].GetComponentInChildren<TextMeshProUGUI>();
             buttonText.text = q.answers[i].text;
         }
-    }   
+    }
 
-    public void  LoadNewQuestion()
+    public void LoadNewQuestion()
     {
         Setup(GetRandomQuestion(currentJob));
     }
@@ -74,8 +92,8 @@ public class QuestionPanel : MonoBehaviour
 
     public void LoadFromInput()
     {
-        if(folderInputField != null)
-        InputPanel.AcceptInputField(folderInputField);
+        if (folderInputField != null)
+            InputPanel.AcceptInputField(folderInputField);
         else
         {
             Debug.Log("Nessun input field caricato.");
@@ -85,18 +103,22 @@ public class QuestionPanel : MonoBehaviour
         if (InputPanel.fieldsClear)
         {
             Setup(GetRandomQuestion(folderInputField.text));
+            questionNumber = GetJobFolderSize(folderInputField.text);
+            if (interviewInfo)
+            {
+                interviewInfo.gameObject.SetActive(true);
+                interviewInfo.ReloadInfo();
+            }
         }
 
         InputPanel.ClearAll();
     }
-    
-    
 
     public Question GetRandomQuestion(string job)
     {
         int i = 0;
 
-       // Debug.Log($"Domande in {job}: " + GetJobFolderSize(job));
+        // Debug.Log($"Domande in {job}: " + GetJobFolderSize(job));
 
         while (i <= GetJobFolderSize(job))
         {
@@ -116,16 +138,27 @@ public class QuestionPanel : MonoBehaviour
 
     public void OnButtonClick(Button button)
     {
-       // Debug.Log("Click di " + button.name);
         if (question != null)
         {
-           // Debug.Log("Punteggio pre-risposta: " + points);
             points += float.Parse(button.name);
-         //   Debug.Log("Aggiungo punti " + float.Parse(button.name));
-         //   Debug.Log("Punteggio post-risposta: " + points);
+            answered++;
+
+            average = points / answered;
+            Invoke(nameof(LoadFromInput), 1f);
+        }
+        else
+        {
+            Invoke(nameof(ResetInterview), 1f);
         }
 
-      //  Invoke(nameof(LoadNewQuestion), 1f);
-      Invoke(nameof(LoadFromInput), 1f);
+        //  Invoke(nameof(LoadNewQuestion), 1f);
+
+
+       
+    }
+
+    public void ResetInterview()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
