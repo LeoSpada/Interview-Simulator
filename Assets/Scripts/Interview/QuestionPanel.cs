@@ -7,28 +7,31 @@ using static InterviewManager;
 
 public class QuestionPanel : MonoBehaviour
 {
+    [Header("Domanda")]
     public TextMeshProUGUI questionText;
     public Button[] ansButtons;
     private Question question;
+    private readonly List<int> prevID = new();
 
-    public InterviewInfo interviewInfo;
-    public CVInfo cvInfo;
-
-    public TMP_InputField folderInputField;
-
-    public float points = 0;
-
-    public int answered = 0;
-
-    public float average = 0f;
-
-    public int questionNumber = 0;
-
+    [Header("CV")]
     public string currentJob;
-
     private bool cvLoaded = false;
 
-    private readonly List<int> prevID = new();
+    [Header("Punteggi")]
+    public float points = 0;
+    public int answered = 0;
+    public float average = 0f;
+    public int questionNumber = 0;
+
+    // Sezione usata in Quiz Test
+    // CVInfo e InterviewInfo potrebbero essere usati anche in fase finale
+    // folderInput e metodi associati dovrebbero essere usati SOLO nella fase di testing
+
+    [Header("Debug e altro")]
+    public InterviewInfo interviewInfo;
+    public CVInfo cvInfo;
+    public TMP_InputField folderInputField;
+    public GameObject folderInputGroup;
 
     void Start()
     {
@@ -42,6 +45,7 @@ public class QuestionPanel : MonoBehaviour
         if (CVManager.currentCV != null)
         {
             cvLoaded = true;
+            folderInputGroup.SetActive(false);
             currentJob = CVManager.currentCV.job.ToString();
 
             if (cvInfo)
@@ -99,6 +103,8 @@ public class QuestionPanel : MonoBehaviour
 
     public void SubmitFolderInput()
     {
+        if (cvLoaded) return;
+
         if (folderInputField != null)
             InputPanel.AcceptInputField(folderInputField);
         else
@@ -110,6 +116,7 @@ public class QuestionPanel : MonoBehaviour
         if (InputPanel.fieldsClear)
         {
             currentJob = folderInputField.text;
+            folderInputGroup.SetActive(false);
             LoadNewQuestion();
         }
 
@@ -130,9 +137,6 @@ public class QuestionPanel : MonoBehaviour
     public Question GetRandomQuestion(string job)
     {
         int i = 0;
-
-        // Debug.Log($"Domande in {job}: " + GetJobFolderSize(job));
-
         while (i <= GetJobFolderSize(job))
         {
             Question rand = GetRandomQuestionInFolder(job);
