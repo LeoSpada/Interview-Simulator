@@ -10,9 +10,28 @@ public static class CVManager
     public static bool editCurrent = false;
 
     private const string saveFolder = "Saves";
+
+    public static string GetCVFolder()
+    {
+        return Path.Combine(Application.persistentDataPath, saveFolder);
+    }
+
+    public static int GetCVFolderSize()
+    {
+        return GetAllCV().Count;
+    }
+
+    public static FileInfo[] GetFilesInfo()
+    {
+        DirectoryInfo mainDir = new(GetCVFolder());
+        var files = mainDir.GetFiles("*.json");
+        return files;
+    }
+
     static string GetCVFilePath(string name, string surname)
     {
-        string path = Path.Combine(Application.persistentDataPath, saveFolder, $"{name}_{surname}_CV.json");
+        string folder = GetCVFolder();
+        string path = Path.Combine(folder, $"{name}_{surname}_CV.json");
         return path;
     }
 
@@ -21,8 +40,8 @@ public static class CVManager
     {
         List<CVEntry> list = new();
 
-        DirectoryInfo dir = new(Path.Combine(Application.persistentDataPath, saveFolder));
-        FileInfo[] info = dir.GetFiles("*.json");
+       // DirectoryInfo dir = new(Path.Combine(Application.persistentDataPath, saveFolder));
+        FileInfo[] info = GetFilesInfo();
 
         foreach (FileInfo f in info)
         {
@@ -48,16 +67,14 @@ public static class CVManager
         return loadedCV;
     }
 
-    public static void AddCVEntry(CVEntry cvEntry)
+    public static CVEntry GetRandomCVEntry()
     {
-        //if (CheckEntry(cvEntry))
-        //{
-        //   // Debug.Log("Sovrascrittura di");
-        //   // DebugCV(cvEntry);
+        List<CVEntry> list = GetAllCV();
+        return list[Random.Range(0, list.Count)];
+    }
 
-        //    // AGGIUNGERE MESSAGGIO / CONFERMA DI SOVRASCRITTURA
-        //}
-
+    public static void AddCVEntry(CVEntry cvEntry)
+    {     
         string json = JsonConvert.SerializeObject(cvEntry);
         File.WriteAllText((GetCVFilePath(cvEntry.name, cvEntry.surname)), json);
     }

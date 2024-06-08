@@ -114,14 +114,6 @@ public class QuestionPanel : MonoBehaviour
         return null;
     }
 
-    //public void NextQuestion()
-    //{
-    //    // Messo medico per test: inserire in seguito variabile a questionPanel forse per memorizzare il lavoro
-    //    // OPPURE (MEGLIO) leggere da CurrentCV
-
-    //    Setup(GetRandomQuestion("Medico"));
-    //}
-
     public void OnButtonClick(Button button)
     {
        // Debug.Log("Click di " + button.name);
