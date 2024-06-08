@@ -10,7 +10,13 @@ public class QuestionCreator : MonoBehaviour
     public TMP_InputField[] inputFields;
     public TMP_InputField[] points;
 
-    public TMP_Dropdown jobDropdown;
+    public TMP_InputField customFolder;
+
+    private bool customActive = false;
+
+    public TMP_Dropdown folderDropdown;
+
+    private string folder = "";
 
     // private bool allClear = true;
 
@@ -21,6 +27,20 @@ public class QuestionCreator : MonoBehaviour
         {
             point.text = value.ToString();
             value += 0.25f;
+        }
+    }
+
+    public void Update()
+    {
+        if (folderDropdown.captionText.text.Equals("Custom"))
+        {
+            customFolder.gameObject.SetActive(true);
+            customActive = true;
+        }
+        else
+        {
+            customFolder.gameObject.SetActive(false);
+            customActive = false;
         }
     }
 
@@ -58,17 +78,33 @@ public class QuestionCreator : MonoBehaviour
             else point.image.color = Color.white;
         }
 
-        CVEntry.Occupazione occupazione = InputPanel.AcceptDropdown<CVEntry.Occupazione>(jobDropdown, false, true);
 
-        string job = "";
 
-        if(!InputPanel.dropdownsClear)
+        if (customActive)
         {
-            job = jobDropdown.captionText.text;
-            Debug.Log(job);
-           // InputPanel.allClear = true;
+            folder = customFolder.text;
+            Debug.Log("Custom concesso: salvataggio andrà in " + folder);
         }
-        else job = occupazione.ToString();
+        else
+        {
+
+
+            CVEntry.Occupazione occupazione = InputPanel.AcceptDropdown<CVEntry.Occupazione>(folderDropdown, false, true);
+
+            if (!InputPanel.dropdownsClear)
+            {
+
+                folder = folderDropdown.captionText.text;
+                Debug.Log("Non è custom, ma " + folder);
+                // Debug.Log(folder);
+                //if (folder.Equals("Custom"))
+                //{
+                //    customFolder.gameObject.SetActive(true);
+                //}
+                // InputPanel.allClear = true;
+            }
+            else folder = occupazione.ToString();
+        }
 
         //  if (occupazione == default) allClear = false;
 
@@ -85,9 +121,9 @@ public class QuestionCreator : MonoBehaviour
 
             question = new(inputFields[0].text, answers);
 
-            // string job = occupazione.ToString();
+            // string folder = occupazione.ToString();
 
-            SaveQuestion(job);
+            SaveQuestion(folder);
         }
         // Reimposta allClear a true per il prossimo submit
         InputPanel.fieldsClear = true;
@@ -107,9 +143,9 @@ public class QuestionCreator : MonoBehaviour
     }
 
     // Conferma il Submit
-    public void SaveQuestion(string job)
+    public void SaveQuestion(string folder)
     {
-        InterviewManager.AddQuestion(question, job);
-        Debug.Log("SALVATO CON SUCCESSO da SaveQuestion");
+        InterviewManager.AddQuestion(question, folder);
+        Debug.Log("SALVATO CON SUCCESSO IN " + folder);
     }
 }
