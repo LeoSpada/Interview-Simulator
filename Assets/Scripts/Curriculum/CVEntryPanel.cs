@@ -11,13 +11,18 @@ public class CVEntryPanel : MonoBehaviour
 
     private CVEntry CV;
 
+    public GameObject overwritePanel;
     public GameObject confirmPanel;
+    private TextMeshProUGUI confirmMessage;
 
     private void Start()
     {
         // Se in modalità modifica, carica il CV scelto
         if (CVManager.editCurrent)
             LoadCurrent();
+
+        if (confirmPanel)
+            confirmMessage = confirmPanel.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     // Crea un CV a partire dai campi inseriti. Controlli su file esistenti e campi vuoti prima del salvataggio.
@@ -41,10 +46,11 @@ public class CVEntryPanel : MonoBehaviour
             if (CVManager.CheckEntry(CV))
             {
                 // Debug.Log("CV già presente.");
-                confirmPanel.SetActive(true);
+                overwritePanel.SetActive(true);
             }
             else
             {
+                confirmPanel.SetActive(true);
                 SaveCV();
             }
         }
@@ -57,6 +63,7 @@ public class CVEntryPanel : MonoBehaviour
     {
         CVManager.AddCVEntry(CV);
         Debug.Log("SALVATO CON SUCCESSO");
+        confirmMessage.text = "CV salvato con successo.";
 
         // Se l'operazione era una sovrascrittura
         if (CVManager.editCurrent)
@@ -67,6 +74,7 @@ public class CVEntryPanel : MonoBehaviour
             if (!CVManager.IsCurrentCV(inputFields[0].text, inputFields[1].text))
             {
                 Debug.Log("Il CV è stato sovrascritto e il file rinominato.\nElimino vecchio file");
+                confirmMessage.text += "\nIl CV è stato sovrascritto e il file rinominato.";
                 CVManager.RemoveCVEntry(CVManager.currentCV);
             }
         }
@@ -81,10 +89,9 @@ public class CVEntryPanel : MonoBehaviour
 
         inputFields[0].text = currentCV.name;
         inputFields[1].text = currentCV.surname;
-        // inputFields[2].text = currentCV.job;
 
         // Debug.Log(((int)currentCV.gender));
-        // Viene sommato 1 perché il valore 0 del dropdown è la frase "Inserire Genere" (non compatibile con enum
+        // Viene sommato 1 perché il valore 0 del dropdown è la frase "Inserire Genere" (non compatibile con enum)
         // Forse rimuovere inserire genere e +1 successivamente
 
         dropdowns[0].value = (int)currentCV.gender + 1;
