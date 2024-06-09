@@ -215,11 +215,11 @@ public class QuestionPanel : MonoBehaviour
 
         int i, j, k;
 
-        for (i = 0; i < startQuestions; i++) questions.Add(GetRandomQuestion("Start"));
+        for (i = 0; i < startQuestions; i++) questions.Add(GetRandomQuestion(startFolder));
 
         for (j = i; j < i + jobQuestions; j++) questions.Add(GetRandomQuestion(currentJob));
 
-        for (k = j; k < questionNumber; k++) questions.Add(GetRandomQuestion("SoftSkill"));
+        for (k = j; k < questionNumber; k++) questions.Add(GetRandomQuestion(softSkillFolder));
 
         // Aggiunge una domanda nulla per segnalare a setup la fine del colloquio
         questions.Add(null);
