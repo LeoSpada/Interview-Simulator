@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using TMPro;
-using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -43,10 +42,6 @@ public class QuestionPanel : MonoBehaviour
 
     void Start()
     {
-
-
-        // LoadNewQuestion("start");
-
         if (interviewInfo)
             interviewInfo.gameObject.SetActive(false);
 
@@ -66,7 +61,6 @@ public class QuestionPanel : MonoBehaviour
                 cvInfo.reloadInfo();
             }
 
-            //LoadNewQuestion();
             SetupInterview();
         }
 
@@ -105,30 +99,27 @@ public class QuestionPanel : MonoBehaviour
     public void LoadNewQuestion()
     {
         Setup(GetRandomQuestion(currentJob));
-        SetupInterviewInfo(currentJob);
+        SetupInterviewInfo();
     }
 
     public void NextQuestion()
     {
-        Debug.Log("caricamento nuova domanda");
-       
-
         if (index <= questionNumber - 1)
-        {            
+        {
             Setup(questions[++index]);
-            Debug.Log("Index = " + index);
-            SetupInterviewInfo(currentJob);
+           // Debug.Log("Index = " + index);
+            SetupInterviewInfo();
         }
 
-        else Debug.Log("FINITE?");
+        else Debug.Log("FINITE");
     }
 
-    public void LoadNewQuestion(string job)
-    {
-        Setup(GetRandomQuestion(job));
-        SetupInterviewInfo(job);
+    //public void LoadNewQuestion(string job)
+    //{
+    //    Setup(GetRandomQuestion(job));
+    //    SetupInterviewInfo();
 
-    }
+    //}
 
     public void SubmitFolderInput()
     {
@@ -146,8 +137,6 @@ public class QuestionPanel : MonoBehaviour
         {
             currentJob = folderInputField.text;
             folderInputGroup.SetActive(false);
-            // LoadNewQuestion();
-            Debug.Log("Il lavoro scelto è " + currentJob);
             SetupInterview();
         }
 
@@ -155,10 +144,9 @@ public class QuestionPanel : MonoBehaviour
     }
 
 
-    public void SetupInterviewInfo(string job)
+    public void SetupInterviewInfo()
     {
-        // questionNumber = GetJobFolderSize(job);
-
+       
         if (interviewInfo)
         {
             interviewInfo.gameObject.SetActive(true);
@@ -168,10 +156,8 @@ public class QuestionPanel : MonoBehaviour
 
     public Question GetRandomQuestion(string job)
     {
-        Debug.Log("Cerco per " + job);
-
+        
         int i = 0;
-        Debug.Log("Dimensione jobFolder = " + GetJobFolderSize(job));
 
         while (i <= GetJobFolderSize(job))
         {
@@ -181,9 +167,7 @@ public class QuestionPanel : MonoBehaviour
 
             if (!prevID.Contains(rand.id))
             {
-                prevID.Add(rand.id);
-
-                Debug.Log("CARICATA!");
+                prevID.Add(rand.id);                
                 return rand;
             }
             else
@@ -226,47 +210,16 @@ public class QuestionPanel : MonoBehaviour
             return;
         }
 
+        for (int i = 0; i < startQuestions; i++) questions.Add(GetRandomQuestion("Start"));
 
-        for (int i = 0; i < startQuestions; i++)
-        {
-            //questions[i] = GetRandomQuestion("Start");
-            Debug.Log("i = " + i);
-            Question q = GetRandomQuestion("Start");
+        for (int i = startQuestions; i < startQuestions + jobQuestions; i++) questions.Add(GetRandomQuestion(currentJob));
 
-            //if (q == null)
-            //{
-            //    Debug.Log("Errore?");
-            //}
-            //else
-            //{
-            //    Debug.Log("Tutto ok in setup interview. La domanda è:");
-            //    DebugQuestion(q);
-            //}
-
-            questions.Add(q);
-
-            //    Debug.Log(questions[i].question);
-
-            //   DebugQuestion(questions[i]);
-        }
-
-        for (int i = startQuestions; i < startQuestions + jobQuestions; i++)
-        {
-            Debug.Log("i = " + i);
-            questions.Add(GetRandomQuestion(currentJob));
-        }
-
-        for (int i = startQuestions + jobQuestions; i < questionNumber; i++)
-        {
-            Debug.Log("i = " + i);
-            questions.Add(GetRandomQuestion("SoftSkill"));
-        }
+        for (int i = startQuestions + jobQuestions; i < questionNumber; i++) questions.Add(GetRandomQuestion("SoftSkill"));
 
         // Aggiunge una domanda nulla per segnalare a setup la fine del colloquio
         questions.Add(null);
 
-
-        SetupInterviewInfo(currentJob);
+        SetupInterviewInfo();
         Setup(questions[index]);
     }
 
