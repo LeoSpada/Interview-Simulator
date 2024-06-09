@@ -205,10 +205,6 @@ public class QuestionPanel : MonoBehaviour
         jobQuestions = QuestionLimit(startQuestions, currentJob);
         softSkillQuestions = QuestionLimit(startQuestions, softSkillFolder);
 
-        //if (startQuestions > GetJobFolderSize("start")) startQuestions = GetJobFolderSize("start");
-        //if (jobQuestions > GetJobFolderSize(currentJob)) jobQuestions = GetJobFolderSize(currentJob);
-        //if (softSkillQuestions > GetJobFolderSize("softskill")) softSkillQuestions = GetJobFolderSize("softskill");
-
         questionNumber = startQuestions + jobQuestions + softSkillQuestions;
 
         if (questions == null)
@@ -217,11 +213,13 @@ public class QuestionPanel : MonoBehaviour
             return;
         }
 
-        for (int i = 0; i < startQuestions; i++) questions.Add(GetRandomQuestion("Start"));
+        int i, j, k;
 
-        for (int i = startQuestions; i < startQuestions + jobQuestions; i++) questions.Add(GetRandomQuestion(currentJob));
+        for (i = 0; i < startQuestions; i++) questions.Add(GetRandomQuestion("Start"));
 
-        for (int i = startQuestions + jobQuestions; i < questionNumber; i++) questions.Add(GetRandomQuestion("SoftSkill"));
+        for (j = i; j < i + jobQuestions; j++) questions.Add(GetRandomQuestion(currentJob));
+
+        for (k = j; k < questionNumber; k++) questions.Add(GetRandomQuestion("SoftSkill"));
 
         // Aggiunge una domanda nulla per segnalare a setup la fine del colloquio
         questions.Add(null);
