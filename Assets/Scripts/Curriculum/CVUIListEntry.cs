@@ -7,6 +7,8 @@ public class CVUIListEntry : MonoBehaviour
     public TextMeshProUGUI surnameText;
     private CVEntry CVEntry;
 
+    public GameObject deleteConfirmPanel;
+
     // public Canvas entryPanel;
 
     public void Setup(CVEntry entry)
@@ -17,6 +19,7 @@ public class CVUIListEntry : MonoBehaviour
     }
 
     // Carica il CVEntry a partire dai campi nome e cognome già riempiti da CVLoadPanel 
+    // RICERCA è una funzione non più implementata: forse rimuovere
     public void SearchSetup()
     {
         CVEntry = CVManager.GetCVEntry(nameText.text, surnameText.text);
@@ -41,5 +44,10 @@ public class CVUIListEntry : MonoBehaviour
     {
         CVManager.RemoveCVEntry(CVEntry);
         GameManager.instance.LoadScene("Scena_Lista_CV");
+    }
+
+    public void DeleteButton()
+    {
+        deleteConfirmPanel.SetActive(true);
     }
 }
