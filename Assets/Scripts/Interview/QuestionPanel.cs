@@ -19,6 +19,8 @@ public class QuestionPanel : MonoBehaviour
     public int jobQuestions = 2;
     public int softSkillQuestions = 2;
     public int index = 0;
+    public string startFolder = "Start";
+    public string softSkillFolder = "SoftSkill";
 
     [Header("CV")]
     public string currentJob;
@@ -107,7 +109,7 @@ public class QuestionPanel : MonoBehaviour
         if (index <= questionNumber - 1)
         {
             Setup(questions[++index]);
-           // Debug.Log("Index = " + index);
+            // Debug.Log("Index = " + index);
             SetupInterviewInfo();
         }
 
@@ -146,7 +148,7 @@ public class QuestionPanel : MonoBehaviour
 
     public void SetupInterviewInfo()
     {
-       
+
         if (interviewInfo)
         {
             interviewInfo.gameObject.SetActive(true);
@@ -156,7 +158,7 @@ public class QuestionPanel : MonoBehaviour
 
     public Question GetRandomQuestion(string job)
     {
-        
+
         int i = 0;
 
         while (i <= GetJobFolderSize(job))
@@ -167,7 +169,7 @@ public class QuestionPanel : MonoBehaviour
 
             if (!prevID.Contains(rand.id))
             {
-                prevID.Add(rand.id);                
+                prevID.Add(rand.id);
                 return rand;
             }
             else
@@ -195,14 +197,19 @@ public class QuestionPanel : MonoBehaviour
         }
     }
 
+    // Imposta il colloquio precaricando le domande da varie cartelle.
+    // ATTENZIONE: attualmente carica da 3 cartelle, senza possibilità di cambiare. Si può cambiare però le 3 cartelle da cui caricare (VEDI VARIABILI SOPRA)
     public void SetupInterview()
     {
+        startQuestions = QuestionLimit(startQuestions, startFolder);
+        jobQuestions = QuestionLimit(startQuestions, currentJob);
+        softSkillQuestions = QuestionLimit(startQuestions, softSkillFolder);
+
+        //if (startQuestions > GetJobFolderSize("start")) startQuestions = GetJobFolderSize("start");
+        //if (jobQuestions > GetJobFolderSize(currentJob)) jobQuestions = GetJobFolderSize(currentJob);
+        //if (softSkillQuestions > GetJobFolderSize("softskill")) softSkillQuestions = GetJobFolderSize("softskill");
+
         questionNumber = startQuestions + jobQuestions + softSkillQuestions;
-
-        // Serve un controllo che, se le domande scelte per il lavoro / cartella sono MAGGIORI di quante ce ne sono attualmente in cartella, carica IL MASSIMO
-        // oppure ferma il setup
-
-        Debug.Log("Caricando domande Start");
 
         if (questions == null)
         {
@@ -221,6 +228,19 @@ public class QuestionPanel : MonoBehaviour
 
         SetupInterviewInfo();
         Setup(questions[index]);
+    }
+
+    public int QuestionLimit(int counter, string folder, bool log = false)
+    {
+        {
+            int folderSize = GetJobFolderSize(folder);
+            if (counter > folderSize)
+            {
+                if (log) Debug.Log($"Domande richieste ({counter}) > Domande trovate in cartella '{folder}' ({folderSize}). Caricamento di tutte le domande in '{folder}'.");
+                return GetJobFolderSize(folder);
+            }
+            else return counter;
+        }
     }
 
     public void ResetInterview()
