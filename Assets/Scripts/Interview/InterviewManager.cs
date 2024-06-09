@@ -120,6 +120,12 @@ public static class InterviewManager
         File.WriteAllText(GetQuestionFilePath(job, question.id), json);
     }
 
+    // Usata per debug. Stampa a schermo la domanda formattata.
+    public static void DebugQuestion(Question question)
+    {
+        Debug.Log($"Domanda: {question.question}\nRisposte: 1) {question.answers[0].text} [{question.answers[0].points} pt.]\t 2) {question.answers[1].text} [{question.answers[1].points} pt.]\t 3) {question.answers[2].text} [{question.answers[2].points} pt.]\t 3) {question.answers[3].text} [{question.answers[3].points} pt.]");
+    }
+
     [System.Serializable]
     public class Question
     {
