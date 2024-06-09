@@ -40,7 +40,7 @@ public static class CVManager
     {
         List<CVEntry> list = new();
 
-       // DirectoryInfo dir = new(Path.Combine(Application.persistentDataPath, saveFolder));
+        // DirectoryInfo dir = new(Path.Combine(Application.persistentDataPath, saveFolder));
         FileInfo[] info = GetFilesInfo();
 
         foreach (FileInfo f in info)
@@ -74,7 +74,7 @@ public static class CVManager
     }
 
     public static void AddCVEntry(CVEntry cvEntry)
-    {     
+    {
         string json = JsonConvert.SerializeObject(cvEntry);
         File.WriteAllText((GetCVFilePath(cvEntry.name, cvEntry.surname)), json);
     }
@@ -124,6 +124,9 @@ public class CVEntry
     public string surname;
     public Occupazione job;
     public Genere gender;
+    //public Lingua linguaMadre;
+    //public Lingua linguaSecondaria;
+    // public Patente patente;
     // AGGIUNGERE QUI TUTTI I CAMPI e rigenerare costruttore
     // VEDERE DATI_CURRICULUM e altri
 
@@ -143,7 +146,7 @@ public class CVEntry
 
     public enum Lingua { Nessuno, Italiano, Inglese, Francese, Tedesco, Spagnolo, Portoghese }
 
-    public enum Patente { A, A1, A2, B, C, D, E }
+    public enum Patente { Nessuna, A, A1, A2, B, C, D, E }
 
     public enum Genere { M, F, Altro }
 
