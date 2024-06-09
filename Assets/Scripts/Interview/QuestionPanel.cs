@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,7 +12,14 @@ public class QuestionPanel : MonoBehaviour
     public TextMeshProUGUI questionText;
     public Button[] ansButtons;
     private Question question;
+    private List<Question> questions = new();
     private readonly List<int> prevID = new();
+
+    [Header("Colloquio")]
+    public int startQuestions = 2;
+    public int jobQuestions = 2;
+    public int softSkillQuestions = 2;
+    public int index = 0;
 
     [Header("CV")]
     public string currentJob;
@@ -35,6 +43,10 @@ public class QuestionPanel : MonoBehaviour
 
     void Start()
     {
+
+
+        // LoadNewQuestion("start");
+
         if (interviewInfo)
             interviewInfo.gameObject.SetActive(false);
 
@@ -53,7 +65,9 @@ public class QuestionPanel : MonoBehaviour
                 cvInfo.gameObject.SetActive(true);
                 cvInfo.reloadInfo();
             }
-            LoadNewQuestion();
+
+            //LoadNewQuestion();
+            SetupInterview();
         }
 
         else Debug.Log("Nessun CV attualmente caricato. Caricare domanda tramite pulsanti.");
@@ -94,6 +108,21 @@ public class QuestionPanel : MonoBehaviour
         SetupInterviewInfo(currentJob);
     }
 
+    public void NextQuestion()
+    {
+        Debug.Log("caricamento nuova domanda");
+       
+
+        if (index <= questionNumber - 1)
+        {            
+            Setup(questions[++index]);
+            Debug.Log("Index = " + index);
+            SetupInterviewInfo(currentJob);
+        }
+
+        else Debug.Log("FINITE?");
+    }
+
     public void LoadNewQuestion(string job)
     {
         Setup(GetRandomQuestion(job));
@@ -117,7 +146,9 @@ public class QuestionPanel : MonoBehaviour
         {
             currentJob = folderInputField.text;
             folderInputGroup.SetActive(false);
-            LoadNewQuestion();
+            // LoadNewQuestion();
+            Debug.Log("Il lavoro scelto è " + currentJob);
+            SetupInterview();
         }
 
         InputPanel.ClearAll();
@@ -126,7 +157,8 @@ public class QuestionPanel : MonoBehaviour
 
     public void SetupInterviewInfo(string job)
     {
-        questionNumber = GetJobFolderSize(job);
+        // questionNumber = GetJobFolderSize(job);
+
         if (interviewInfo)
         {
             interviewInfo.gameObject.SetActive(true);
@@ -136,13 +168,22 @@ public class QuestionPanel : MonoBehaviour
 
     public Question GetRandomQuestion(string job)
     {
+        Debug.Log("Cerco per " + job);
+
         int i = 0;
+        Debug.Log("Dimensione jobFolder = " + GetJobFolderSize(job));
+
         while (i <= GetJobFolderSize(job))
         {
             Question rand = GetRandomQuestionInFolder(job);
+
+            // DebugQuestion(rand);
+
             if (!prevID.Contains(rand.id))
             {
                 prevID.Add(rand.id);
+
+                Debug.Log("CARICATA!");
                 return rand;
             }
             else
@@ -162,12 +203,71 @@ public class QuestionPanel : MonoBehaviour
 
             average = points / answered;
 
-            Invoke(nameof(LoadNewQuestion), 1f);
+            Invoke(nameof(NextQuestion), 1f);
         }
         else
         {
             Invoke(nameof(ResetInterview), 1f);
         }
+    }
+
+    public void SetupInterview()
+    {
+        questionNumber = startQuestions + jobQuestions + softSkillQuestions;
+
+        // Serve un controllo che, se le domande scelte per il lavoro / cartella sono MAGGIORI di quante ce ne sono attualmente in cartella, carica IL MASSIMO
+        // oppure ferma il setup
+
+        Debug.Log("Caricando domande Start");
+
+        if (questions == null)
+        {
+            Debug.Log("Lista nulla");
+            return;
+        }
+
+
+        for (int i = 0; i < startQuestions; i++)
+        {
+            //questions[i] = GetRandomQuestion("Start");
+            Debug.Log("i = " + i);
+            Question q = GetRandomQuestion("Start");
+
+            //if (q == null)
+            //{
+            //    Debug.Log("Errore?");
+            //}
+            //else
+            //{
+            //    Debug.Log("Tutto ok in setup interview. La domanda è:");
+            //    DebugQuestion(q);
+            //}
+
+            questions.Add(q);
+
+            //    Debug.Log(questions[i].question);
+
+            //   DebugQuestion(questions[i]);
+        }
+
+        for (int i = startQuestions; i < startQuestions + jobQuestions; i++)
+        {
+            Debug.Log("i = " + i);
+            questions.Add(GetRandomQuestion(currentJob));
+        }
+
+        for (int i = startQuestions + jobQuestions; i < questionNumber; i++)
+        {
+            Debug.Log("i = " + i);
+            questions.Add(GetRandomQuestion("SoftSkill"));
+        }
+
+        // Aggiunge una domanda nulla per segnalare a setup la fine del colloquio
+        questions.Add(null);
+
+
+        SetupInterviewInfo(currentJob);
+        Setup(questions[index]);
     }
 
     public void ResetInterview()
