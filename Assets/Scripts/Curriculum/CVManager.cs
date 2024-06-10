@@ -85,7 +85,7 @@ public static class CVManager
     public static CVEntry GetRandomCVEntry()
     {
         List<CVEntry> list = GetAllCV();
-        return list[Random.Range(0, list.Count)];
+        return list[UnityEngine.Random.Range(0, list.Count)];
     }
 
     public static void AddCVEntry(CVEntry cvEntry)
