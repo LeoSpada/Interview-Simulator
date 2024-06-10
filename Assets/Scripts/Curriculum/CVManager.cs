@@ -95,7 +95,7 @@ public static class CVManager
         File.WriteAllText((GetCVFilePath(cvEntry.name, cvEntry.surname)), json);
 
         // COPIA IN CARTELLA BACKUP
-        BackupManager.BackUpFolder(GetCVFolder(), saveFolder);
+       // BackupManager.BackUpFolder(GetCVFolder(), saveFolder);
     }
 
 
@@ -107,7 +107,7 @@ public static class CVManager
         if (CheckEntry(cvEntry))
             File.Delete(GetCVFilePath(cvEntry.name, cvEntry.surname));
 
-        BackupManager.BackUpFolder(GetCVFolder(), saveFolder);
+      //  BackupManager.BackUpFolder(GetCVFolder(), saveFolder);
     }
 
     public static bool CheckEntry(CVEntry cvEntry)
