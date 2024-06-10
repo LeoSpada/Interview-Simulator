@@ -7926,6 +7926,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Medico
       m_Image: {fileID: 0}
+    - m_Text: Start
+      m_Image: {fileID: 0}
     - m_Text: SoftSkill
       m_Image: {fileID: 0}
     - m_Text: Custom
