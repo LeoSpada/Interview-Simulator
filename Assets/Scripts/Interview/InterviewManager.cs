@@ -15,6 +15,20 @@ public static class InterviewManager
 
     public static string GetJobFolder(string job)
     {
+        string folder = Path.Combine(Application.persistentDataPath, saveFolder);
+        try
+        {
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
+            }
+
+        }
+        catch (IOException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
         return Path.Combine(Application.persistentDataPath, saveFolder, job);
     }
 

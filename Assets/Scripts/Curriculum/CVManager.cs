@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
@@ -13,6 +14,20 @@ public static class CVManager
 
     public static string GetCVFolder()
     {
+        string folder = Path.Combine(Application.persistentDataPath, saveFolder);
+        try
+        {
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
+            }
+
+        }
+        catch (IOException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
         return Path.Combine(Application.persistentDataPath, saveFolder);
     }
 
