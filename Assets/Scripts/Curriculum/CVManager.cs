@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
+using UnityEditor;
 using UnityEngine;
 
 public static class CVManager
@@ -92,12 +93,24 @@ public static class CVManager
     {
         string json = JsonConvert.SerializeObject(cvEntry);
         File.WriteAllText((GetCVFilePath(cvEntry.name, cvEntry.surname)), json);
+
+
+        // COPIA IN CARTELLA BACKUP
+
+        if(!Directory.Exists(Path.Combine(Application.persistentDataPath, "Backup", saveFolder)))
+        FileUtil.CopyFileOrDirectory(GetCVFolder(), Path.Combine(Application.persistentDataPath, "Backup", saveFolder));
+        else
+        {
+            Debug.Log("Cancello vecchio Backup");
+            FileUtil.DeleteFileOrDirectory(Path.Combine(Application.persistentDataPath, "Backup", saveFolder));
+            FileUtil.CopyFileOrDirectory(GetCVFolder(), Path.Combine(Application.persistentDataPath, "Backup", saveFolder));
+        }
     }
 
     public static void RemoveCVEntry(CVEntry cvEntry)
     {
         if (CheckEntry(cvEntry))
-            File.Delete(GetCVFilePath(cvEntry.name, cvEntry.surname));
+            File.Delete(GetCVFilePath(cvEntry.name, cvEntry.surname));       
     }
 
     public static bool CheckEntry(CVEntry cvEntry)
