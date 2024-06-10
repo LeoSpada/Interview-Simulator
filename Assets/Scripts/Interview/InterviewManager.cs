@@ -45,22 +45,36 @@ public static class InterviewManager
     public static DirectoryInfo[] GetFoldersInfo()
     {
         DirectoryInfo mainDir = new(Path.Combine(Application.persistentDataPath, saveFolder));
-        var dirs = mainDir.GetDirectories();
+        if (mainDir == null) return null;
+
+        DirectoryInfo[] dirs;
+        try
+        {
+            dirs = mainDir.GetDirectories();
+        }
+        catch (DirectoryNotFoundException)
+        {
+            Debug.Log("Nessuna directory trovata in " + saveFolder);
+            return null;
+        }
+
         return dirs;
     }
 
     public static int CountFolders()
     {
         var dirs = GetFoldersInfo();
+        if (dirs == null) return 0;
 
         Debug.Log("Numero di cartelle: " + dirs.Length);
 
         return dirs.Length;
     }
 
-    public static int CountQuestions(bool log)
+    public static int CountQuestions(bool log = false)
     {
         var dirs = GetFoldersInfo();
+        if (dirs == null) return 0;
 
         int sum = 0;
 
@@ -70,7 +84,7 @@ public static class InterviewManager
             if (log) Debug.Log(dir.Name + " ha " + GetAllQuestionsInFolder(dir.Name).Count + " domande.");
         }
 
-        Debug.Log("Somma: " + sum);
+        if (log) Debug.Log("Somma: " + sum);
         return sum;
     }
 
@@ -177,31 +191,33 @@ public static class InterviewManager
             this.question = question;
             this.answers = answers;
 
-            q_id = GetLastID();
+            // q_id = GetLastID();
 
+            q_id = CountQuestions();
             id = ++q_id;
 
             // Debug.Log("Q_ID attuale:" + id);
-            SaveLastID();
+            // SaveLastID();
         }
 
-        public static void SaveLastID()
-        {
-            PlayerPrefs.SetInt("q_id", q_id);
-        }
+        //    public static void SaveLastID()
+        //    {
+        //        PlayerPrefs.SetInt("q_id", q_id);
+        //    }
 
-        public static int GetLastID()
-        {
-            if (PlayerPrefs.HasKey("q_id"))
-            {
-                if (CountQuestions(false) == 0)
-                {
-                    Debug.Log("Nessuna domanda trovata. Azzero q_id in PlayerPrefs.");
-                    return -1;
-                }
-                return PlayerPrefs.GetInt("q_id");
-            }
-            else return -1;
-        }
+        //    public static int GetLastID()
+        //    {
+        //        if (PlayerPrefs.HasKey("q_id"))
+        //        {
+        //            if (CountQuestions() == 0)
+        //            {
+        //                Debug.Log("Nessuna domanda trovata. Azzero q_id in PlayerPrefs.");
+        //                return -1;
+        //            }
+
+        //            return PlayerPrefs.GetInt("q_id");
+        //        }
+        //        else return -1;
+        //    }
     }
 }
