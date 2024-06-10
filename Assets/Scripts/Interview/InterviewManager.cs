@@ -13,7 +13,7 @@ public static class InterviewManager
 
     private const string saveFolder = "Questions";
 
-    public static string GetJobFolder(string job)
+    public static string GetQuestionsFolder()
     {
         string folder = Path.Combine(Application.persistentDataPath, saveFolder);
         try
@@ -29,7 +29,12 @@ public static class InterviewManager
             Console.WriteLine(ex.Message);
         }
 
-        return Path.Combine(Application.persistentDataPath, saveFolder, job);
+        return folder;
+    }
+
+    public static string GetJobFolder(string job)
+    {
+        return Path.Combine(GetQuestionsFolder(), job);
     }
 
     public static int GetJobFolderSize(string job)
@@ -62,7 +67,7 @@ public static class InterviewManager
         foreach (DirectoryInfo dir in dirs)
         {
             sum += GetAllQuestionsInFolder(dir.Name).Count;
-           if(log) Debug.Log(dir.Name + " ha " + GetAllQuestionsInFolder(dir.Name).Count + " domande.");
+            if (log) Debug.Log(dir.Name + " ha " + GetAllQuestionsInFolder(dir.Name).Count + " domande.");
         }
 
         Debug.Log("Somma: " + sum);
@@ -132,6 +137,10 @@ public static class InterviewManager
         string json = JsonConvert.SerializeObject(question);
         Debug.Log(json);
         File.WriteAllText(GetQuestionFilePath(job, question.id), json);
+
+        // string backUpPath = Path.Combine(saveFolder, job);
+
+        BackupManager.BackUpFolder(GetQuestionsFolder(), saveFolder);
     }
 
     // Usata per debug. Stampa a schermo la domanda formattata.
@@ -144,7 +153,7 @@ public static class InterviewManager
     public class Question
     {
         public string question;
-        public Answer[] answers;        
+        public Answer[] answers;
 
         public int id;
 
@@ -164,7 +173,7 @@ public static class InterviewManager
         public Question(string question, Answer[] answers)
         {
             this.question = question;
-            this.answers = answers;           
+            this.answers = answers;
 
             q_id = GetLastID();
 
@@ -184,7 +193,7 @@ public static class InterviewManager
             if (PlayerPrefs.HasKey("q_id"))
             {
                 if (CountQuestions(false) == 0)
-                {                    
+                {
                     Debug.Log("Nessuna domanda trovata. Azzero q_id in PlayerPrefs.");
                     return -1;
                 }

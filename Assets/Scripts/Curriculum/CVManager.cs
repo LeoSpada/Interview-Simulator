@@ -95,28 +95,11 @@ public static class CVManager
         File.WriteAllText((GetCVFilePath(cvEntry.name, cvEntry.surname)), json);
 
         // COPIA IN CARTELLA BACKUP
-        BackUpFolder();
+        BackupManager.BackUpFolder(GetCVFolder(), saveFolder);
     }
 
 
-    public static void BackUpFolder()
-    {
-        string backUpPath = Path.Combine(Application.dataPath, "Backup", saveFolder);
 
-        if (!Directory.Exists(backUpPath))
-        {
-            Directory.CreateDirectory(backUpPath);
-            // FileUtil.CopyFileOrDirectory(GetCVFolder(), backUpPath);
-            FileUtil.ReplaceDirectory(GetCVFolder(), backUpPath);
-        }
-
-        else
-        {
-            Debug.Log("Cancello vecchio Backup");
-            FileUtil.DeleteFileOrDirectory(backUpPath);
-            FileUtil.CopyFileOrDirectory(GetCVFolder(), backUpPath);
-        }
-    }
 
 
     public static void RemoveCVEntry(CVEntry cvEntry)
@@ -124,7 +107,7 @@ public static class CVManager
         if (CheckEntry(cvEntry))
             File.Delete(GetCVFilePath(cvEntry.name, cvEntry.surname));
 
-        BackUpFolder();
+        BackupManager.BackUpFolder(GetCVFolder(), saveFolder);
     }
 
     public static bool CheckEntry(CVEntry cvEntry)
