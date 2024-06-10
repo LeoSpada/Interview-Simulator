@@ -94,23 +94,37 @@ public static class CVManager
         string json = JsonConvert.SerializeObject(cvEntry);
         File.WriteAllText((GetCVFilePath(cvEntry.name, cvEntry.surname)), json);
 
-
         // COPIA IN CARTELLA BACKUP
+        BackUpFolder();
+    }
 
-        if(!Directory.Exists(Path.Combine(Application.persistentDataPath, "Backup", saveFolder)))
-        FileUtil.CopyFileOrDirectory(GetCVFolder(), Path.Combine(Application.persistentDataPath, "Backup", saveFolder));
+
+    public static void BackUpFolder()
+    {
+        string backUpPath = Path.Combine(Application.dataPath, "Backup", saveFolder);
+
+        if (!Directory.Exists(backUpPath))
+        {
+            Directory.CreateDirectory(backUpPath);
+            // FileUtil.CopyFileOrDirectory(GetCVFolder(), backUpPath);
+            FileUtil.ReplaceDirectory(GetCVFolder(), backUpPath);
+        }
+
         else
         {
             Debug.Log("Cancello vecchio Backup");
-            FileUtil.DeleteFileOrDirectory(Path.Combine(Application.persistentDataPath, "Backup", saveFolder));
-            FileUtil.CopyFileOrDirectory(GetCVFolder(), Path.Combine(Application.persistentDataPath, "Backup", saveFolder));
+            FileUtil.DeleteFileOrDirectory(backUpPath);
+            FileUtil.CopyFileOrDirectory(GetCVFolder(), backUpPath);
         }
     }
+
 
     public static void RemoveCVEntry(CVEntry cvEntry)
     {
         if (CheckEntry(cvEntry))
-            File.Delete(GetCVFilePath(cvEntry.name, cvEntry.surname));       
+            File.Delete(GetCVFilePath(cvEntry.name, cvEntry.surname));
+
+        BackUpFolder();
     }
 
     public static bool CheckEntry(CVEntry cvEntry)
