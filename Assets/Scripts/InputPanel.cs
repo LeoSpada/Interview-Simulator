@@ -18,15 +18,16 @@ public static class InputPanel
 
     public static void AcceptInputField(TMP_InputField inputField, bool canColor = true, bool canBreak = true)
     {
-        if (!InputPanel.CheckInputField(inputField))
+        if (!inputField.isActiveAndEnabled)
         {
-            // Debug.Log("Campo inesistente");
-
-            if (canColor) inputField.image.color = Color.red;
-
-            if (canBreak) InputPanel.fieldsClear = false;
+            Debug.Log(inputField + " ignorato");
+            return;
         }
-
+        else if (!InputPanel.CheckInputField(inputField))
+        {
+            if (canColor) inputField.image.color = Color.red;
+            if (canBreak) fieldsClear = false;
+        }
         else if (canColor) inputField.image.color = Color.white;
     }
 
@@ -34,9 +35,9 @@ public static class InputPanel
     {
         foreach (TMP_InputField inputField in inputFields)
         {
-           AcceptInputField(inputField, canColor, canBreak);
+            AcceptInputField(inputField, canColor, canBreak);
         }
-    }   
+    }
 
     // Controlla che il valore del dropdown corrisponda ad un valore contenuto nell'enum
     public static T AcceptDropdown<T>(TMP_Dropdown dropdown, bool canColor = true, bool canBreak = true)
