@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
+using UnityEditor;
 using UnityEngine;
 
 public static class CVManager
@@ -8,9 +10,44 @@ public static class CVManager
     public static CVEntry currentCV = null;
 
     public static bool editCurrent = false;
+
+    private const string saveFolder = "Saves";
+
+    public static string GetCVFolder()
+    {
+        string folder = Path.Combine(Application.persistentDataPath, saveFolder);
+        try
+        {
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
+            }
+
+        }
+        catch (IOException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+        return Path.Combine(Application.persistentDataPath, saveFolder);
+    }
+
+    public static int GetCVFolderSize()
+    {
+        return GetAllCV().Count;
+    }
+
+    public static FileInfo[] GetFilesInfo()
+    {
+        DirectoryInfo mainDir = new(GetCVFolder());
+        var files = mainDir.GetFiles("*.json");
+        return files;
+    }
+
     static string GetCVFilePath(string name, string surname)
     {
-        string path = Path.Combine(Application.persistentDataPath, $"{name}_{surname}_CV.json");
+        string folder = GetCVFolder();
+        string path = Path.Combine(folder, $"{name}_{surname}_CV.json");
         return path;
     }
 
@@ -19,8 +56,8 @@ public static class CVManager
     {
         List<CVEntry> list = new();
 
-        DirectoryInfo dir = new(Application.persistentDataPath);
-        FileInfo[] info = dir.GetFiles("*.json");
+        // DirectoryInfo dir = new(Path.Combine(Application.persistentDataPath, saveFolder));
+        FileInfo[] info = GetFilesInfo();
 
         foreach (FileInfo f in info)
         {
@@ -46,24 +83,31 @@ public static class CVManager
         return loadedCV;
     }
 
+    public static CVEntry GetRandomCVEntry()
+    {
+        List<CVEntry> list = GetAllCV();
+        return list[UnityEngine.Random.Range(0, list.Count)];
+    }
+
     public static void AddCVEntry(CVEntry cvEntry)
     {
-        //if (CheckEntry(cvEntry))
-        //{
-        //   // Debug.Log("Sovrascrittura di");
-        //   // DebugCV(cvEntry);
-
-        //    // AGGIUNGERE MESSAGGIO / CONFERMA DI SOVRASCRITTURA
-        //}
-
         string json = JsonConvert.SerializeObject(cvEntry);
         File.WriteAllText((GetCVFilePath(cvEntry.name, cvEntry.surname)), json);
+
+        // COPIA IN CARTELLA BACKUP
+       // BackupManager.BackUpFolder(GetCVFolder(), saveFolder);
     }
+
+
+
+
 
     public static void RemoveCVEntry(CVEntry cvEntry)
     {
         if (CheckEntry(cvEntry))
             File.Delete(GetCVFilePath(cvEntry.name, cvEntry.surname));
+
+       // BackupManager.BackUpFolder(GetCVFolder(), saveFolder);
     }
 
     public static bool CheckEntry(CVEntry cvEntry)
@@ -80,8 +124,13 @@ public static class CVManager
             Debug.Log(name + "non corrisponde");
             return false;
         }
-            
+
         else return true;
+    }
+
+    public static void UnloadCurrentCV()
+    {
+        currentCV = null;
     }
 
 
@@ -98,8 +147,11 @@ public class CVEntry
 {
     public string name;
     public string surname;
-    public string job;
+    public Occupazione job;
     public Genere gender;
+    //public Lingua linguaMadre;
+    //public Lingua linguaSecondaria;
+    // public Patente patente;
     // AGGIUNGERE QUI TUTTI I CAMPI e rigenerare costruttore
     // VEDERE DATI_CURRICULUM e altri
 
@@ -109,7 +161,7 @@ public class CVEntry
 
     }
 
-    public CVEntry(string name, string surname, string job, Genere gender)
+    public CVEntry(string name, string surname, Occupazione job, Genere gender)
     {
         this.name = name;
         this.surname = surname;
@@ -119,8 +171,10 @@ public class CVEntry
 
     public enum Lingua { Nessuno, Italiano, Inglese, Francese, Tedesco, Spagnolo, Portoghese }
 
-    public enum Patente { A, A1, A2, B, C, D, E }
+    public enum Patente { Nessuna, A, A1, A2, B, C, D, E }
 
     public enum Genere { M, F, Altro }
+
+    public enum Occupazione { Sviluppatore, Medico };
 }
 

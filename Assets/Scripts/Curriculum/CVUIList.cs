@@ -5,6 +5,11 @@ public class CVUIList : MonoBehaviour
     public GameObject entryPrefab;
     public Transform contentRoot;
 
+    public void Start()
+    {
+        GetCV();
+    }
+
     public void GetCV()
     {
         var entries = CVManager.GetAllCV();

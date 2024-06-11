@@ -31,7 +31,7 @@ public class CVLoadPanel : MonoBehaviour
 
         nameText.text = cv.name;
         surnameText.text = cv.surname;
-        jobText.text = cv.job;
+        jobText.text = cv.job.ToString();
 
         surnameText.gameObject.SetActive(true);
         jobText.gameObject.SetActive(true);

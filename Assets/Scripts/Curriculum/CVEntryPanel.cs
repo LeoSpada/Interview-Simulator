@@ -7,100 +7,55 @@ public class CVEntryPanel : MonoBehaviour
     // Contiene i vari inputField
     public TMP_InputField[] inputFields;
 
-    // Fare array di Dropdown?
-    public TMP_Dropdown genderDropdown;
-
-    private bool allClear = true;
+    public TMP_Dropdown[] dropdowns;
 
     private CVEntry CV;
 
+    public GameObject overwritePanel;
     public GameObject confirmPanel;
+    private TextMeshProUGUI confirmMessage;
 
     private void Start()
     {
         // Se in modalità modifica, carica il CV scelto
-        if (CVManager.editCurrent)       
-            LoadCurrent();      
+        if (CVManager.editCurrent)
+            LoadCurrent();
+
+        if (confirmPanel)
+            confirmMessage = confirmPanel.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     // Crea un CV a partire dai campi inseriti. Controlli su file esistenti e campi vuoti prima del salvataggio.
     public void Submit()
     {
-        foreach (TMP_InputField inputField in inputFields)
+        InputPanel.AcceptInputFields(inputFields);
+
+        // Trovare modo di migliorare leggibilità per il programmatore
+        // Possibile mettere un identificativo migliore senza rimuovere array?
+        // Genderdropdown anziché dropdowns[0]
+
+        CVEntry.Genere genere = InputPanel.AcceptDropdown<CVEntry.Genere>(dropdowns[0]);
+        CVEntry.Occupazione occupazione = InputPanel.AcceptDropdown<CVEntry.Occupazione>(dropdowns[1]);
+
+
+        if (InputPanel.fieldsClear && InputPanel.dropdownsClear)
         {
-            if (!AcceptInput(inputField))
-            {
-                // Debug.Log("Campo inesistente");
-
-                inputField.image.color = Color.red;
-
-                allClear = false;
-
-                // Rimettere break riduce i controlli ma non fa colorare di rosso tutti i campi (solo il primo non valido)
-                // break;
-            }
-
-            else inputField.image.color = Color.white;
-        }
-
-        CVEntry.Genere genere = AcceptDropdown<CVEntry.Genere>(genderDropdown);
-
-        if (allClear)
-        {
-            CV = new(inputFields[0].text, inputFields[1].text, inputFields[2].text, genere);
+            CV = new(inputFields[0].text, inputFields[1].text, occupazione, genere);
 
             // Se un file con lo stesso nome è già presente, compare una finestra di conferma
             if (CVManager.CheckEntry(CV))
             {
                 // Debug.Log("CV già presente.");
-                confirmPanel.SetActive(true);
+                overwritePanel.SetActive(true);
             }
             else
             {
+                confirmPanel.SetActive(true);
                 SaveCV();
             }
         }
         // Reimposta allClear a true per il prossimo submit
-        allClear = true;
-    }
-
-    // Controlla che l'input field contenga dati utilizzabili
-    public bool AcceptInput(TMP_InputField inputField)
-    {
-        if (string.IsNullOrWhiteSpace(inputField.text)) return false;
-        else return true;
-
-        // nameCompletionSource.SetResult(inputField.text);
-    }
-
-    // Controlla che il valore del dropdown corrisponda ad un valore contenuto nell'enum
-    public T AcceptDropdown<T>(TMP_Dropdown dropdown)
-    {
-        // Ottiene il valore del testo del dropdown
-        string dropdownText = dropdown.options[dropdown.value].text;
-        // Debug.Log(dropdownText);
-
-        T enumObj;
-
-        // Prova ad ottenere il valore enum corretto corrispondente alla stringa
-        try
-        {
-            enumObj = (T)Enum.Parse(typeof(T), dropdownText);
-        }
-        catch (ArgumentException)
-        {
-            allClear = false;
-
-            dropdown.image.color = Color.red;
-            Debug.Log("Il valore del dropdown non è consentito nell'Enum.\nRicontrollare codice.");
-
-            return default;
-        }
-
-        dropdown.image.color = Color.white;
-
-        // Debug.Log("Enumobj: " + enumObj);
-        return enumObj;
+        InputPanel.ClearAll();
     }
 
     // Conferma il Submit
@@ -108,6 +63,7 @@ public class CVEntryPanel : MonoBehaviour
     {
         CVManager.AddCVEntry(CV);
         Debug.Log("SALVATO CON SUCCESSO");
+        confirmMessage.text = "CV salvato con successo.";
 
         // Se l'operazione era una sovrascrittura
         if (CVManager.editCurrent)
@@ -118,6 +74,7 @@ public class CVEntryPanel : MonoBehaviour
             if (!CVManager.IsCurrentCV(inputFields[0].text, inputFields[1].text))
             {
                 Debug.Log("Il CV è stato sovrascritto e il file rinominato.\nElimino vecchio file");
+                confirmMessage.text += "\nIl CV è stato sovrascritto e il file rinominato.";
                 CVManager.RemoveCVEntry(CVManager.currentCV);
             }
         }
@@ -132,11 +89,13 @@ public class CVEntryPanel : MonoBehaviour
 
         inputFields[0].text = currentCV.name;
         inputFields[1].text = currentCV.surname;
-        inputFields[2].text = currentCV.job;
+
         // Debug.Log(((int)currentCV.gender));
-        // Viene sommato 1 perché il valore 0 del dropdown è la frase "Inserire Genere" (non compatibile con enum
+        // Viene sommato 1 perché il valore 0 del dropdown è la frase "Inserire Genere" (non compatibile con enum)
         // Forse rimuovere inserire genere e +1 successivamente
-        genderDropdown.value = (int)currentCV.gender + 1;
+
+        dropdowns[0].value = (int)currentCV.gender + 1;
+        dropdowns[1].value = (int)currentCV.job + 1;
     }
 
     // Se la schermata viene disattivata, si esce dalla modalità modifica
