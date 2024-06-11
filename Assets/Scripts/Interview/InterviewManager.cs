@@ -152,7 +152,7 @@ public static class InterviewManager
         Debug.Log(json);
         File.WriteAllText(GetQuestionFilePath(job, question.id), json);
                 
-        BackupManager.BackUpFolder(GetQuestionsFolder(), saveFolder);
+      //  BackupManager.BackUpFolder(GetQuestionsFolder(), saveFolder);
 
        // BackupManager.BackUpAll();
     }
