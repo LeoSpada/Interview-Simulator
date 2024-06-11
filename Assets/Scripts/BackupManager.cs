@@ -7,22 +7,39 @@ using UnityEngine.WSA;
 public static class BackupManager
 {
 
-    public static void BackUpFolder(string folder, string backupFolder)
+    // FARE CON INVERSE
+    // Mettere indirizzo A e B (sorgente / destinazione) e in base a restore assegni folder e backup folder
+
+    public static void BackUpFolder(string folder, string backupFolder, bool restore = false)
     {
         string backUpPath = Path.Combine(UnityEngine.Application.dataPath, "Backup", backupFolder);
 
-        if (!Directory.Exists(backUpPath))
+        string source, destination;
+
+        if (!restore)
         {
-            Directory.CreateDirectory(backUpPath);
+            source = folder;
+            destination = backUpPath;
+        }
+        else
+        {
+            source = backUpPath;
+            destination = folder;
+        }
+            
+
+        if (!Directory.Exists(destination))
+        {
+            Directory.CreateDirectory(destination);
             // FileUtil.CopyFileOrDirectory(GetCVFolder(), backUpPath);
-            FileUtil.ReplaceDirectory(folder, backUpPath);
+            FileUtil.ReplaceDirectory(source, destination);
         }
 
         else
         {
             Debug.Log("Cancello vecchio Backup");
-            FileUtil.DeleteFileOrDirectory(backUpPath);
-            FileUtil.CopyFileOrDirectory(folder, backUpPath);
+            FileUtil.DeleteFileOrDirectory(destination);
+            FileUtil.CopyFileOrDirectory(source, destination);
         }
     }
 
