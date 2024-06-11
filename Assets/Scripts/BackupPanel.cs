@@ -12,9 +12,10 @@ public class BackupPanel : MonoBehaviour
     {
         backupPath.text += "\n" + BackupManager.GetBackUpPath();
     }
-    public void Save()
+    public void Save(bool overwrite)
     {
-        BackupManager.BackUpAll();
+        if (overwrite) BackupManager.DeleteBackupDirectory();
+            BackupManager.BackUpAll();
         // Debug.Log("Click salvatggio");
     }
 
@@ -23,6 +24,7 @@ public class BackupPanel : MonoBehaviour
         BackupManager.BackUpAll(true);
         //  Debug.Log("Click caricamento");
     }
+
 
     public void LoadCVScene()
     {

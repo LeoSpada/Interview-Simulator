@@ -4,10 +4,6 @@ using UnityEngine;
 
 public static class BackupManager
 {
-
-    // FARE CON INVERSE
-    // Mettere indirizzo A e B (sorgente / destinazione) e in base a restore assegni folder e backup folder
-
     public static string GetBackUpPath()
     {
         return Path.Combine(Directory.GetCurrentDirectory(), "Backup");
@@ -58,38 +54,20 @@ public static class BackupManager
         {
             source = backUpPath;
             destination = persistent;
-        }
+        }             
 
         CopyDirectory(source, destination, true);
 
         Debug.Log("Backup terminato");
     }
 
-    //private static void CopyDir(string source, string destination)
-    //{
-    //    if (!Directory.Exists(destination))
-    //    {
-    //        Directory.CreateDirectory(destination);
-    //        // FileUtil.ReplaceDirectory(source, destination);
-    //        //File.Copy(source, destination);
+    public static void DeleteBackupDirectory()
+    {
+        Directory.Delete(GetBackUpPath(), true);
+        Directory.CreateDirectory(GetBackUpPath());
+    }
 
-    //        File.Replace(source, destination, "BKP");
-    //    }
-
-    //    else
-    //    {
-    //        Debug.Log("Cancello vecchio Backup");
-    //        //FileUtil.DeleteFileOrDirectory(destination);
-    //        //FileUtil.CopyFileOrDirectory(source, destination);
-    //        // File.Delete(destination);
-    //        File.Copy(source, destination);
-
-    //    }
-
-    //    Debug.Log("COPIA FATTA");
-    //}
-
-    static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
+    public static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
     {
 
         // Get information about the source directory
