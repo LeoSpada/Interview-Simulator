@@ -33,6 +33,9 @@ public static class BackupManager
 
     public static void BackUpAll(bool restore = false)
     {
+
+        Debug.Log("Avvio backup di tutto");
+
         string persistent = Path.Combine(UnityEngine.Device.Application.persistentDataPath);
         string backUpPath = Path.Combine(UnityEngine.Application.dataPath, "Backup");
 
@@ -51,6 +54,8 @@ public static class BackupManager
         }
 
         CopyDir(source,destination);
+
+        Debug.Log("Backup terminato");
     }
 
     private static void CopyDir(string source, string destination)
@@ -67,5 +72,7 @@ public static class BackupManager
             FileUtil.DeleteFileOrDirectory(destination);
             FileUtil.CopyFileOrDirectory(source, destination);
         }
+
+        Debug.Log("COPIA FATTA");
     }
 }
