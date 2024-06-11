@@ -2,6 +2,7 @@ using System.IO;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.WSA;
 
 public static class BackupManager
@@ -27,11 +28,36 @@ public static class BackupManager
             destination = folder;
         }
             
+        CopyDir(source, destination);
+    }
 
+    public static void BackUpAll(bool restore = false)
+    {
+        string persistent = Path.Combine(UnityEngine.Device.Application.persistentDataPath);
+        string backUpPath = Path.Combine(UnityEngine.Application.dataPath, "Backup");
+
+
+        string source, destination;
+
+        if (!restore)
+        {
+            source = persistent;
+            destination = backUpPath;
+        }
+        else
+        {
+            source = backUpPath;
+            destination = persistent;
+        }
+
+        CopyDir(source,destination);
+    }
+
+    private static void CopyDir(string source, string destination)
+    {
         if (!Directory.Exists(destination))
         {
             Directory.CreateDirectory(destination);
-            // FileUtil.CopyFileOrDirectory(GetCVFolder(), backUpPath);
             FileUtil.ReplaceDirectory(source, destination);
         }
 
@@ -40,26 +66,6 @@ public static class BackupManager
             Debug.Log("Cancello vecchio Backup");
             FileUtil.DeleteFileOrDirectory(destination);
             FileUtil.CopyFileOrDirectory(source, destination);
-        }
-    }
-
-    public static void BackUpAll()
-    {
-        string persistent = Path.Combine(UnityEngine.Device.Application.persistentDataPath);
-        string backUpPath = Path.Combine(UnityEngine.Application.dataPath, "Backup");
-
-        if (!Directory.Exists(backUpPath))
-        {
-            Directory.CreateDirectory(backUpPath);
-            // FileUtil.CopyFileOrDirectory(GetCVFolder(), backUpPath);
-            FileUtil.ReplaceDirectory(persistent, backUpPath);
-        }
-
-        else
-        {
-            Debug.Log("Cancello vecchio Backup");
-            FileUtil.DeleteFileOrDirectory(backUpPath);
-            FileUtil.CopyFileOrDirectory(persistent, backUpPath);
         }
     }
 }

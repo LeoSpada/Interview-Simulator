@@ -151,12 +151,10 @@ public static class InterviewManager
         string json = JsonConvert.SerializeObject(question);
         Debug.Log(json);
         File.WriteAllText(GetQuestionFilePath(job, question.id), json);
-
-        // string backUpPath = Path.Combine(saveFolder, job);
-
+                
         BackupManager.BackUpFolder(GetQuestionsFolder(), saveFolder);
 
-        // BackupManager.BackUpAll();
+       // BackupManager.BackUpAll();
     }
 
     // Usata per debug. Stampa a schermo la domanda formattata.
