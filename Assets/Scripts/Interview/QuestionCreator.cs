@@ -17,6 +17,8 @@ public class QuestionCreator : MonoBehaviour
 
     public TMP_Dropdown folderDropdown;
 
+    public GameObject confirmPanel;
+
     private string folder = "";
 
     public void Start()
@@ -108,5 +110,7 @@ public class QuestionCreator : MonoBehaviour
     {
         InterviewManager.AddQuestion(question, folder);
         Debug.Log("SALVATO CON SUCCESSO IN " + folder);
+
+        if (confirmPanel) confirmPanel.SetActive(true);
     }
 }
