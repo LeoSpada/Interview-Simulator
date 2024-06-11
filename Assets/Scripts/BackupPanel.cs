@@ -28,6 +28,6 @@ public class BackupPanel : MonoBehaviour
 
     public void LoadCVScene()
     {
-        GameManager.instance.LoadScene("CV_Question_Creator");
+        GameManager.instance.LoadScene("Scena_Titolo");
     }
 }
