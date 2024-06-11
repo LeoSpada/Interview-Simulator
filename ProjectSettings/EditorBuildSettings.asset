@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CV_Question_Creator.unity
     guid: 486f7699acda743459a304b0fa409545
+  - enabled: 1
+    path: Assets/Scenes/Backup.unity
+    guid: c533bedd4f71c394e8b828db6046a7f5
   m_configObjects: {}

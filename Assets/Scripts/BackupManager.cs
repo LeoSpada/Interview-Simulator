@@ -24,8 +24,10 @@ public static class BackupManager
             source = backUpPath;
             destination = folder;
         }
-            
-        CopyDir(source, destination);
+
+        CopyDirectory(source, destination, true);
+
+        Debug.Log("Backup terminato");
     }
 
     public static void BackUpAll(bool restore = false)
@@ -50,26 +52,74 @@ public static class BackupManager
             destination = persistent;
         }
 
-        CopyDir(source,destination);
+        CopyDirectory(source, destination, true);
 
         Debug.Log("Backup terminato");
     }
 
-    private static void CopyDir(string source, string destination)
+    //private static void CopyDir(string source, string destination)
+    //{
+    //    if (!Directory.Exists(destination))
+    //    {
+    //        Directory.CreateDirectory(destination);
+    //        // FileUtil.ReplaceDirectory(source, destination);
+    //        //File.Copy(source, destination);
+
+    //        File.Replace(source, destination, "BKP");
+    //    }
+
+    //    else
+    //    {
+    //        Debug.Log("Cancello vecchio Backup");
+    //        //FileUtil.DeleteFileOrDirectory(destination);
+    //        //FileUtil.CopyFileOrDirectory(source, destination);
+    //        // File.Delete(destination);
+    //        File.Copy(source, destination);
+
+    //    }
+
+    //    Debug.Log("COPIA FATTA");
+    //}
+
+    static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
     {
-        if (!Directory.Exists(destination))
+       
+        // Get information about the source directory
+        var dir = new DirectoryInfo(sourceDir);
+
+        // Check if the source directory exists
+        if (!dir.Exists)
+            throw new DirectoryNotFoundException($"Source directory not found: {dir.FullName}");
+
+        // Cache directories before we start copying
+        DirectoryInfo[] dirs = dir.GetDirectories();
+
+        // Create the destination directory
+        Directory.CreateDirectory(destinationDir);
+
+        // Get the files in the source directory and copy to the destination directory
+        foreach (FileInfo file in dir.GetFiles())
         {
-            Directory.CreateDirectory(destination);
-            FileUtil.ReplaceDirectory(source, destination);
+
+            string targetFilePath = Path.Combine(destinationDir, file.Name);
+            try
+            {
+                file.CopyTo(targetFilePath, true);
+            }
+            catch (IOException)
+            {
+               // Debug.Log($"{file.Name} non sovrascritto.");
+            }
         }
 
-        else
+        // If recursive and copying subdirectories, recursively call this method
+        if (recursive)
         {
-            Debug.Log("Cancello vecchio Backup");
-            FileUtil.DeleteFileOrDirectory(destination);
-            FileUtil.CopyFileOrDirectory(source, destination);
+            foreach (DirectoryInfo subDir in dirs)
+            {
+                string newDestinationDir = Path.Combine(destinationDir, subDir.Name);
+                CopyDirectory(subDir.FullName, newDestinationDir, true);
+            }
         }
-
-        Debug.Log("COPIA FATTA");
     }
 }
