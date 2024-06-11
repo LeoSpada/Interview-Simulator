@@ -9,6 +9,10 @@ public static class InputPanel
     public static bool fieldsClear = true;
     public static bool dropdownsClear = true;
 
+    // Valore che il codice rimuove / ignora in alcuni contesti.
+    // ATTENZIONE: deve essere un numero!
+    public static string disabledText = "000";
+
     // Controlla che l'input field contenga dati utilizzabili
     public static bool CheckInputField(TMP_InputField inputField)
     {
@@ -49,7 +53,7 @@ public static class InputPanel
     public static void DisableInputField(TMP_InputField field)
     {
         Debug.Log("Ignorata");
-        field.text = "000";
+        field.text = disabledText;
         field.gameObject.SetActive(false);
     }
 

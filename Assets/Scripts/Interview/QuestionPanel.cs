@@ -96,6 +96,21 @@ public class QuestionPanel : MonoBehaviour
             TextMeshProUGUI buttonText = ansButtons[i].GetComponentInChildren<TextMeshProUGUI>();
             buttonText.text = q.answers[i].text;
         }
+
+        foreach (Button button in ansButtons)
+        {
+            TextMeshProUGUI buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
+
+            if (buttonText.text.Equals(InputPanel.disabledText))
+            {
+                // Debug.Log($"Risposta {button.name} rimossa");
+                button.gameObject.SetActive(false);
+            }
+            else
+            {
+                button.gameObject.SetActive(true);
+            }
+        }
     }
 
     public void LoadNewQuestion()
@@ -115,13 +130,6 @@ public class QuestionPanel : MonoBehaviour
 
         else Debug.Log("FINITE");
     }
-
-    //public void LoadNewQuestion(string job)
-    //{
-    //    Setup(GetRandomQuestion(job));
-    //    SetupInterviewInfo();
-
-    //}
 
     public void SubmitFolderInput()
     {
