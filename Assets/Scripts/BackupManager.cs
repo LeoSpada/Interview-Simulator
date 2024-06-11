@@ -8,9 +8,15 @@ public static class BackupManager
     // FARE CON INVERSE
     // Mettere indirizzo A e B (sorgente / destinazione) e in base a restore assegni folder e backup folder
 
+    public static string GetBackUpPath()
+    {
+        return Path.Combine(Directory.GetCurrentDirectory(), "Backup");
+    }
+
+
     public static void BackUpFolder(string folder, string backupFolder, bool restore = false)
     {
-        string backUpPath = Path.Combine(UnityEngine.Application.dataPath, "Backup", backupFolder);
+        string backUpPath = Path.Combine(GetBackUpPath(), backupFolder);
 
         string source, destination;
 
@@ -36,7 +42,9 @@ public static class BackupManager
         Debug.Log("Avvio backup di tutto");
 
         string persistent = Path.Combine(UnityEngine.Device.Application.persistentDataPath);
-        string backUpPath = Path.Combine(UnityEngine.Application.dataPath, "Backup");
+        string backUpPath = GetBackUpPath();
+
+        //string backUpPath = Path.Combine(UnityEngine.Application.dataPath, "Backup");
 
 
         string source, destination;
@@ -83,7 +91,7 @@ public static class BackupManager
 
     static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
     {
-       
+
         // Get information about the source directory
         var dir = new DirectoryInfo(sourceDir);
 
@@ -108,7 +116,7 @@ public static class BackupManager
             }
             catch (IOException)
             {
-               // Debug.Log($"{file.Name} non sovrascritto.");
+                // Debug.Log($"{file.Name} non sovrascritto.");
             }
         }
 

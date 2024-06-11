@@ -6,17 +6,22 @@ using UnityEngine;
 public class BackupPanel : MonoBehaviour
 {
     //public GameObject confirmPanel;
-    //public TextMeshProUGUI confirmText;
+    public TextMeshProUGUI backupPath;
+
+    public void Start()
+    {
+        backupPath.text += "\n" + BackupManager.GetBackUpPath();
+    }
     public void Save()
     {
         BackupManager.BackUpAll();
-       // Debug.Log("Click salvatggio");
+        // Debug.Log("Click salvatggio");
     }
 
     public void Load()
     {
         BackupManager.BackUpAll(true);
-      //  Debug.Log("Click caricamento");
+        //  Debug.Log("Click caricamento");
     }
 
     public void LoadCVScene()
