@@ -9,6 +9,10 @@ public static class InputPanel
     public static bool fieldsClear = true;
     public static bool dropdownsClear = true;
 
+    // Valore che il codice rimuove / ignora in alcuni contesti.
+    // ATTENZIONE: deve essere un numero!
+    public static string disabledText = "000";
+
     // Controlla che l'input field contenga dati utilizzabili
     public static bool CheckInputField(TMP_InputField inputField)
     {
@@ -18,15 +22,16 @@ public static class InputPanel
 
     public static void AcceptInputField(TMP_InputField inputField, bool canColor = true, bool canBreak = true)
     {
-        if (!InputPanel.CheckInputField(inputField))
+        if (!inputField.isActiveAndEnabled)
         {
-            // Debug.Log("Campo inesistente");
-
-            if (canColor) inputField.image.color = Color.red;
-
-            if (canBreak) InputPanel.fieldsClear = false;
+            Debug.Log(inputField + " ignorato");
+            return;
         }
-
+        else if (!InputPanel.CheckInputField(inputField))
+        {
+            if (canColor) inputField.image.color = Color.red;
+            if (canBreak) fieldsClear = false;
+        }
         else if (canColor) inputField.image.color = Color.white;
     }
 
@@ -34,9 +39,23 @@ public static class InputPanel
     {
         foreach (TMP_InputField inputField in inputFields)
         {
-           AcceptInputField(inputField, canColor, canBreak);
+            AcceptInputField(inputField, canColor, canBreak);
         }
-    }   
+    }
+
+    public static void EnableInputField(TMP_InputField field)
+    {
+        field.ActivateInputField();
+        field.enabled = true;
+        field.gameObject.SetActive(true);
+    }
+
+    public static void DisableInputField(TMP_InputField field)
+    {
+        Debug.Log("Ignorata");
+        field.text = disabledText;
+        field.gameObject.SetActive(false);
+    }
 
     // Controlla che il valore del dropdown corrisponda ad un valore contenuto nell'enum
     public static T AcceptDropdown<T>(TMP_Dropdown dropdown, bool canColor = true, bool canBreak = true)

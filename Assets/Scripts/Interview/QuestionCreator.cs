@@ -17,6 +17,8 @@ public class QuestionCreator : MonoBehaviour
 
     public TMP_Dropdown folderDropdown;
 
+    public TMP_Dropdown answersSizeDropdown;
+
     public GameObject confirmPanel;
 
     private string folder = "";
@@ -42,6 +44,38 @@ public class QuestionCreator : MonoBehaviour
         {
             customFolder.gameObject.SetActive(false);
             customActive = false;
+        }
+
+
+    }
+
+    public void ChangeAnswersSize()
+    {
+
+        int size = int.Parse(answersSizeDropdown.captionText.text);
+
+        Debug.Log("Dim inserita = " + size);
+
+
+        foreach (var ans in answerFields)
+        {
+
+            ans.DeactivateInputField(true);
+            ans.enabled = false;
+
+        }
+
+        int i; 
+        for (i = 0; i < size; i++)
+        {
+            InputPanel.EnableInputField(answerFields[i]);
+            InputPanel.EnableInputField(pointFields[i]);
+        }
+
+        for (int j =i; j<answerFields.Length; j++)
+        {
+            InputPanel.DisableInputField(answerFields[j]);
+            InputPanel.DisableInputField(pointFields[j]);
         }
     }
 

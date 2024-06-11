@@ -29,6 +29,7 @@ public class QuestionPanel : MonoBehaviour
     [Header("Punteggi")]
     public float points = 0;
     public int answered = 0;
+    public int noPointAnswers = 0;
     public float average = 0f;
     public int questionNumber = 0;
 
@@ -96,6 +97,21 @@ public class QuestionPanel : MonoBehaviour
             TextMeshProUGUI buttonText = ansButtons[i].GetComponentInChildren<TextMeshProUGUI>();
             buttonText.text = q.answers[i].text;
         }
+
+        foreach (Button button in ansButtons)
+        {
+            TextMeshProUGUI buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
+
+            if (buttonText.text.Equals(InputPanel.disabledText))
+            {
+                // Debug.Log($"Risposta {button.name} rimossa");
+                button.gameObject.SetActive(false);
+            }
+            else
+            {
+                button.gameObject.SetActive(true);
+            }
+        }
     }
 
     public void LoadNewQuestion()
@@ -115,13 +131,6 @@ public class QuestionPanel : MonoBehaviour
 
         else Debug.Log("FINITE");
     }
-
-    //public void LoadNewQuestion(string job)
-    //{
-    //    Setup(GetRandomQuestion(job));
-    //    SetupInterviewInfo();
-
-    //}
 
     public void SubmitFolderInput()
     {
@@ -184,10 +193,15 @@ public class QuestionPanel : MonoBehaviour
     {
         if (question != null)
         {
-            points += float.Parse(button.name);
+            float answerPoints = float.Parse(button.name);
+
+            if (answerPoints != 0) points += answerPoints;
+            else noPointAnswers++;
+
+
             answered++;
 
-            average = points / answered;
+            average = points / (answered - noPointAnswers);
 
             Invoke(nameof(NextQuestion), 1f);
         }
