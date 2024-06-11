@@ -39,6 +39,20 @@ public static class InputPanel
         }
     }
 
+    public static void EnableInputField(TMP_InputField field)
+    {
+        field.ActivateInputField();
+        field.enabled = true;
+        field.gameObject.SetActive(true);
+    }
+
+    public static void DisableInputField(TMP_InputField field)
+    {
+        Debug.Log("Ignorata");
+        field.text = "000";
+        field.gameObject.SetActive(false);
+    }
+
     // Controlla che il valore del dropdown corrisponda ad un valore contenuto nell'enum
     public static T AcceptDropdown<T>(TMP_Dropdown dropdown, bool canColor = true, bool canBreak = true)
     {

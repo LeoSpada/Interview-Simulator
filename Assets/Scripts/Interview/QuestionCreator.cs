@@ -19,8 +19,6 @@ public class QuestionCreator : MonoBehaviour
 
     public TMP_Dropdown answersSizeDropdown;
 
-    private bool sizeChanged;
-
     public GameObject confirmPanel;
 
     private string folder = "";
@@ -70,24 +68,16 @@ public class QuestionCreator : MonoBehaviour
         int i; 
         for (i = 0; i < size; i++)
         {
-            answerFields[i].ActivateInputField();
-            answerFields[i].enabled = true;
-            answerFields[i].gameObject.SetActive(true);
+            InputPanel.EnableInputField(answerFields[i]);
+            InputPanel.EnableInputField(pointFields[i]);
         }
 
         for (int j =i; j<answerFields.Length; j++)
         {
-            Debug.Log("Ignorata");
-            answerFields[j].text = "";
-            answerFields[j].gameObject.SetActive(false);
+            InputPanel.DisableInputField(answerFields[j]);
+            InputPanel.DisableInputField(pointFields[j]);
         }
     }
-
-
-
-
-
-
 
     // Crea un CV a partire dai campi inseriti. Controlli su file esistenti e campi vuoti prima del salvataggio.
     public void Submit()
