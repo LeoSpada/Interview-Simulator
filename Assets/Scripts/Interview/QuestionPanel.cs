@@ -20,10 +20,12 @@ public class QuestionPanel : MonoBehaviour
     [Header("Colloquio")]
     public int startQuestions = 2;
     public int jobQuestions = 2;
-    public int softSkillQuestions = 2;
+    public int endQuestions = 2;
     public int index = 0;
     public string startFolder = "Start";
-    public string softSkillFolder = "SoftSkill";
+    // CAMBIARE NOME CARTELLA / CREARE CARTELLA END e END nel dropdown di question creator
+    // Rimuovere soft skill da dropdown question Creator
+    public string endFolder = "End";
 
     [Header("CV")]
     public string currentJob;
@@ -62,6 +64,12 @@ public class QuestionPanel : MonoBehaviour
 
     void Start()
     {
+        introQuestion = GetIntroQuestion();
+        softSkillQuestion = GetSoftSkillQuestion();
+        strengthQuestion = GetStrengthQuestion();
+        weaknessQuestion = GetWeaknessQuestion();
+
+
         if (interviewInfo)
             interviewInfo.gameObject.SetActive(false);
 
@@ -79,15 +87,12 @@ public class QuestionPanel : MonoBehaviour
             {
                 cvInfo.gameObject.SetActive(true);
                 cvInfo.reloadInfo();
-            }          
+            }
 
             SetupInterview();
         }
 
         else Debug.Log("Nessun CV attualmente caricato. Caricare domanda tramite pulsanti.");
-
-        
-
     }
 
     public void Setup(Question q)
@@ -215,6 +220,8 @@ public class QuestionPanel : MonoBehaviour
 
     public void OnButtonClick(Button button)
     {
+        DebugQuestion(question);
+
         if (question != null)
         {
             float answerPoints = float.Parse(button.name);
@@ -254,8 +261,6 @@ public class QuestionPanel : MonoBehaviour
                 {
                     Debug.Log("CONTINUE");
                     noPointAnswers++;
-
-
                     questionNumber++;
                 }
                 else points += answerPoints;
@@ -271,39 +276,40 @@ public class QuestionPanel : MonoBehaviour
 
             Invoke(nameof(NextQuestion), 1f);
         }
-        else
+
+        // Parte non funzionante di test per rimuovere risposte già date
+        // TESTATO SOLO CON SOFTSKILLQUESTION
+
+        else if (question.Equals(softSkillQuestion))
         {
-            // Cambiare con invocazione Scena punteggio
-            Invoke(nameof(ResetInterview), 1f);
+            Debug.Log("TROVATA");
+            softSkillQuestion.answers[0].text = InputPanel.disabledText;
+            DebugQuestion(softSkillQuestion);
         }
+
+
+        else Invoke(nameof(ResetInterview), 1f);
     }
 
     // Imposta il colloquio precaricando le domande da varie cartelle.
     // ATTENZIONE: attualmente carica da 3 cartelle, senza possibilità di cambiare. Si può cambiare però le 3 cartelle da cui caricare (VEDI VARIABILI SOPRA)
 
-    // TROVARE MODO DI AGGIUNGERE LOOP DEI PREGI / DIFETTI (vedi foto)
+
     // ALCUNE DOMANDE ANDREBBERO FATTE IN UN ORDINE PREFISSATO
     // Funzione in InterviewManager che restituisce la cartella intera, in ordine? (Forse già c'è - Vedi GetAllQuestionsInFolder()
 
     public void SetupInterview()
     {
-        // FORSE index deve partire da (Quantità di domande intro risposte) e questionNumber sommato con il loro numero        
-
-        introQuestion = GetIntroQuestion();
-        softSkillQuestion = GetSoftSkillQuestion();
-        strengthQuestion = GetStrengthQuestion();
-        weaknessQuestion = GetWeaknessQuestion();
 
 
         questions.Add(introQuestion);
-        // index++;
         questionNumber++;
 
         startQuestions = QuestionLimit(startQuestions, startFolder);
         jobQuestions = QuestionLimit(startQuestions, currentJob);
-        softSkillQuestions = QuestionLimit(startQuestions, softSkillFolder);
+        endQuestions = QuestionLimit(startQuestions, endFolder);
 
-        //questionNumber = startQuestions + jobQuestions + softSkillQuestions;
+        //questionNumber = startQuestions + jobQuestions + endQuestions;
 
         if (questions == null)
         {
@@ -317,8 +323,7 @@ public class QuestionPanel : MonoBehaviour
 
         for (j = i; j < i + jobQuestions; j++) questions.Add(GetRandomQuestion(currentJob));
 
-        // RIESEGUI PER VEDERE SE VA
-        for (k = j; k < j + softSkillQuestions; k++) questions.Add(GetRandomQuestion(softSkillFolder));
+        for (k = j; k < j + endQuestions; k++) questions.Add(GetRandomQuestion(endFolder));
 
         // Aggiunge una domanda nulla per segnalare a setup la fine del colloquio
         questions.Add(null);
@@ -326,7 +331,7 @@ public class QuestionPanel : MonoBehaviour
         SetupInterviewInfo();
         DebugQuestion(questions[index]);
 
-        Debug.Log("Ci sono domande n =" + questions.Count);
+        Debug.Log("Ci sono domande n = " + questions.Count);
 
         questionNumber = questions.Count - 1;
         Setup(questions[index]);
@@ -445,6 +450,8 @@ public class QuestionPanel : MonoBehaviour
             else return counter;
         }
     }
+
+    // RIMUOVERE / COMMENTARE DA VERSIONE FINALE
 
     public void ResetInterview()
     {
