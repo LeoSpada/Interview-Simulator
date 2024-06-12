@@ -232,9 +232,11 @@ public class QuestionPanel : MonoBehaviour
     {
         string[] feedbacks =
         {
-            "interessante",
-            "Wow",
-            "Capisco"
+            "Risposta interessante.",
+            "...",
+            "Capisco...",
+            "Bene. Andiamo avanti.",
+            ""
         };
 
         return feedbacks[Random.Range(0, feedbacks.Length)];
