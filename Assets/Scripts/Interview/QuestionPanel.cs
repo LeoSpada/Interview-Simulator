@@ -224,6 +224,17 @@ public class QuestionPanel : MonoBehaviour
 
         if (question != null)
         {
+
+            Debug.Log("Question: " + question.question);
+            Debug.Log("SSQ: " + softSkillQuestion.question);
+
+            if (question.question.Equals(softSkillQuestion.question))
+            {
+                Debug.Log("TROVATA");
+                softSkillQuestion.answers[0].text = InputPanel.disabledText;
+                DebugQuestion(softSkillQuestion);
+            }
+
             float answerPoints = float.Parse(button.name);
 
             if (answerPoints != 0)
@@ -279,14 +290,6 @@ public class QuestionPanel : MonoBehaviour
 
         // Parte non funzionante di test per rimuovere risposte già date
         // TESTATO SOLO CON SOFTSKILLQUESTION
-
-        else if (question.Equals(softSkillQuestion))
-        {
-            Debug.Log("TROVATA");
-            softSkillQuestion.answers[0].text = InputPanel.disabledText;
-            DebugQuestion(softSkillQuestion);
-        }
-
 
         else Invoke(nameof(ResetInterview), 1f);
     }
