@@ -38,10 +38,10 @@ public class QuestionPanel : MonoBehaviour
 
     // Sezione usata in IntroQuestion
 
-    private readonly float softSkillID = 1000;
-    private readonly float pregiID = 1001;
-    private readonly float difettiID = 1002;
-    private readonly float continueID = 1003;
+    private readonly float softSkillID = 11.01f;
+    private readonly float pregiID = 11.02f;
+    private readonly float difettiID = 11.03f;
+    private readonly float continueID = 11.04f;
     private readonly string introFolder = "intro";
 
     // Sezione usata in Quiz Test
@@ -133,7 +133,8 @@ public class QuestionPanel : MonoBehaviour
 
     public void NextQuestion()
     {
-        if (index <= questionNumber - 1)
+        // Rimosso -1 per test
+        if (index <= questionNumber)
         {
             Setup(questions[++index]);
             // Debug.Log("Index = " + index);
@@ -231,17 +232,16 @@ public class QuestionPanel : MonoBehaviour
 
     public void SetupInterview()
     {
-
-        // ATTENZIONE: NON FA RAGGIUNGERE SCHERMATA DOMANDE FINITE
-        // FORSE i deve partire da (Quantità di domande intro risposte) e questionNumber sommato con il loro numero
-        //questions.Add(GetIntroQuestion());
-        //questionNumber++;
+        // FORSE index deve partire da (Quantità di domande intro risposte) e questionNumber sommato con il loro numero
+        questions.Add(GetIntroQuestion());
+        // index++;
+        questionNumber++;
 
         startQuestions = QuestionLimit(startQuestions, startFolder);
         jobQuestions = QuestionLimit(startQuestions, currentJob);
         softSkillQuestions = QuestionLimit(startQuestions, softSkillFolder);
 
-        questionNumber = startQuestions + jobQuestions + softSkillQuestions;
+        //questionNumber = startQuestions + jobQuestions + softSkillQuestions;
 
         if (questions == null)
         {
@@ -255,12 +255,18 @@ public class QuestionPanel : MonoBehaviour
 
         for (j = i; j < i + jobQuestions; j++) questions.Add(GetRandomQuestion(currentJob));
 
-        for (k = j; k < questionNumber; k++) questions.Add(GetRandomQuestion(softSkillFolder));
+        // RIESEGUI PER VEDERE SE VA
+        for (k = j; k < j + softSkillQuestions; k++) questions.Add(GetRandomQuestion(softSkillFolder));
 
         // Aggiunge una domanda nulla per segnalare a setup la fine del colloquio
         questions.Add(null);
 
         SetupInterviewInfo();
+        DebugQuestion(questions[index]);
+
+        Debug.Log("Ci sono domande n =" + questions.Count);
+
+        questionNumber = questions.Count - 1;
         Setup(questions[index]);
     }
 
@@ -273,26 +279,23 @@ public class QuestionPanel : MonoBehaviour
         answers[0].points = softSkillID;
 
         answers[1].text = "Elenca Pregi";
-        answers[0].points = pregiID;
-        
+        answers[1].points = pregiID;
+
         answers[2].text = "Elenca Difetti";
-        answers[0].points = difettiID;
-        
+        answers[2].points = difettiID;
+
         answers[3].text = "Vai avanti";
-        answers[0].points = continueID;
+        answers[3].points = continueID;
 
         Question question = new(questionText, answers);
 
-        if (save) InterviewManager.AddQuestion(question,introFolder);
+        if (save) InterviewManager.AddQuestion(question, introFolder);
 
         return question;
-
     }
 
     public int QuestionLimit(int counter, string folder, bool log = false)
     {
-
-
         {
             int folderSize = GetJobFolderSize(folder);
             if (counter > folderSize)
