@@ -113,6 +113,12 @@ public static class InterviewManager
         List<Question> list = new();
 
         DirectoryInfo dir = new(GetJobFolder(job));
+        if (!dir.Exists)
+        {
+            Debug.Log("La cartella " + dir + " non esiste");
+            return list;
+        }
+
         FileInfo[] info = dir.GetFiles("*.json");
 
         foreach (FileInfo f in info)
@@ -151,10 +157,10 @@ public static class InterviewManager
         string json = JsonConvert.SerializeObject(question);
         Debug.Log(json);
         File.WriteAllText(GetQuestionFilePath(job, question.id), json);
-                
-      //  BackupManager.BackUpFolder(GetQuestionsFolder(), saveFolder);
 
-       // BackupManager.BackUpAll();
+        //  BackupManager.BackUpFolder(GetQuestionsFolder(), saveFolder);
+
+        // BackupManager.BackUpAll();
     }
 
     // Usata per debug. Stampa a schermo la domanda formattata.
