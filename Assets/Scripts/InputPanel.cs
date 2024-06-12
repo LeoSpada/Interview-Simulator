@@ -58,6 +58,8 @@ public static class InputPanel
     }
 
     // Controlla che il valore del dropdown corrisponda ad un valore contenuto nell'enum
+
+    // FORSE NECESSARIE MODIFICHE PER IGNORARE / ATTIVARE / DISATTIVARE: VEDI ACCEPT INPUT FIELD
     public static T AcceptDropdown<T>(TMP_Dropdown dropdown, bool canColor = true, bool canBreak = true)
     {
         // Ottiene il valore del testo del dropdown

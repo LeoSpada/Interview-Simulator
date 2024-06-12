@@ -98,10 +98,6 @@ public static class CVManager
        // BackupManager.BackUpFolder(GetCVFolder(), saveFolder);
     }
 
-
-
-
-
     public static void RemoveCVEntry(CVEntry cvEntry)
     {
         if (CheckEntry(cvEntry))
@@ -143,6 +139,9 @@ public static class CVManager
 
 
 [System.Serializable]
+
+// AGGIUNGERE CAMPI PER ISTRUZIONE ED ESPERIENZE PASSATE
+
 public class CVEntry
 {
     public string name;

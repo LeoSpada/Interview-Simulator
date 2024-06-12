@@ -45,10 +45,9 @@ public class QuestionCreator : MonoBehaviour
             customFolder.gameObject.SetActive(false);
             customActive = false;
         }
-
-
     }
 
+    // Usata da OnValueChanged di answersSizeDropdown
     public void ChangeAnswersSize()
     {
 
@@ -97,7 +96,7 @@ public class QuestionCreator : MonoBehaviour
             if (!InputPanel.dropdownsClear)
             {
                 folder = folderDropdown.captionText.text;
-                Debug.Log("Non è custom, ma " + folder);
+               // Debug.Log("Non è custom, ma " + folder);
             }
             else folder = occupazione.ToString();
         }
@@ -113,7 +112,7 @@ public class QuestionCreator : MonoBehaviour
             if (customActive)
             {
                 folder = customFolder.text;
-                Debug.Log("Custom concesso: salvataggio andrà in " + folder);
+               // Debug.Log("Custom concesso: salvataggio andrà in " + folder);
             }
 
             SaveQuestion(folder);
