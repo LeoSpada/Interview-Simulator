@@ -175,6 +175,7 @@ public class QuestionPanel : MonoBehaviour
 
         if (interviewInfo)
         {
+            questionNumber = questions.Count - 1;
             interviewInfo.gameObject.SetActive(true);
             interviewInfo.ReloadInfo();
         }
@@ -225,11 +226,21 @@ public class QuestionPanel : MonoBehaviour
                 {
                     Debug.Log("PREGI");
                     noPointAnswers++;
+
+                    questions.Insert(index + 1, GetStrengthQuestion());
+                    questions.Insert(index + 2, GetIntroQuestion());
+                    questionNumber++;
+                    
                 }
                 else if (answerPoints == difettiID)
                 {
                     Debug.Log("DIFETTI");
                     noPointAnswers++;
+
+                    questions.Insert(index + 1, GetWeaknessQuestion());
+                    questions.Insert(index + 2, GetIntroQuestion());
+                    questionNumber++;
+                    
                 }
                 else if (answerPoints == continueID)
                 {
@@ -346,6 +357,56 @@ public class QuestionPanel : MonoBehaviour
         answers[2].points = 0f;
 
         answers[3].text = "Time Management";
+        answers[3].points = 0f;
+
+        Question question = new(questionText, answers);
+
+        if (save) InterviewManager.AddQuestion(question, introFolder);
+
+        return question;
+    }
+
+    // Domande sui pregi
+    public Question GetStrengthQuestion(bool save = false)
+    {
+        string questionText = "Quali pregi possiede?";
+
+        Answer[] answers = new Answer[4];
+        answers[0].text = "Onestà";
+        answers[0].points = 0f;
+
+        answers[1].text = "Umiltà";
+        answers[1].points = 0f;
+
+        answers[2].text = "Affidabilità";
+        answers[2].points = 0f;
+
+        answers[3].text = "Determinazione";
+        answers[3].points = 0f;
+
+        Question question = new(questionText, answers);
+
+        if (save) InterviewManager.AddQuestion(question, introFolder);
+
+        return question;
+    }
+
+    // Domande sui difetti
+    public Question GetWeaknessQuestion(bool save = false)
+    {
+        string questionText = "Quali difetti possiede?";
+
+        Answer[] answers = new Answer[4];
+        answers[0].text = "Rabbia";
+        answers[0].points = 0f;
+
+        answers[1].text = "Pigrizia";
+        answers[1].points = 0f;
+
+        answers[2].text = "Invidia";
+        answers[2].points = 0f;
+
+        answers[3].text = "Distrazione";
         answers[3].points = 0f;
 
         Question question = new(questionText, answers);
