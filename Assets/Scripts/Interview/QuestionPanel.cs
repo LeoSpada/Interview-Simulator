@@ -1,9 +1,12 @@
+using JetBrains.Annotations;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Windows;
 using static InterviewManager;
+using static InterviewManager.Question;
 
 public class QuestionPanel : MonoBehaviour
 {
@@ -32,6 +35,14 @@ public class QuestionPanel : MonoBehaviour
     public int noPointAnswers = 0;
     public float average = 0f;
     public int questionNumber = 0;
+
+    // Sezione usata in IntroQuestion
+
+    private readonly float softSkillID = 1000;
+    private readonly float pregiID = 1001;
+    private readonly float difettiID = 1002;
+    private readonly float continueID = 1003;
+    private readonly string introFolder = "intro";
 
     // Sezione usata in Quiz Test
     // CVInfo e InterviewInfo potrebbero essere usati anche in fase finale
@@ -213,8 +224,19 @@ public class QuestionPanel : MonoBehaviour
 
     // Imposta il colloquio precaricando le domande da varie cartelle.
     // ATTENZIONE: attualmente carica da 3 cartelle, senza possibilità di cambiare. Si può cambiare però le 3 cartelle da cui caricare (VEDI VARIABILI SOPRA)
+
+    // TROVARE MODO DI AGGIUNGERE LOOP DEI PREGI / DIFETTI (vedi foto)
+    // ALCUNE DOMANDE ANDREBBERO FATTE IN UN ORDINE PREFISSATO
+    // Funzione in InterviewManager che restituisce la cartella intera, in ordine? (Forse già c'è - Vedi GetAllQuestionsInFolder()
+
     public void SetupInterview()
     {
+
+        // ATTENZIONE: NON FA RAGGIUNGERE SCHERMATA DOMANDE FINITE
+        // FORSE i deve partire da (Quantità di domande intro risposte) e questionNumber sommato con il loro numero
+        //questions.Add(GetIntroQuestion());
+        //questionNumber++;
+
         startQuestions = QuestionLimit(startQuestions, startFolder);
         jobQuestions = QuestionLimit(startQuestions, currentJob);
         softSkillQuestions = QuestionLimit(startQuestions, softSkillFolder);
@@ -242,8 +264,35 @@ public class QuestionPanel : MonoBehaviour
         Setup(questions[index]);
     }
 
+    public Question GetIntroQuestion(bool save = true)
+    {
+        string questionText = "Mi parli un po' di lei...";
+
+        Answer[] answers = new Answer[4];
+        answers[0].text = "Elenca Soft Skill";
+        answers[0].points = softSkillID;
+
+        answers[1].text = "Elenca Pregi";
+        answers[0].points = pregiID;
+        
+        answers[2].text = "Elenca Difetti";
+        answers[0].points = difettiID;
+        
+        answers[3].text = "Vai avanti";
+        answers[0].points = continueID;
+
+        Question question = new(questionText, answers);
+
+        if (save) InterviewManager.AddQuestion(question,introFolder);
+
+        return question;
+
+    }
+
     public int QuestionLimit(int counter, string folder, bool log = false)
     {
+
+
         {
             int folderSize = GetJobFolderSize(folder);
             if (counter > folderSize)
