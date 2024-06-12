@@ -9956,7 +9956,7 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Start
       m_Image: {fileID: 0}
-    - m_Text: SoftSkill
+    - m_Text: End
       m_Image: {fileID: 0}
     - m_Text: Custom
       m_Image: {fileID: 0}
