@@ -45,6 +45,11 @@ public class QuestionPanel : MonoBehaviour
     // private bool continueIntro = true;
     private readonly string introFolder = "intro";
 
+    private Question introQuestion;
+    private Question softSkillQuestion;
+    private Question strengthQuestion;
+    private Question weaknessQuestion;
+
     // Sezione usata in Quiz Test
     // CVInfo e InterviewInfo potrebbero essere usati anche in fase finale
     // folderInput e metodi associati dovrebbero essere usati SOLO nella fase di testing
@@ -74,12 +79,15 @@ public class QuestionPanel : MonoBehaviour
             {
                 cvInfo.gameObject.SetActive(true);
                 cvInfo.reloadInfo();
-            }
+            }          
 
             SetupInterview();
         }
 
         else Debug.Log("Nessun CV attualmente caricato. Caricare domanda tramite pulsanti.");
+
+        
+
     }
 
     public void Setup(Question q)
@@ -218,8 +226,8 @@ public class QuestionPanel : MonoBehaviour
                     Debug.Log("SOFT");
                     noPointAnswers++;
 
-                    questions.Insert(index + 1, GetSoftSkillQuestion());
-                    questions.Insert(index + 2, GetIntroQuestion());
+                    questions.Insert(index + 1, softSkillQuestion);
+                    questions.Insert(index + 2, introQuestion);
                     questionNumber++;
                 }
                 else if (answerPoints == pregiID)
@@ -227,28 +235,28 @@ public class QuestionPanel : MonoBehaviour
                     Debug.Log("PREGI");
                     noPointAnswers++;
 
-                    questions.Insert(index + 1, GetStrengthQuestion());
-                    questions.Insert(index + 2, GetIntroQuestion());
+                    questions.Insert(index + 1, strengthQuestion);
+                    questions.Insert(index + 2, introQuestion);
                     questionNumber++;
-                    
+
                 }
                 else if (answerPoints == difettiID)
                 {
                     Debug.Log("DIFETTI");
                     noPointAnswers++;
 
-                    questions.Insert(index + 1, GetWeaknessQuestion());
-                    questions.Insert(index + 2, GetIntroQuestion());
+                    questions.Insert(index + 1, weaknessQuestion);
+                    questions.Insert(index + 2, introQuestion);
                     questionNumber++;
-                    
+
                 }
                 else if (answerPoints == continueID)
                 {
                     Debug.Log("CONTINUE");
                     noPointAnswers++;
-                    
-                                   
-                    questionNumber++;                    
+
+
+                    questionNumber++;
                 }
                 else points += answerPoints;
 
@@ -280,10 +288,16 @@ public class QuestionPanel : MonoBehaviour
     public void SetupInterview()
     {
         // FORSE index deve partire da (Quantità di domande intro risposte) e questionNumber sommato con il loro numero        
-        
-            questions.Add(GetIntroQuestion());
-            // index++;
-            questionNumber++;        
+
+        introQuestion = GetIntroQuestion();
+        softSkillQuestion = GetSoftSkillQuestion();
+        strengthQuestion = GetStrengthQuestion();
+        weaknessQuestion = GetWeaknessQuestion();
+
+
+        questions.Add(introQuestion);
+        // index++;
+        questionNumber++;
 
         startQuestions = QuestionLimit(startQuestions, startFolder);
         jobQuestions = QuestionLimit(startQuestions, currentJob);
@@ -318,6 +332,9 @@ public class QuestionPanel : MonoBehaviour
         Setup(questions[index]);
     }
 
+    // SNELLIRE CODICE??
+
+
     public Question GetIntroQuestion(bool save = true)
     {
         string questionText = "Mi parli un po' di lei...";
@@ -348,16 +365,16 @@ public class QuestionPanel : MonoBehaviour
 
         Answer[] answers = new Answer[4];
         answers[0].text = "Team Working";
-        answers[0].points = 0f;
+        answers[0].points = 1f;
 
         answers[1].text = "Leadership";
-        answers[1].points = 0f;
+        answers[1].points = 1f;
 
         answers[2].text = "Problem Solving";
-        answers[2].points = 0f;
+        answers[2].points = 1f;
 
         answers[3].text = "Time Management";
-        answers[3].points = 0f;
+        answers[3].points = 1f;
 
         Question question = new(questionText, answers);
 
@@ -373,16 +390,16 @@ public class QuestionPanel : MonoBehaviour
 
         Answer[] answers = new Answer[4];
         answers[0].text = "Onestà";
-        answers[0].points = 0f;
+        answers[0].points = 1f;
 
         answers[1].text = "Umiltà";
-        answers[1].points = 0f;
+        answers[1].points = 1f;
 
         answers[2].text = "Affidabilità";
-        answers[2].points = 0f;
+        answers[2].points = 1f;
 
         answers[3].text = "Determinazione";
-        answers[3].points = 0f;
+        answers[3].points = 1f;
 
         Question question = new(questionText, answers);
 
@@ -398,16 +415,16 @@ public class QuestionPanel : MonoBehaviour
 
         Answer[] answers = new Answer[4];
         answers[0].text = "Rabbia";
-        answers[0].points = 0f;
+        answers[0].points = -1f;
 
         answers[1].text = "Pigrizia";
-        answers[1].points = 0f;
+        answers[1].points = -1f;
 
         answers[2].text = "Invidia";
-        answers[2].points = 0f;
+        answers[2].points = -1f;
 
         answers[3].text = "Distrazione";
-        answers[3].points = 0f;
+        answers[3].points = -1f;
 
         Question question = new(questionText, answers);
 
