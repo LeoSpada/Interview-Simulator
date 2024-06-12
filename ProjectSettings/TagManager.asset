@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - TagProva
+  - 0
   layers:
   - Default
   - TransparentFX

@@ -230,8 +230,11 @@ public class QuestionPanel : MonoBehaviour
 
             if (question.question.Equals(softSkillQuestion.question))
             {
-                Debug.Log("TROVATA");
-                softSkillQuestion.answers[0].text = InputPanel.disabledText;
+                // DEVE OTTENERE INDICE DELLA RISPOSTA DATA
+                int i = int.Parse(button.tag);
+
+                Debug.Log("TROVATA - click di risposta " + i);
+                softSkillQuestion.answers[i].text = InputPanel.disabledText;
                 DebugQuestion(softSkillQuestion);
             }
 
