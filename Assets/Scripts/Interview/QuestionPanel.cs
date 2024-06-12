@@ -1,10 +1,8 @@
-using JetBrains.Annotations;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.Windows;
 using static InterviewManager;
 using static InterviewManager.Question;
 
@@ -44,7 +42,6 @@ public class QuestionPanel : MonoBehaviour
     private readonly float pregiID = 11.02f;
     private readonly float difettiID = 11.03f;
     private readonly float continueID = 11.04f;
-    // private bool continueIntro = true;
     private readonly string introFolder = "intro";
 
     private Question introQuestion;
@@ -118,6 +115,25 @@ public class QuestionPanel : MonoBehaviour
         question = q;
         questionText.text = q.question;
 
+        // Se le voci di introQuestion non hanno più risposte disponibili al loro interno, non vengono visualizzate
+        if (question.id == introQuestion.id)
+        {
+            if (CountAnswers(softSkillQuestion) == 0)
+            {
+                question.answers[0].text = InputPanel.disabledText;
+            }
+
+            if (CountAnswers(strengthQuestion) == 0)
+            {
+                question.answers[1].text = InputPanel.disabledText;
+            }
+
+            if (CountAnswers(weaknessQuestion) == 0)
+            {
+                question.answers[2].text = InputPanel.disabledText;
+            }
+        }
+
         for (int i = 0; i < ansButtons.Length; i++)
         {
             ansButtons[i].name = question.answers[i].points.ToString();
@@ -140,12 +156,6 @@ public class QuestionPanel : MonoBehaviour
             }
         }
     }
-
-    //public void LoadNewQuestion()
-    //{
-    //    Setup(GetRandomQuestion(currentJob));
-    //    SetupInterviewInfo();
-    //}
 
     public void NextQuestion()
     {
@@ -218,33 +228,50 @@ public class QuestionPanel : MonoBehaviour
         return null;
     }
 
+    public string Feedback()
+    {
+        string[] feedbacks =
+        {
+            "interessante",
+            "Wow",
+            "Capisco"
+        };
+
+        return feedbacks[Random.Range(0, feedbacks.Length)];
+    }
+
     public void OnButtonClick(Button button)
     {
-        DebugQuestion(question);
+        // DebugQuestion(question);        
+
+        // FARE FUNZIONE CHE RANDOMIZZA FRASI GENERICHE TIPO "interessante", "capisco"... E LE STAMPA A SCHERMO
+        questionText.text = Feedback();
 
         if (question != null)
         {
 
-            if (question.question.Equals(softSkillQuestion.question))
+            // Se la domanda combacia con una delle tipologie di domande introduttive, disattiva la risposta scelta per quella domanda
+
+            if (question.id == softSkillQuestion.id)
             {
                 int i = int.Parse(button.tag);
-                
+
                 softSkillQuestion.answers[i].text = InputPanel.disabledText;
                 DebugQuestion(softSkillQuestion);
             }
 
-            if (question.question.Equals(strengthQuestion.question))
+            if (question.id == strengthQuestion.id)
             {
                 int i = int.Parse(button.tag);
-                
+
                 strengthQuestion.answers[i].text = InputPanel.disabledText;
                 DebugQuestion(strengthQuestion);
             }
 
-            if (question.question.Equals(weaknessQuestion.question))
+            if (question.id == weaknessQuestion.id)
             {
                 int i = int.Parse(button.tag);
-              
+
                 weaknessQuestion.answers[i].text = InputPanel.disabledText;
                 DebugQuestion(weaknessQuestion);
             }
@@ -253,45 +280,52 @@ public class QuestionPanel : MonoBehaviour
 
             if (answerPoints != 0)
             {
+                // Se la risposta combacia con l'id/punteggio associato alle sottocategorie, vengono aggiunte al colloquio le domande correlate 
+
                 if (answerPoints == softSkillID)
                 {
-                    Debug.Log("SOFT");
+                    // Debug.Log("SOFT");
                     noPointAnswers++;
 
                     questions.Insert(index + 1, softSkillQuestion);
+                    introQuestion.question = "C'è altro che vuole aggiungere?";
                     questions.Insert(index + 2, introQuestion);
                     questionNumber++;
                 }
                 else if (answerPoints == pregiID)
                 {
-                    Debug.Log("PREGI");
+                    // Debug.Log("PREGI");
                     noPointAnswers++;
 
                     questions.Insert(index + 1, strengthQuestion);
+                    introQuestion.question = "C'è altro che vuole aggiungere?";
                     questions.Insert(index + 2, introQuestion);
                     questionNumber++;
 
                 }
                 else if (answerPoints == difettiID)
                 {
-                    Debug.Log("DIFETTI");
+                    // Debug.Log("DIFETTI");
                     noPointAnswers++;
 
                     questions.Insert(index + 1, weaknessQuestion);
+                    introQuestion.question = "C'è altro che vuole aggiungere?";
                     questions.Insert(index + 2, introQuestion);
                     questionNumber++;
 
                 }
                 else if (answerPoints == continueID)
                 {
-                    Debug.Log("CONTINUE");
+                    //  Debug.Log("CONTINUE");
                     noPointAnswers++;
                     questionNumber++;
                 }
+
+                // Se non si è nella introQuestion, il punteggio viene semplicemente sommato
+
                 else points += answerPoints;
-
-
             }
+            // Se il punteggio è 0, non deve incidere sulla media
             else noPointAnswers++;
 
             answered++;
@@ -346,9 +380,10 @@ public class QuestionPanel : MonoBehaviour
         questions.Add(null);
 
         SetupInterviewInfo();
-        DebugQuestion(questions[index]);
 
-        Debug.Log("Ci sono domande n = " + questions.Count);
+        //DebugQuestion(questions[index]);
+
+        // Debug.Log("Ci sono domande n = " + questions.Count);
 
         questionNumber = questions.Count - 1;
         Setup(questions[index]);

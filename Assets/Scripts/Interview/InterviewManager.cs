@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
+using static InterviewManager.Question;
 
 public static class InterviewManager
 {
@@ -163,7 +164,19 @@ public static class InterviewManager
         // BackupManager.BackUpAll();
     }
 
-    // Usata per debug. Stampa a schermo la domanda formattata.
+    public static int CountAnswers(Question question, bool log = false)
+    {
+        int counter = 0;
+        foreach (Answer ans in question.answers)
+        {
+            if (!ans.text.Equals("000")) counter++;
+        }
+
+        if (log) Debug.Log($"La domanda {question} ha {counter} risposte");
+        return counter;
+    }
+
+    // Usata per debug. Stampa ans schermo la domanda formattata.
     public static void DebugQuestion(Question question)
     {
         Debug.Log($"Domanda: {question.question}\nRisposte: 1) {question.answers[0].text} [{question.answers[0].points} pt.]\t 2) {question.answers[1].text} [{question.answers[1].points} pt.]\t 3) {question.answers[2].text} [{question.answers[2].points} pt.]\t 3) {question.answers[3].text} [{question.answers[3].points} pt.]");
