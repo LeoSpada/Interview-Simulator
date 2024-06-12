@@ -42,6 +42,7 @@ public class QuestionPanel : MonoBehaviour
     private readonly float pregiID = 11.02f;
     private readonly float difettiID = 11.03f;
     private readonly float continueID = 11.04f;
+    // private bool continueIntro = true;
     private readonly string introFolder = "intro";
 
     // Sezione usata in Quiz Test
@@ -86,6 +87,8 @@ public class QuestionPanel : MonoBehaviour
         // Se q è null, le domande sono finite.
         // Rimpiazzare questa parte con caricamento scena di calcolo punteggio??
 
+        // INSERIRE INVOCAZIONE SCENA PUNTEGGIO
+
         if (q == null)
         {
             question = null;
@@ -125,11 +128,11 @@ public class QuestionPanel : MonoBehaviour
         }
     }
 
-    public void LoadNewQuestion()
-    {
-        Setup(GetRandomQuestion(currentJob));
-        SetupInterviewInfo();
-    }
+    //public void LoadNewQuestion()
+    //{
+    //    Setup(GetRandomQuestion(currentJob));
+    //    SetupInterviewInfo();
+    //}
 
     public void NextQuestion()
     {
@@ -207,18 +210,51 @@ public class QuestionPanel : MonoBehaviour
         {
             float answerPoints = float.Parse(button.name);
 
-            if (answerPoints != 0) points += answerPoints;
-            else noPointAnswers++;
+            if (answerPoints != 0)
+            {
+                if (answerPoints == softSkillID)
+                {
+                    Debug.Log("SOFT");
+                    noPointAnswers++;
 
+                    questions.Insert(index + 1, GetSoftSkillQuestion());
+                    questions.Insert(index + 2, GetIntroQuestion());
+                    questionNumber++;
+                }
+                else if (answerPoints == pregiID)
+                {
+                    Debug.Log("PREGI");
+                    noPointAnswers++;
+                }
+                else if (answerPoints == difettiID)
+                {
+                    Debug.Log("DIFETTI");
+                    noPointAnswers++;
+                }
+                else if (answerPoints == continueID)
+                {
+                    Debug.Log("CONTINUE");
+                    noPointAnswers++;
+                    
+                                   
+                    questionNumber++;                    
+                }
+                else points += answerPoints;
+
+
+            }
+            else noPointAnswers++;
 
             answered++;
 
-            average = points / (answered - noPointAnswers);
+            if (answered - noPointAnswers == 0) average = 0;
+            else average = points / (answered - noPointAnswers);
 
             Invoke(nameof(NextQuestion), 1f);
         }
         else
         {
+            // Cambiare con invocazione Scena punteggio
             Invoke(nameof(ResetInterview), 1f);
         }
     }
@@ -232,10 +268,11 @@ public class QuestionPanel : MonoBehaviour
 
     public void SetupInterview()
     {
-        // FORSE index deve partire da (Quantità di domande intro risposte) e questionNumber sommato con il loro numero
-        questions.Add(GetIntroQuestion());
-        // index++;
-        questionNumber++;
+        // FORSE index deve partire da (Quantità di domande intro risposte) e questionNumber sommato con il loro numero        
+        
+            questions.Add(GetIntroQuestion());
+            // index++;
+            questionNumber++;        
 
         startQuestions = QuestionLimit(startQuestions, startFolder);
         jobQuestions = QuestionLimit(startQuestions, currentJob);
@@ -286,6 +323,30 @@ public class QuestionPanel : MonoBehaviour
 
         answers[3].text = "Vai avanti";
         answers[3].points = continueID;
+
+        Question question = new(questionText, answers);
+
+        if (save) InterviewManager.AddQuestion(question, introFolder);
+
+        return question;
+    }
+
+    public Question GetSoftSkillQuestion(bool save = false)
+    {
+        string questionText = "Quali Soft Skill possiede?";
+
+        Answer[] answers = new Answer[4];
+        answers[0].text = "Team Working";
+        answers[0].points = 0f;
+
+        answers[1].text = "Leadership";
+        answers[1].points = 0f;
+
+        answers[2].text = "Problem Solving";
+        answers[2].points = 0f;
+
+        answers[3].text = "Time Management";
+        answers[3].points = 0f;
 
         Question question = new(questionText, answers);
 
