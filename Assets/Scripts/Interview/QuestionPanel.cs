@@ -360,6 +360,8 @@ public class QuestionPanel : MonoBehaviour
         jobQuestions = QuestionLimit(startQuestions, currentJob);
         endQuestions = QuestionLimit(startQuestions, endFolder);
 
+        Debug.Log("End folder = " + endFolder);
+
         //questionNumber = startQuestions + jobQuestions + endQuestions;
 
         if (questions == null)

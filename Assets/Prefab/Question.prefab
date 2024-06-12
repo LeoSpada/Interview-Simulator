@@ -956,7 +956,7 @@ MonoBehaviour:
   endQuestions: 2
   index: 0
   startFolder: Start
-  endFolder: SoftSkill
+  endFolder: End
   currentJob: 
   points: 0
   answered: 0
