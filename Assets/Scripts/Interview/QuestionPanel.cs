@@ -19,7 +19,7 @@ public class QuestionPanel : MonoBehaviour
     public int startQuestions = 2;
     public int jobQuestions = 2;
     public int endQuestions = 2;
-    public int index = 0;
+    private int index = 0;
     public string startFolder = "Start";
     // CAMBIARE NOME CARTELLA / CREARE CARTELLA END e END nel dropdown di question creator
     // Rimuovere soft skill da dropdown question Creator
