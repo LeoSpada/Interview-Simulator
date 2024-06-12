@@ -37,6 +37,9 @@ public class CVEntryPanel : MonoBehaviour
         CVEntry.Genere genere = InputPanel.AcceptDropdown<CVEntry.Genere>(dropdowns[0]);
         CVEntry.Occupazione occupazione = InputPanel.AcceptDropdown<CVEntry.Occupazione>(dropdowns[1]);
 
+        // AGGIUNGERE NUOVI DROPDOWN QUI
+        // FORSE FARE UNA FUNZIONE DA USARE CON OnValueChanged dei dropdown che svelano altri dropdown
+
 
         if (InputPanel.fieldsClear && InputPanel.dropdownsClear)
         {
