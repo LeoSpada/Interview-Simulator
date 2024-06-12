@@ -225,17 +225,28 @@ public class QuestionPanel : MonoBehaviour
         if (question != null)
         {
 
-            Debug.Log("Question: " + question.question);
-            Debug.Log("SSQ: " + softSkillQuestion.question);
-
             if (question.question.Equals(softSkillQuestion.question))
             {
-                // DEVE OTTENERE INDICE DELLA RISPOSTA DATA
                 int i = int.Parse(button.tag);
-
-                Debug.Log("TROVATA - click di risposta " + i);
+                
                 softSkillQuestion.answers[i].text = InputPanel.disabledText;
                 DebugQuestion(softSkillQuestion);
+            }
+
+            if (question.question.Equals(strengthQuestion.question))
+            {
+                int i = int.Parse(button.tag);
+                
+                strengthQuestion.answers[i].text = InputPanel.disabledText;
+                DebugQuestion(strengthQuestion);
+            }
+
+            if (question.question.Equals(weaknessQuestion.question))
+            {
+                int i = int.Parse(button.tag);
+              
+                weaknessQuestion.answers[i].text = InputPanel.disabledText;
+                DebugQuestion(weaknessQuestion);
             }
 
             float answerPoints = float.Parse(button.name);
