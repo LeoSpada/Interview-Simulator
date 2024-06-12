@@ -4095,10 +4095,6 @@ PrefabInstance:
       propertyPath: folderInputGroup
       value: 
       objectReference: {fileID: 2094305419}
-    - target: {fileID: 6739160230060157277, guid: 27ba5bc027cb67d479b41a014b9dc68d, type: 3}
-      propertyPath: m_TagString
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6877735067023216703, guid: 27ba5bc027cb67d479b41a014b9dc68d, type: 3}
       propertyPath: m_Name
       value: Question
