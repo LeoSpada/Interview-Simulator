@@ -30,7 +30,7 @@ public class CVUIListEntry : MonoBehaviour
        // CVManager.DebugCV(CVEntry);
         CVManager.currentCV = CVEntry;
         // GameManager.instance.LoadScene("Scena_Titolo");
-        GameManager.instance.LoadScene("CV_Quiz_Test");
+        GameManager.instance.LoadScene("Scena_Colloquio");
     }
 
     public void EditEntry()

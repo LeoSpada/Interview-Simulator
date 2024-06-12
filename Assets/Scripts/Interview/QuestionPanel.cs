@@ -77,7 +77,7 @@ public class QuestionPanel : MonoBehaviour
         if (CVManager.currentCV != null)
         {
             cvLoaded = true;
-            folderInputGroup.SetActive(false);
+           if(folderInputGroup) folderInputGroup.SetActive(false);
             currentJob = CVManager.currentCV.job.ToString();
 
             if (cvInfo)
@@ -94,6 +94,8 @@ public class QuestionPanel : MonoBehaviour
 
     public void Setup(Question q)
     {
+
+        Debug.Log(currentJob);
         // Se q è null, le domande sono finite.
         // Rimpiazzare questa parte con caricamento scena di calcolo punteggio??
 
@@ -236,7 +238,7 @@ public class QuestionPanel : MonoBehaviour
             "...",
             "Capisco...",
             "Bene. Andiamo avanti.",
-            ""
+            "Proseguiamo."
         };
 
         return feedbacks[Random.Range(0, feedbacks.Length)];
