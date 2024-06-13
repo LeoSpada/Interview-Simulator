@@ -42,7 +42,7 @@ public class CVEntryPanel : MonoBehaviour
         //CVEntry.Istruzione istruzione;
 
         
-        CVEntry.Istruzione.Qualifica qualifica = InputPanel.AcceptDropdown<CVEntry.Istruzione.Qualifica>(dropdowns[2]);
+        Istruzione.Qualifica qualifica = InputPanel.AcceptDropdown<Istruzione.Qualifica>(dropdowns[2]);
 
         
         //Debug.Log(qualifica.Qualifica);
@@ -97,7 +97,7 @@ public class CVEntryPanel : MonoBehaviour
 
     public void ShowSubDropdown()
     {
-        CVEntry.Istruzione.Qualifica qualifica = InputPanel.AcceptDropdown<CVEntry.Istruzione.Qualifica>(dropdowns[2]);
+        Istruzione.Qualifica qualifica = InputPanel.AcceptDropdown<Istruzione.Qualifica>(dropdowns[2]);
         //Debug.Log(qualifica.Qualifica);
 
         string istruzioneText = qualifica.ToString();

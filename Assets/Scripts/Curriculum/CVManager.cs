@@ -142,6 +142,13 @@ public static class CVManager
 
 // AGGIUNGERE CAMPI PER ISTRUZIONE ED ESPERIENZE PASSATE
 
+public class Istruzione
+{
+    public enum Qualifica { Medie, Superiori, Università };
+    public enum Titolo { ITIS, IPSIA, Liceo };
+}
+
+
 public class CVEntry
 {
     public string name;
@@ -182,12 +189,12 @@ public class CVEntry
     // Forse fare in struct, con qualifica e dettaglio (liceo, itis, lauree varie)...
     // public enum Istruzione {Medie, Superiori, Università };
 
-    public struct Istruzione
-    {
-       // public string test;
-        public enum Qualifica { Medie, Superiori, Università };
-        public enum Titolo { ITIS, IPSIA, Liceo };
+    //public struct Istruzione
+    //{
+    //   // public string test;
+    //    public enum Qualifica { Medie, Superiori, Università };
+    //    public enum Titolo { ITIS, IPSIA, Liceo };
 
-    }
+    //}
 }
 
