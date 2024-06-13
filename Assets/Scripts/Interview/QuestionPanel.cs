@@ -46,7 +46,7 @@ public class QuestionPanel : MonoBehaviour
     private readonly float continueID = 11.04f;
     private readonly string introFolder = "Intro";
 
-    private Question eduQuestion;
+    private Question bonusPointsQuestion;
     private Question introQuestion;
     private Question softSkillQuestion;
     private Question strengthQuestion;
@@ -95,7 +95,7 @@ public class QuestionPanel : MonoBehaviour
             currentEducationID = (int)cv.istruzione.qualifica;
             Debug.Log("educazione di valore " + currentEducationID);
 
-            eduQuestion = GetEducationQuestion();
+            bonusPointsQuestion = GetBonusPointsQuestion();
 
             Debug.Log(currentEducation);
 
@@ -374,7 +374,7 @@ public class QuestionPanel : MonoBehaviour
 
     public void SetupInterview()
     {
-        questions.Add(eduQuestion);
+        questions.Add(bonusPointsQuestion);
         questionNumber++;
 
         questions.Add(introQuestion);
@@ -413,13 +413,11 @@ public class QuestionPanel : MonoBehaviour
         Setup(questions[index]);
     }
 
-    // SNELLIRE CODICE??
-
-    // GetEducation: cambiare nome (più generico)
-    // Inserire qui tutti bonus e malus iniziali.
+    // SNELLIRE CODICE?? (Tante ripetizioni in tutte le funzioni Get...Question)
+  
     // Cambiare forse frasi e valori bonus e malus
 
-    public Question GetEducationQuestion()
+    public Question GetBonusPointsQuestion()
     {
         int id = 1100;
 
