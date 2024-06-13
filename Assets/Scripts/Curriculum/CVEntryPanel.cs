@@ -124,7 +124,7 @@ public class CVEntryPanel : MonoBehaviour
         }
         else //if (qualificaText.Equals("Superiori"))
         {
-            Debug.Log("SUPERIORI");
+            // Debug.Log("SUPERIORI");
             rigaQualifica.SetActive(true);
             UpdateTitoloDropdownValues(qualificaText);
         }
@@ -153,13 +153,15 @@ public class CVEntryPanel : MonoBehaviour
 
 
         }
-        else if (qualifica.Equals("Università"))
+        else if (qualifica.Equals("Laurea"))
         {
             options = new()
             {
-                "Laurea 1",
-                "Laurea 2",
-                "Laurea 3"
+                "Scientifica",
+                "Umanistica",
+                "Economica",
+                "Sociale",
+                "Tecnologica"
             };
         }
 
@@ -182,6 +184,9 @@ public class CVEntryPanel : MonoBehaviour
 
         dropdowns[0].value = (int)currentCV.genere + 1;
         dropdowns[1].value = (int)currentCV.occupazione + 1;
+        dropdowns[2].value = (int)currentCV.istruzione.qualifica + 1;
+
+        // Probabilmente non è possibile ricaricare il titolo di Istruzione perché le opzioni hanno indici diversi
     }
 
     // Se la schermata viene disattivata, si esce dalla modalità modifica

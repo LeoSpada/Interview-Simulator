@@ -180,8 +180,8 @@ public class Istruzione
     //}
 
 
-    public enum Qualifica { Medie, Superiori, Università };
-    public enum Titolo { Nessuno, ITIS, IPSIA, Liceo };
+    public enum Qualifica { Medie, Superiori, Laurea };
+    public enum Titolo { Nessuno, ITIS, IPSIA, Liceo, Scientifica, Umanistica, Economica, Sociale, Tecnologica};
 
 
 }
