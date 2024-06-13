@@ -87,7 +87,7 @@ public class QuestionPanel : MonoBehaviour
         {
             cvLoaded = true;
             if (folderInputGroup) folderInputGroup.SetActive(false);
-            
+
             currentJob = CVManager.currentCV.occupazione.ToString();
             currentJobID = ((int)CVManager.currentCV.occupazione);
             Debug.Log("occupazione di valore " + currentJobID);
@@ -429,27 +429,93 @@ public class QuestionPanel : MonoBehaviour
 
     // GetEducation: cambiare nome (più generico)
     // Inserire qui tutti bonus e malus iniziali.
+    // Cambiare forse frasi e valori bonus e malus
 
     public Question GetEducationQuestion()
     {
-        Debug.Log("Creando nuova dom su educazione");
+        // Debug.Log("Creando nuova dom su educazione");
         int id = 1100;
 
         // Question question = null;
         //= InterviewManager.GetQuestion(introFolder, id);
+        Debug.Log("Valore Edu = " + currentEducationID + " - Valore Occp = " + currentJobID);
+
+        //int gap = currentJobID - currentEducationID;
+
+        //Debug.Log("differenza J-E = " + gap);
+
+        string questionText;
+        // = "..." + currentEducation + "!!!";
+
+        //if (gap <= 0)
+        //{
+        //    points = -gap * 10;
+        //}
 
 
-        string questionText = "..." + currentEducation + "!!!";
-        if (currentEducation == "Medie")
+
+        // Solo terza media
+        if (currentEducationID == 0)
         {
-            Debug.Log("domanda edu, ha la media");
-            questionText = "Lei ha solo la terza media...";
-            points -= 10;
+            if (currentJobID <= 1)
+            {
+                questionText = "Lei ha solo la terza media... ma va bene.";
+                // points -= 0;
+            }
+            else if (currentJobID <= 3)
+            {
+                questionText = "Lei ha solo la terza media... pazienza.";
+                points -= 5;
+            }
+            else if (currentJobID >= 4)
+            {
+                questionText = "Lei ha solo la terza media... INAMMISSIBILE.";
+                points -= 50;
+            }
         }
 
+        // Solo superiori
+        if (currentEducationID == 1)
+        {
+            if (currentJobID <= 1)
+            {
+                questionText = "Lei ha un diploma di scuola superiore... Più che sufficiente.";
+                points += 5;
+            }
+            else if (currentJobID <= 3)
+            {
+                questionText = "Lei ha un diploma di scuola superiore...  perfetto.";
+                // points += 0;
+            }
+            else if (currentJobID >= 4)
+            {
+                questionText = "Lei non ha una laurea... Vedremo.";
+                points -= 10;
+            }
+        }
+
+        // Laurea
+        if (currentEducationID == 2)
+        {
+            if (currentJobID <= 1)
+            {
+                questionText = "Lei ha una laurea... Molto qualificato.";
+                points += 10;
+            }
+            else if (currentJobID <= 3)
+            {
+                questionText = "Lei ha una laurea...  più che sufficiente.";
+                points += 5;
+            }
+            else if (currentJobID >= 4)
+            {
+                questionText = "Lei ha una laurea... Bene.";
+                // points -= 0;
+            }
+        }
 
         Answer[] answers = new Answer[4];
-        answers[0].text = "Continua comunque";
+        answers[0].text = "Continua";
         answers[0].points = continueID;
 
         answers[1].text = InputPanel.disabledText;

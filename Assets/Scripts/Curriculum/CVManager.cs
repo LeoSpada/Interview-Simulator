@@ -226,9 +226,9 @@ public class CVEntry
 
     // L'ordine in cui sono disposte le occupazioni possibili incide parzialemente sullo studio richiesto.
 
-    // Prime due : Medie
-    // Terza e quarta: Superiori
-    // Quinta in poi: Laurea
+    // Prime due (0-1): Medie
+    // Terza e quarta (2-3): Superiori
+    // Quinta in poi (>4): Laurea
 
     public enum Occupazione { Sarto, Estetista, Meccanico, Segretario, Sviluppatore, Insegnante, Avvocato, Medico };
 }
