@@ -444,7 +444,7 @@ public class QuestionPanel : MonoBehaviour
 
         //Debug.Log("differenza J-E = " + gap);
 
-        string questionText;
+        string questionText = "";
         // = "..." + currentEducation + "!!!";
 
         //if (gap <= 0)
