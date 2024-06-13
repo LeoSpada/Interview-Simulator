@@ -27,6 +27,7 @@ public class QuestionPanel : MonoBehaviour
 
     [Header("CV")]
     public string currentJob;
+    private string currentEducation;
     private bool cvLoaded = false;
 
     [Header("Punteggi")]
@@ -44,6 +45,7 @@ public class QuestionPanel : MonoBehaviour
     private readonly float continueID = 11.04f;
     private readonly string introFolder = "Intro";
 
+    private Question eduQuestion;
     private Question introQuestion;
     private Question softSkillQuestion;
     private Question strengthQuestion;
@@ -61,6 +63,8 @@ public class QuestionPanel : MonoBehaviour
 
     void Start()
     {
+
+
         introQuestion = GetIntroQuestion();
 
         softSkillQuestion = GetSoftSkillQuestion();
@@ -82,6 +86,11 @@ public class QuestionPanel : MonoBehaviour
             cvLoaded = true;
             if (folderInputGroup) folderInputGroup.SetActive(false);
             currentJob = CVManager.currentCV.occupazione.ToString();
+            currentEducation = CVManager.currentCV.istruzione.qualifica.ToString();
+
+            eduQuestion = GetEducationQuestion();
+
+            Debug.Log(currentEducation);
 
             if (cvInfo)
             {
@@ -367,7 +376,8 @@ public class QuestionPanel : MonoBehaviour
 
     public void SetupInterview()
     {
-
+        questions.Add(eduQuestion);
+        questionNumber++;
 
         questions.Add(introQuestion);
         questionNumber++;
@@ -408,6 +418,48 @@ public class QuestionPanel : MonoBehaviour
     }
 
     // SNELLIRE CODICE??
+
+    // GetEducation: cambiare nome (più generico)
+    // Inserire qui tutti bonus e malus iniziali.
+
+    public Question GetEducationQuestion()
+    {
+        Debug.Log("Creando nuova dom su educazione");
+        int id = 1100;
+
+        // Question question = null;
+        //= InterviewManager.GetQuestion(introFolder, id);
+
+
+        string questionText = "..." + currentEducation + "!!!";
+        if (currentEducation == "Medie")
+        {
+            Debug.Log("domanda edu, ha la media");
+            questionText = "Lei ha solo la terza media...";
+            points -= 10;
+        }
+
+
+        Answer[] answers = new Answer[4];
+        answers[0].text = "Continua comunque";
+        answers[0].points = continueID;
+
+        answers[1].text = InputPanel.disabledText;
+        answers[1].points = 0;
+
+        answers[2].text = InputPanel.disabledText;
+        answers[2].points = 0;
+
+        answers[3].text = InputPanel.disabledText;
+        answers[3].points = 0;
+
+        Question question = new(questionText, answers, id);
+        InterviewManager.AddQuestion(question, introFolder);
+        return question;
+        //}
+
+        //return question;
+    }
 
     public Question GetIntroQuestion()
     {
