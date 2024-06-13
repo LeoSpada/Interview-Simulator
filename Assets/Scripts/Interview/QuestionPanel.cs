@@ -21,14 +21,13 @@ public class QuestionPanel : MonoBehaviour
     public int endQuestions = 2;
     private int index = 0;
     public string startFolder = "Start";
-    // CAMBIARE NOME CARTELLA / CREARE CARTELLA END e END nel dropdown di question creator
-    // Rimuovere soft skill da dropdown question Creator
     public string endFolder = "End";
 
     [Header("CV")]
+    private CVEntry cv;
     public string currentJob;
     private int currentJobID;
-    private string currentEducation;
+    public string currentEducation;
     private int currentEducationID;
     private bool cvLoaded = false;
 
@@ -65,8 +64,6 @@ public class QuestionPanel : MonoBehaviour
 
     void Start()
     {
-
-
         introQuestion = GetIntroQuestion();
 
         softSkillQuestion = GetSoftSkillQuestion();
@@ -88,12 +85,14 @@ public class QuestionPanel : MonoBehaviour
             cvLoaded = true;
             if (folderInputGroup) folderInputGroup.SetActive(false);
 
-            currentJob = CVManager.currentCV.occupazione.ToString();
-            currentJobID = ((int)CVManager.currentCV.occupazione);
+            cv = CVManager.currentCV;
+
+            currentJob = cv.occupazione.ToString();
+            currentJobID = (int)cv.occupazione;
             Debug.Log("occupazione di valore " + currentJobID);
 
-            currentEducation = CVManager.currentCV.istruzione.qualifica.ToString();
-            currentEducationID = ((int)CVManager.currentCV.istruzione.qualifica);
+            currentEducation = cv.istruzione.qualifica.ToString();
+            currentEducationID = (int)cv.istruzione.qualifica;
             Debug.Log("educazione di valore " + currentEducationID);
 
             eduQuestion = GetEducationQuestion();
@@ -269,9 +268,7 @@ public class QuestionPanel : MonoBehaviour
 
     public void OnButtonClick(Button button)
     {
-        // DebugQuestion(question);        
 
-        // FARE FUNZIONE CHE RANDOMIZZA FRASI GENERICHE TIPO "interessante", "capisco"... E LE STAMPA A SCHERMO
         questionText.text = Feedback();
 
         if (question != null)
@@ -369,18 +366,11 @@ public class QuestionPanel : MonoBehaviour
             Invoke(nameof(NextQuestion), 1f);
         }
 
-        // Parte non funzionante di test per rimuovere risposte già date
-        // TESTATO SOLO CON SOFTSKILLQUESTION
-
         else Invoke(nameof(ResetInterview), 1f);
     }
 
     // Imposta il colloquio precaricando le domande da varie cartelle.
     // ATTENZIONE: attualmente carica da 3 cartelle, senza possibilità di cambiare. Si può cambiare però le 3 cartelle da cui caricare (VEDI VARIABILI SOPRA)
-
-
-    // ALCUNE DOMANDE ANDREBBERO FATTE IN UN ORDINE PREFISSATO
-    // Funzione in InterviewManager che restituisce la cartella intera, in ordine? (Forse già c'è - Vedi GetAllQuestionsInFolder()
 
     public void SetupInterview()
     {
@@ -393,8 +383,6 @@ public class QuestionPanel : MonoBehaviour
         startQuestions = QuestionLimit(startQuestions, startFolder);
         jobQuestions = QuestionLimit(startQuestions, currentJob);
         endQuestions = QuestionLimit(startQuestions, endFolder);
-
-        // Debug.Log("End folder = " + endFolder);
 
         //questionNumber = startQuestions + jobQuestions + endQuestions;
 
@@ -433,26 +421,18 @@ public class QuestionPanel : MonoBehaviour
 
     public Question GetEducationQuestion()
     {
-        // Debug.Log("Creando nuova dom su educazione");
         int id = 1100;
 
         // Question question = null;
         //= InterviewManager.GetQuestion(introFolder, id);
-        Debug.Log("Valore Edu = " + currentEducationID + " - Valore Occp = " + currentJobID);
+
+        // Debug.Log("Valore Edu = " + currentEducationID + " - Valore Occp = " + currentJobID);
 
         //int gap = currentJobID - currentEducationID;
 
         //Debug.Log("differenza J-E = " + gap);
 
         string questionText = "";
-        // = "..." + currentEducation + "!!!";
-
-        //if (gap <= 0)
-        //{
-        //    points = -gap * 10;
-        //}
-
-
 
         // Solo terza media
         if (currentEducationID == 0)
@@ -514,6 +494,31 @@ public class QuestionPanel : MonoBehaviour
             }
         }
 
+        // Sezione punti bonus
+        // MIGLIORARE INTERFACCIA (prefab Question) per far entrare tutto il testo (POTREBBE ESSERE MOLTO LUNGO)
+
+        // Se non funziona, fare più schede (una per "dato")
+
+        if (!cv.esperienza.ToString().Equals("Nessuna"))
+        {
+            questionText += "\nVedo che ha lavorato in precedenza come " + cv.esperienza.ToString() + "...";
+            points++;
+        }
+
+        if (!cv.secondaLingua.ToString().Equals("Nessuna"))
+        {
+            questionText += "\nVedo che parla anche " + cv.secondaLingua.ToString() + "...";
+            points++;
+        }
+
+        if (!cv.patente.ToString().Equals("Nessuna"))
+        {
+            questionText += "\nVedo che ha una patente " + cv.patente.ToString() + "...";
+            points++;
+        }
+
+
+
         Answer[] answers = new Answer[4];
         answers[0].text = "Continua";
         answers[0].points = continueID;
@@ -530,9 +535,6 @@ public class QuestionPanel : MonoBehaviour
         Question question = new(questionText, answers, id);
         InterviewManager.AddQuestion(question, introFolder);
         return question;
-        //}
-
-        //return question;
     }
 
     public Question GetIntroQuestion()
@@ -595,7 +597,6 @@ public class QuestionPanel : MonoBehaviour
             InterviewManager.AddQuestion(question, introFolder);
             return question;
         }
-        // else Debug.Log("soft già presente");
         return question;
     }
 
@@ -626,9 +627,7 @@ public class QuestionPanel : MonoBehaviour
             question = new(questionText, answers, id);
             InterviewManager.AddQuestion(question, introFolder);
             return question;
-
         }
-
         return question;
     }
 
