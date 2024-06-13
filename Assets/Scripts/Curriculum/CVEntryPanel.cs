@@ -5,7 +5,18 @@ using UnityEngine;
 
 public class CVEntryPanel : MonoBehaviour
 {
+    [Header("Valori di input")]
     private CVEntry CV;
+    private CVEntry.Genere genere;
+    private CVEntry.Occupazione occupazione;
+    private Istruzione.Qualifica qualifica;
+    private Istruzione.Titolo titolo;
+    CVEntry.Esperienza esperienza;
+    CVEntry.Lingua lingua;
+    CVEntry.Patente patente;
+
+
+    // Inserire qui tutti quelli di submit
 
     // Contiene i vari inputField
     [Header("Campi liberi")]
@@ -15,14 +26,14 @@ public class CVEntryPanel : MonoBehaviour
     [Header("Dropdown")]
     public TMP_Dropdown genereDD;
     public TMP_Dropdown occupazioneDD;
-    
+
     public TMP_Dropdown qualificaDD;
     public TMP_Dropdown titoloDD;
 
     public TMP_Dropdown esperienzaDD;
     public TMP_Dropdown linguaDD;
-    public TMP_Dropdown patenteDD;   
-    
+    public TMP_Dropdown patenteDD;
+
     [Header("GUI e altro")]
     public GameObject rigaQualifica;
     public GameObject overwritePanel;
@@ -39,19 +50,26 @@ public class CVEntryPanel : MonoBehaviour
             confirmMessage = confirmPanel.GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    // Crea un CV a partire dai campi inseriti. Controlli su file esistenti e campi vuoti prima del salvataggio.
-    public void Submit()
+    // FUNZIONANTE: TESTATO SOLO SU GENERE
+    public void CheckAllInputs()
     {
         InputPanel.AcceptInputFields(inputFields);
 
-        // Trovare modo di migliorare leggibilità per il programmatore
-        // Possibile mettere un identificativo migliore senza rimuovere array?
-        // Genderdropdown anziché dropdowns[0]
+        genere = InputPanel.AcceptDropdown<CVEntry.Genere>(genereDD);
+        occupazione = InputPanel.AcceptDropdown<CVEntry.Occupazione>(occupazioneDD);
+        qualifica = InputPanel.AcceptDropdown<Istruzione.Qualifica>(qualificaDD);
+        esperienza = InputPanel.AcceptDropdown<CVEntry.Esperienza>(esperienzaDD);
+        lingua = InputPanel.AcceptDropdown<CVEntry.Lingua>(linguaDD);
+        patente = InputPanel.AcceptDropdown<CVEntry.Patente>(patenteDD);
+    }
 
-        CVEntry.Genere genere = InputPanel.AcceptDropdown<CVEntry.Genere>(genereDD);
-        CVEntry.Occupazione occupazione = InputPanel.AcceptDropdown<CVEntry.Occupazione>(occupazioneDD);
+    // Crea un CV a partire dai campi inseriti. Controlli su file esistenti e campi vuoti prima del salvataggio.
+    public void Submit()
+    {
+        //InputPanel.AcceptInputFields(inputFields);
 
-        Istruzione.Qualifica qualifica = InputPanel.AcceptDropdown<Istruzione.Qualifica>(qualificaDD);
+        CheckAllInputs();
+        
         Istruzione.Titolo titolo;
 
 
@@ -60,10 +78,6 @@ public class CVEntryPanel : MonoBehaviour
             titolo = InputPanel.AcceptDropdown<Istruzione.Titolo>(titoloDD);
         }
         else titolo = Istruzione.Titolo.Nessuno;
-
-        CVEntry.Esperienza esperienza = InputPanel.AcceptDropdown<CVEntry.Esperienza>(esperienzaDD);
-        CVEntry.Lingua lingua = InputPanel.AcceptDropdown<CVEntry.Lingua>(linguaDD);
-        CVEntry.Patente patente = InputPanel.AcceptDropdown<CVEntry.Patente>(patenteDD);
 
         if (InputPanel.fieldsClear && InputPanel.dropdownsClear)
         {
@@ -180,7 +194,7 @@ public class CVEntryPanel : MonoBehaviour
 
         inputFields[0].text = currentCV.name;
         inputFields[1].text = currentCV.surname;
-                
+
         // Viene sommato 1 perché il valore 0 dei dropdown è la frase "Inserire ..." (non compatibile con enum)
 
         genereDD.value = (int)currentCV.genere + 1;

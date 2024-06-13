@@ -9,6 +9,8 @@ public static class InputPanel
     public static bool fieldsClear = true;
     public static bool dropdownsClear = true;
 
+    public static Color errorColor = new(0.5f,0,0,0.2f);
+
     // Valore che il codice rimuove / ignora in alcuni contesti.
     // ATTENZIONE: deve essere un numero!
     public static string disabledText = "000";
@@ -29,7 +31,7 @@ public static class InputPanel
         }
         else if (!InputPanel.CheckInputField(inputField))
         {
-            if (canColor) inputField.image.color = Color.red;
+            if (canColor) inputField.image.color = errorColor;
             if (canBreak) fieldsClear = false;
         }
         else if (canColor) inputField.image.color = Color.white;
@@ -58,7 +60,7 @@ public static class InputPanel
     }
 
     // Controlla che il valore del dropdown corrisponda ad un valore contenuto nell'enum
-    public static T AcceptDropdown<T>(TMP_Dropdown dropdown, bool canColor = true, bool canBreak = true)
+    public static T AcceptDropdown<T>(TMP_Dropdown dropdown, bool canColor = true, bool canBreak = true, bool log = false)
     {
         // Ottiene il valore del testo del dropdown
         string dropdownText = dropdown.options[dropdown.value].text;
@@ -75,14 +77,13 @@ public static class InputPanel
         {
             if (canColor)
             {
-                dropdown.image.color = Color.red;
-
+                dropdown.image.color = errorColor;               
             }
 
             if (canBreak)
             {
                 dropdownsClear = false;
-                Debug.Log("Il valore del dropdown non è consentito nell'Enum.\nRicontrollare codice.");
+               if(log) Debug.Log("Il valore del dropdown non è consentito nell'Enum.\nRicontrollare codice.");
             }
             return default;
         }
@@ -93,6 +94,11 @@ public static class InputPanel
         // Debug.Log("Enumobj: " + enumObj);
         return enumObj;
     }
+
+    //public static void ResetColor()
+    //{
+        
+    //}
 
     public static void ClearAll()
     {
