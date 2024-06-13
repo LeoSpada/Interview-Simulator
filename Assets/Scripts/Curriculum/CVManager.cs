@@ -133,7 +133,7 @@ public static class CVManager
     // Usata per debug. Stampa a schermo il cv formattato.
     public static void DebugCV(CVEntry cv)
     {
-        Debug.Log("Nome: " + cv.name + " " + cv.surname + " , " + cv.gender + "\nOccupazione desiderata: " + cv.job);
+        Debug.Log("Nome: " + cv.name + " " + cv.surname + " , " + cv.genere + "\nOccupazione desiderata: " + cv.occupazione);
     }
 }
 
@@ -146,8 +146,9 @@ public class CVEntry
 {
     public string name;
     public string surname;
-    public Occupazione job;
-    public Genere gender;
+    public Occupazione occupazione;
+    public Genere genere;
+    public Istruzione istruzione;
     //public Lingua linguaMadre;
     //public Lingua linguaSecondaria;
     // public Patente patente;
@@ -160,12 +161,13 @@ public class CVEntry
 
     }
 
-    public CVEntry(string name, string surname, Occupazione job, Genere gender)
+    public CVEntry(string name, string surname, Occupazione occupazione, Genere genere, Istruzione istruzione)
     {
         this.name = name;
         this.surname = surname;
-        this.job = job;
-        this.gender = gender;
+        this.occupazione = occupazione;
+        this.genere = genere;
+        this.istruzione = istruzione;
     }
 
     public enum Lingua { Nessuno, Italiano, Inglese, Francese, Tedesco, Spagnolo, Portoghese }
@@ -175,5 +177,8 @@ public class CVEntry
     public enum Genere { M, F, Altro }
 
     public enum Occupazione { Sviluppatore, Medico };
+
+    // Forse fare in struct, con istruzione e dettaglio (liceo, itis, lauree varie)...
+    public enum Istruzione {Medie, Superiori, Università };
 }
 

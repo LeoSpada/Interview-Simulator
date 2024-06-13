@@ -36,6 +36,7 @@ public class CVEntryPanel : MonoBehaviour
 
         CVEntry.Genere genere = InputPanel.AcceptDropdown<CVEntry.Genere>(dropdowns[0]);
         CVEntry.Occupazione occupazione = InputPanel.AcceptDropdown<CVEntry.Occupazione>(dropdowns[1]);
+        CVEntry.Istruzione istruzione = InputPanel.AcceptDropdown<CVEntry.Istruzione>(dropdowns[2]);
 
         // AGGIUNGERE NUOVI DROPDOWN QUI
         // FORSE FARE UNA FUNZIONE DA USARE CON OnValueChanged dei dropdown che svelano altri dropdown
@@ -43,7 +44,7 @@ public class CVEntryPanel : MonoBehaviour
 
         if (InputPanel.fieldsClear && InputPanel.dropdownsClear)
         {
-            CV = new(inputFields[0].text, inputFields[1].text, occupazione, genere);
+            CV = new(inputFields[0].text, inputFields[1].text, occupazione, genere, istruzione);
 
             // Se un file con lo stesso nome è già presente, compare una finestra di conferma
             if (CVManager.CheckEntry(CV))
@@ -93,12 +94,12 @@ public class CVEntryPanel : MonoBehaviour
         inputFields[0].text = currentCV.name;
         inputFields[1].text = currentCV.surname;
 
-        // Debug.Log(((int)currentCV.gender));
+        // Debug.Log(((int)currentCV.genere));
         // Viene sommato 1 perché il valore 0 del dropdown è la frase "Inserire Genere" (non compatibile con enum)
         // Forse rimuovere inserire genere e +1 successivamente
 
-        dropdowns[0].value = (int)currentCV.gender + 1;
-        dropdowns[1].value = (int)currentCV.job + 1;
+        dropdowns[0].value = (int)currentCV.genere + 1;
+        dropdowns[1].value = (int)currentCV.occupazione + 1;
     }
 
     // Se la schermata viene disattivata, si esce dalla modalità modifica

@@ -81,7 +81,7 @@ public class QuestionPanel : MonoBehaviour
         {
             cvLoaded = true;
             if (folderInputGroup) folderInputGroup.SetActive(false);
-            currentJob = CVManager.currentCV.job.ToString();
+            currentJob = CVManager.currentCV.occupazione.ToString();
 
             if (cvInfo)
             {
