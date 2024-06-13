@@ -27,7 +27,9 @@ public class QuestionPanel : MonoBehaviour
 
     [Header("CV")]
     public string currentJob;
+    private int currentJobID;
     private string currentEducation;
+    private int currentEducationID;
     private bool cvLoaded = false;
 
     [Header("Punteggi")]
@@ -85,8 +87,14 @@ public class QuestionPanel : MonoBehaviour
         {
             cvLoaded = true;
             if (folderInputGroup) folderInputGroup.SetActive(false);
+            
             currentJob = CVManager.currentCV.occupazione.ToString();
+            currentJobID = ((int)CVManager.currentCV.occupazione);
+            Debug.Log("occupazione di valore " + currentJobID);
+
             currentEducation = CVManager.currentCV.istruzione.qualifica.ToString();
+            currentEducationID = ((int)CVManager.currentCV.istruzione.qualifica);
+            Debug.Log("educazione di valore " + currentEducationID);
 
             eduQuestion = GetEducationQuestion();
 
@@ -521,7 +529,7 @@ public class QuestionPanel : MonoBehaviour
             InterviewManager.AddQuestion(question, introFolder);
             return question;
         }
-        else Debug.Log("soft già presente");
+        // else Debug.Log("soft già presente");
         return question;
     }
 

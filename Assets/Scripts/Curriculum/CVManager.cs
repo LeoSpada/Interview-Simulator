@@ -224,17 +224,12 @@ public class CVEntry
 
     public enum Genere { M, F, Altro }
 
-    public enum Occupazione { Sviluppatore, Medico };
+    // L'ordine in cui sono disposte le occupazioni possibili incide parzialemente sullo studio richiesto.
 
-    // Forse fare in struct, con qualifica e dettaglio (liceo, itis, lauree varie)...
-    // public enum Istruzione {Medie, Superiori, Università };
+    // Prime due : Medie
+    // Terza e quarta: Superiori
+    // Quinta in poi: Laurea
 
-    //public struct Istruzione
-    //{
-    //   // public string test;
-    //    public enum Qualifica { Medie, Superiori, Università };
-    //    public enum Titolo { ITIS, IPSIA, Liceo };
-
-    //}
+    public enum Occupazione { Sarto, Estetista, Meccanico, Segretario, Sviluppatore, Insegnante, Avvocato, Medico };
 }
 
