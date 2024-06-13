@@ -42,7 +42,7 @@ public class QuestionPanel : MonoBehaviour
     private readonly float pregiID = 11.02f;
     private readonly float difettiID = 11.03f;
     private readonly float continueID = 11.04f;
-    private readonly string introFolder = "intro";
+    private readonly string introFolder = "Intro";
 
     private Question introQuestion;
     private Question softSkillQuestion;
@@ -62,8 +62,11 @@ public class QuestionPanel : MonoBehaviour
     void Start()
     {
         introQuestion = GetIntroQuestion();
+
         softSkillQuestion = GetSoftSkillQuestion();
+
         strengthQuestion = GetStrengthQuestion();
+
         weaknessQuestion = GetWeaknessQuestion();
 
 
@@ -77,7 +80,7 @@ public class QuestionPanel : MonoBehaviour
         if (CVManager.currentCV != null)
         {
             cvLoaded = true;
-            folderInputGroup.SetActive(false);
+            if (folderInputGroup) folderInputGroup.SetActive(false);
             currentJob = CVManager.currentCV.job.ToString();
 
             if (cvInfo)
@@ -94,6 +97,8 @@ public class QuestionPanel : MonoBehaviour
 
     public void Setup(Question q)
     {
+
+        Debug.Log(currentJob);
         // Se q è null, le domande sono finite.
         // Rimpiazzare questa parte con caricamento scena di calcolo punteggio??
 
@@ -120,16 +125,19 @@ public class QuestionPanel : MonoBehaviour
         {
             if (CountAnswers(softSkillQuestion) == 0)
             {
+                Debug.Log("Finite risposte per SoftSkillQ");
                 question.answers[0].text = InputPanel.disabledText;
             }
 
             if (CountAnswers(strengthQuestion) == 0)
             {
+                Debug.Log("Finite risposte per StrengthQ");
                 question.answers[1].text = InputPanel.disabledText;
             }
 
             if (CountAnswers(weaknessQuestion) == 0)
             {
+                Debug.Log("Finite risposte per WeaknessQ");
                 question.answers[2].text = InputPanel.disabledText;
             }
         }
@@ -236,7 +244,7 @@ public class QuestionPanel : MonoBehaviour
             "...",
             "Capisco...",
             "Bene. Andiamo avanti.",
-            ""
+            "Proseguiamo."
         };
 
         return feedbacks[Random.Range(0, feedbacks.Length)];
@@ -258,6 +266,8 @@ public class QuestionPanel : MonoBehaviour
             {
                 int i = int.Parse(button.tag);
 
+                Debug.Log("rimossa 1 di soft (" + softSkillQuestion.id);
+
                 softSkillQuestion.answers[i].text = InputPanel.disabledText;
                 DebugQuestion(softSkillQuestion);
             }
@@ -266,6 +276,8 @@ public class QuestionPanel : MonoBehaviour
             {
                 int i = int.Parse(button.tag);
 
+                Debug.Log("rimossa 1 di strength " + strengthQuestion.id);
+
                 strengthQuestion.answers[i].text = InputPanel.disabledText;
                 DebugQuestion(strengthQuestion);
             }
@@ -273,6 +285,8 @@ public class QuestionPanel : MonoBehaviour
             if (question.id == weaknessQuestion.id)
             {
                 int i = int.Parse(button.tag);
+
+                Debug.Log("rimossa 1 di weakness " + weaknessQuestion.id);
 
                 weaknessQuestion.answers[i].text = InputPanel.disabledText;
                 DebugQuestion(weaknessQuestion);
@@ -362,7 +376,7 @@ public class QuestionPanel : MonoBehaviour
         jobQuestions = QuestionLimit(startQuestions, currentJob);
         endQuestions = QuestionLimit(startQuestions, endFolder);
 
-        Debug.Log("End folder = " + endFolder);
+        // Debug.Log("End folder = " + endFolder);
 
         //questionNumber = startQuestions + jobQuestions + endQuestions;
 
@@ -395,102 +409,131 @@ public class QuestionPanel : MonoBehaviour
 
     // SNELLIRE CODICE??
 
-
-    public Question GetIntroQuestion(bool save = true)
+    public Question GetIntroQuestion()
     {
-        string questionText = "Mi parli un po' di lei...";
 
-        Answer[] answers = new Answer[4];
-        answers[0].text = "Elenca Soft Skill";
-        answers[0].points = softSkillID;
+        int id = 1101;
 
-        answers[1].text = "Elenca Pregi";
-        answers[1].points = pregiID;
+        Question question = InterviewManager.GetQuestion(introFolder, id);
 
-        answers[2].text = "Elenca Difetti";
-        answers[2].points = difettiID;
+        if (question == null)
+        {
 
-        answers[3].text = "Vai avanti";
-        answers[3].points = continueID;
+            string questionText = "Mi parli un po' di lei...";
 
-        Question question = new(questionText, answers);
+            Answer[] answers = new Answer[4];
+            answers[0].text = "Elenca Soft Skill";
+            answers[0].points = softSkillID;
 
-        if (save) InterviewManager.AddQuestion(question, introFolder);
+            answers[1].text = "Elenca Pregi";
+            answers[1].points = pregiID;
+
+            answers[2].text = "Elenca Difetti";
+            answers[2].points = difettiID;
+
+            answers[3].text = "Vai avanti";
+            answers[3].points = continueID;
+
+            question = new(questionText, answers, id);
+            InterviewManager.AddQuestion(question, introFolder);
+            return question;
+        }
 
         return question;
     }
 
-    public Question GetSoftSkillQuestion(bool save = false)
+    public Question GetSoftSkillQuestion()
     {
-        string questionText = "Quali Soft Skill possiede?";
+        int id = 1102;
 
-        Answer[] answers = new Answer[4];
-        answers[0].text = "Team Working";
-        answers[0].points = 1f;
+        Question question = InterviewManager.GetQuestion(introFolder, id);
 
-        answers[1].text = "Leadership";
-        answers[1].points = 1f;
+        if (question == null)
+        {
+            string questionText = "Quali Soft Skill possiede?";
 
-        answers[2].text = "Problem Solving";
-        answers[2].points = 1f;
+            Answer[] answers = new Answer[4];
+            answers[0].text = "Team Working";
+            answers[0].points = 1f;
 
-        answers[3].text = "Time Management";
-        answers[3].points = 1f;
+            answers[1].text = "Leadership";
+            answers[1].points = 1f;
 
-        Question question = new(questionText, answers);
+            answers[2].text = "Problem Solving";
+            answers[2].points = 1f;
 
-        if (save) InterviewManager.AddQuestion(question, introFolder);
+            answers[3].text = "Time Management";
+            answers[3].points = 1f;
 
+            question = new(questionText, answers, id);
+            InterviewManager.AddQuestion(question, introFolder);
+            return question;
+        }
+        else Debug.Log("soft già presente");
         return question;
     }
 
     // Domande sui pregi
-    public Question GetStrengthQuestion(bool save = false)
+    public Question GetStrengthQuestion()
     {
-        string questionText = "Quali pregi possiede?";
+        int id = 1103;
 
-        Answer[] answers = new Answer[4];
-        answers[0].text = "Onestà";
-        answers[0].points = 1f;
+        Question question = InterviewManager.GetQuestion(introFolder, id);
 
-        answers[1].text = "Umiltà";
-        answers[1].points = 1f;
+        if (question == null)
+        {
+            string questionText = "Quali pregi possiede?";
 
-        answers[2].text = "Affidabilità";
-        answers[2].points = 1f;
+            Answer[] answers = new Answer[4];
+            answers[0].text = "Onestà";
+            answers[0].points = 1f;
 
-        answers[3].text = "Determinazione";
-        answers[3].points = 1f;
+            answers[1].text = "Umiltà";
+            answers[1].points = 1f;
 
-        Question question = new(questionText, answers);
+            answers[2].text = "Affidabilità";
+            answers[2].points = 1f;
 
-        if (save) InterviewManager.AddQuestion(question, introFolder);
+            answers[3].text = "Determinazione";
+            answers[3].points = 1f;
+
+            question = new(questionText, answers, id);
+            InterviewManager.AddQuestion(question, introFolder);
+            return question;
+
+        }
 
         return question;
     }
 
     // Domande sui difetti
-    public Question GetWeaknessQuestion(bool save = false)
+    public Question GetWeaknessQuestion()
     {
-        string questionText = "Quali difetti possiede?";
+        int id = 1104;
 
-        Answer[] answers = new Answer[4];
-        answers[0].text = "Rabbia";
-        answers[0].points = -1f;
+        Question question = InterviewManager.GetQuestion(introFolder, id);
 
-        answers[1].text = "Pigrizia";
-        answers[1].points = -1f;
+        if (question == null)
+        {
+            string questionText = "Quali difetti possiede?";
 
-        answers[2].text = "Invidia";
-        answers[2].points = -1f;
+            Answer[] answers = new Answer[4];
+            answers[0].text = "Rabbia";
+            answers[0].points = -1f;
 
-        answers[3].text = "Distrazione";
-        answers[3].points = -1f;
+            answers[1].text = "Pigrizia";
+            answers[1].points = -1f;
 
-        Question question = new(questionText, answers);
+            answers[2].text = "Invidia";
+            answers[2].points = -1f;
 
-        if (save) InterviewManager.AddQuestion(question, introFolder);
+            answers[3].text = "Distrazione";
+            answers[3].points = -1f;
 
+            question = new(questionText, answers, id);
+            InterviewManager.AddQuestion(question, introFolder);
+            return question;
+        }
         return question;
     }
 
@@ -511,7 +554,7 @@ public class QuestionPanel : MonoBehaviour
 
     public void ResetInterview()
     {
-        CVManager.UnloadCurrentCV();
+        // CVManager.UnloadCurrentCV();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

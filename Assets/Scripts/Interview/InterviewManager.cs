@@ -156,7 +156,7 @@ public static class InterviewManager
     public static void AddQuestion(Question question, string job)
     {
         string json = JsonConvert.SerializeObject(question);
-        Debug.Log(json);
+        // Debug.Log(json);
         File.WriteAllText(GetQuestionFilePath(job, question.id), json);
 
         //  BackupManager.BackUpFolder(GetQuestionsFolder(), saveFolder);
@@ -212,29 +212,15 @@ public static class InterviewManager
 
             q_id = CountQuestions();
             id = ++q_id;
-
-            // Debug.Log("Q_ID attuale:" + id);
-            // SaveLastID();
+            Debug.Log("domanda " + id + " creata");
         }
 
-        //    public static void SaveLastID()
-        //    {
-        //        PlayerPrefs.SetInt("q_id", q_id);
-        //    }
-
-        //    public static int GetLastID()
-        //    {
-        //        if (PlayerPrefs.HasKey("q_id"))
-        //        {
-        //            if (CountQuestions() == 0)
-        //            {
-        //                Debug.Log("Nessuna domanda trovata. Azzero q_id in PlayerPrefs.");
-        //                return -1;
-        //            }
-
-        //            return PlayerPrefs.GetInt("q_id");
-        //        }
-        //        else return -1;
-        //    }
+        public Question(string question, Answer[] answers, int id)
+        {
+            this.question = question;
+            this.answers = answers;
+            this.id = id;
+            Debug.Log("Creata domanda con custom id " + id);
+        }
     }
 }
