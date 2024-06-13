@@ -95,7 +95,7 @@ public static class CVManager
         File.WriteAllText((GetCVFilePath(cvEntry.name, cvEntry.surname)), json);
 
         // COPIA IN CARTELLA BACKUP
-       // BackupManager.BackUpFolder(GetCVFolder(), saveFolder);
+        // BackupManager.BackUpFolder(GetCVFolder(), saveFolder);
     }
 
     public static void RemoveCVEntry(CVEntry cvEntry)
@@ -103,7 +103,7 @@ public static class CVManager
         if (CheckEntry(cvEntry))
             File.Delete(GetCVFilePath(cvEntry.name, cvEntry.surname));
 
-       // BackupManager.BackUpFolder(GetCVFolder(), saveFolder);
+        // BackupManager.BackUpFolder(GetCVFolder(), saveFolder);
     }
 
     public static bool CheckEntry(CVEntry cvEntry)
@@ -148,7 +148,8 @@ public class CVEntry
     public string surname;
     public Occupazione occupazione;
     public Genere genere;
-    public Istruzione istruzione;
+    // public Istruzione istruzione;
+    public Istruzione.Qualifica qualifica;
     //public Lingua linguaMadre;
     //public Lingua linguaSecondaria;
     // public Patente patente;
@@ -161,13 +162,13 @@ public class CVEntry
 
     }
 
-    public CVEntry(string name, string surname, Occupazione occupazione, Genere genere, Istruzione istruzione)
+    public CVEntry(string name, string surname, Occupazione occupazione, Genere genere, Istruzione.Qualifica qualifica)
     {
         this.name = name;
         this.surname = surname;
         this.occupazione = occupazione;
         this.genere = genere;
-        this.istruzione = istruzione;
+        this.qualifica = qualifica;
     }
 
     public enum Lingua { Nessuno, Italiano, Inglese, Francese, Tedesco, Spagnolo, Portoghese }
@@ -178,7 +179,15 @@ public class CVEntry
 
     public enum Occupazione { Sviluppatore, Medico };
 
-    // Forse fare in struct, con istruzione e dettaglio (liceo, itis, lauree varie)...
-    public enum Istruzione {Medie, Superiori, Università };
+    // Forse fare in struct, con qualifica e dettaglio (liceo, itis, lauree varie)...
+    // public enum Istruzione {Medie, Superiori, Università };
+
+    public struct Istruzione
+    {
+       // public string test;
+        public enum Qualifica { Medie, Superiori, Università };
+        public enum Titolo { ITIS, IPSIA, Liceo };
+
+    }
 }
 

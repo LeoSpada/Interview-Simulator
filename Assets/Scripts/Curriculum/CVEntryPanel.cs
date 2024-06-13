@@ -8,6 +8,8 @@ public class CVEntryPanel : MonoBehaviour
     public TMP_InputField[] inputFields;
 
     public TMP_Dropdown[] dropdowns;
+    public GameObject rigaQualifica;
+    public TMP_Dropdown sottoQualifica;
 
     private CVEntry CV;
 
@@ -36,15 +38,24 @@ public class CVEntryPanel : MonoBehaviour
 
         CVEntry.Genere genere = InputPanel.AcceptDropdown<CVEntry.Genere>(dropdowns[0]);
         CVEntry.Occupazione occupazione = InputPanel.AcceptDropdown<CVEntry.Occupazione>(dropdowns[1]);
-        CVEntry.Istruzione istruzione = InputPanel.AcceptDropdown<CVEntry.Istruzione>(dropdowns[2]);
+        
+        //CVEntry.Istruzione istruzione;
+
+        
+        CVEntry.Istruzione.Qualifica qualifica = InputPanel.AcceptDropdown<CVEntry.Istruzione.Qualifica>(dropdowns[2]);
+
+        
+        //Debug.Log(qualifica.Qualifica);
+        //
 
         // AGGIUNGERE NUOVI DROPDOWN QUI
         // FORSE FARE UNA FUNZIONE DA USARE CON OnValueChanged dei dropdown che svelano altri dropdown
 
 
+
         if (InputPanel.fieldsClear && InputPanel.dropdownsClear)
         {
-            CV = new(inputFields[0].text, inputFields[1].text, occupazione, genere, istruzione);
+            CV = new(inputFields[0].text, inputFields[1].text, occupazione, genere, qualifica);
 
             // Se un file con lo stesso nome è già presente, compare una finestra di conferma
             if (CVManager.CheckEntry(CV))
@@ -81,6 +92,24 @@ public class CVEntryPanel : MonoBehaviour
                 confirmMessage.text += "\nIl CV è stato sovrascritto e il file rinominato.";
                 CVManager.RemoveCVEntry(CVManager.currentCV);
             }
+        }
+    }
+
+    public void ShowSubDropdown()
+    {
+        CVEntry.Istruzione.Qualifica qualifica = InputPanel.AcceptDropdown<CVEntry.Istruzione.Qualifica>(dropdowns[2]);
+        //Debug.Log(qualifica.Qualifica);
+
+        string istruzioneText = qualifica.ToString();
+        if (istruzioneText.Equals("Medie"))
+        {
+            // Debug.Log("medie");
+            rigaQualifica.SetActive(false);
+        }
+        else //if (istruzioneText.Equals("Superiori"))
+        {
+            Debug.Log("SUPERIORI");
+            rigaQualifica.SetActive(true);
         }
     }
 

@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static class InputPanel
 {
@@ -62,6 +63,15 @@ public static class InputPanel
     // FORSE NECESSARIE MODIFICHE PER IGNORARE / ATTIVARE / DISATTIVARE: VEDI ACCEPT INPUT FIELD
     public static T AcceptDropdown<T>(TMP_Dropdown dropdown, bool canColor = true, bool canBreak = true)
     {
+
+        //if (!dropdown.isActiveAndEnabled)
+        //{
+        //    Debug.Log(dropdown + " ignorato");
+        //    return default;
+        //}
+
+
+
         // Ottiene il valore del testo del dropdown
         string dropdownText = dropdown.options[dropdown.value].text;
         // Debug.Log(dropdownText);
