@@ -38,13 +38,15 @@ public class CVEntryPanel : MonoBehaviour
 
         CVEntry.Genere genere = InputPanel.AcceptDropdown<CVEntry.Genere>(dropdowns[0]);
         CVEntry.Occupazione occupazione = InputPanel.AcceptDropdown<CVEntry.Occupazione>(dropdowns[1]);
-        
+
         //CVEntry.Istruzione istruzione;
 
-        
+
         Istruzione.Qualifica qualifica = InputPanel.AcceptDropdown<Istruzione.Qualifica>(dropdowns[2]);
 
-        
+
+
+
         //Debug.Log(qualifica.Qualifica);
         //
 
@@ -55,7 +57,9 @@ public class CVEntryPanel : MonoBehaviour
 
         if (InputPanel.fieldsClear && InputPanel.dropdownsClear)
         {
-            CV = new(inputFields[0].text, inputFields[1].text, occupazione, genere, qualifica);
+            Istruzione istruzione = new(qualifica);
+
+            CV = new(inputFields[0].text, inputFields[1].text, occupazione, genere, istruzione);
 
             // Se un file con lo stesso nome è già presente, compare una finestra di conferma
             if (CVManager.CheckEntry(CV))
@@ -98,6 +102,8 @@ public class CVEntryPanel : MonoBehaviour
     public void ShowSubDropdown()
     {
         Istruzione.Qualifica qualifica = InputPanel.AcceptDropdown<Istruzione.Qualifica>(dropdowns[2]);
+
+        // Istruzione istruzione = new(qualifica);
         //Debug.Log(qualifica.Qualifica);
 
         string istruzioneText = qualifica.ToString();

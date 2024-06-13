@@ -144,10 +144,32 @@ public static class CVManager
 
 public class Istruzione
 {
+    public Qualifica qualifica;
+    public Titolo titolo;
+
+    public Istruzione()
+    {
+
+    }
+
+    public Istruzione(Qualifica qualifica)
+    {
+        this.qualifica = qualifica;
+    }
+
+    public Istruzione(Qualifica qualifica, Titolo titolo) : this(qualifica)
+    {
+        this.titolo = titolo;
+    }
+
+
     public enum Qualifica { Medie, Superiori, Università };
     public enum Titolo { ITIS, IPSIA, Liceo };
+
+
 }
 
+[System.Serializable]
 
 public class CVEntry
 {
@@ -155,8 +177,8 @@ public class CVEntry
     public string surname;
     public Occupazione occupazione;
     public Genere genere;
-    // public Istruzione istruzione;
-    public Istruzione.Qualifica qualifica;
+    public Istruzione istruzione;
+    // public Istruzione.Qualifica qualifica;
     //public Lingua linguaMadre;
     //public Lingua linguaSecondaria;
     // public Patente patente;
@@ -169,13 +191,14 @@ public class CVEntry
 
     }
 
-    public CVEntry(string name, string surname, Occupazione occupazione, Genere genere, Istruzione.Qualifica qualifica)
+    public CVEntry(string name, string surname, Occupazione occupazione, Genere genere, Istruzione istruzione)
     {
         this.name = name;
         this.surname = surname;
         this.occupazione = occupazione;
         this.genere = genere;
-        this.qualifica = qualifica;
+        this.istruzione = istruzione;
+        // this.qualifica = qualifica;
     }
 
     public enum Lingua { Nessuno, Italiano, Inglese, Francese, Tedesco, Spagnolo, Portoghese }
