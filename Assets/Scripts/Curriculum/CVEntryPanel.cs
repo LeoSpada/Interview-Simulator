@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -99,24 +100,64 @@ public class CVEntryPanel : MonoBehaviour
         }
     }
 
-    public void ShowSubDropdown()
+    public void ShowTitoloDropdown()
     {
         Istruzione.Qualifica qualifica = InputPanel.AcceptDropdown<Istruzione.Qualifica>(dropdowns[2]);
+
+        sottoQualifica = rigaQualifica.GetComponentInChildren<TMP_Dropdown>();
 
         // Istruzione istruzione = new(qualifica);
         //Debug.Log(qualifica.Qualifica);
 
-        string istruzioneText = qualifica.ToString();
-        if (istruzioneText.Equals("Medie"))
+        string qualificaText = qualifica.ToString();
+        if (qualificaText.Equals("Medie"))
         {
             // Debug.Log("medie");
+            sottoQualifica.ClearOptions();
             rigaQualifica.SetActive(false);
         }
-        else //if (istruzioneText.Equals("Superiori"))
+        else //if (qualificaText.Equals("Superiori"))
         {
             Debug.Log("SUPERIORI");
             rigaQualifica.SetActive(true);
+            UpdateTitoloDropdownValues(qualificaText);
         }
+    }
+
+    public void UpdateTitoloDropdownValues(string qualifica)
+    {
+        sottoQualifica.ClearOptions();
+        List<string> options = new();
+
+        //{
+        //    "Nessuno",
+        //    "ITIS",
+        //    "IPSIA",
+        //    "Liceo"
+        //};
+
+        if (qualifica.Equals("Superiori"))
+        {
+            options = new()
+            {
+                "Liceo",
+                "ITIS",
+                "IPSIA"
+            };
+
+
+        }
+        else if (qualifica.Equals("Università"))
+        {
+            options = new()
+            {
+                "Laurea 1",
+                "Laurea 2",
+                "Laurea 3"
+            };
+        }
+
+        sottoQualifica.AddOptions(options);
     }
 
     // Carica il CV scelto e ne inserisce i dati nei campi di input per la modifica.

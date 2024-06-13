@@ -155,16 +155,33 @@ public class Istruzione
     public Istruzione(Qualifica qualifica)
     {
         this.qualifica = qualifica;
+       // FilterTitolo();
     }
 
     public Istruzione(Qualifica qualifica, Titolo titolo) : this(qualifica)
     {
         this.titolo = titolo;
+        // FilterTitolo();
     }
+
+    //public void FilterTitolo()
+    //{
+    //    // Se ha fatto medie, il titolo è per forza "Nessuno"
+    //    if (qualifica.ToString().Equals("Medie"))
+    //    {
+    //        Debug.Log("Fatto medie");
+    //        titolo = Titolo.Nessuno;
+    //    }
+
+    //    if (!titolo.ToString().Equals("Nessuno"))
+    //    {
+    //        
+    //    }
+    //}
 
 
     public enum Qualifica { Medie, Superiori, Università };
-    public enum Titolo { ITIS, IPSIA, Liceo };
+    public enum Titolo { Nessuno, ITIS, IPSIA, Liceo };
 
 
 }
