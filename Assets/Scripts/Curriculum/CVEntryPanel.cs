@@ -44,7 +44,13 @@ public class CVEntryPanel : MonoBehaviour
 
 
         Istruzione.Qualifica qualifica = InputPanel.AcceptDropdown<Istruzione.Qualifica>(dropdowns[2]);
+        Istruzione.Titolo titolo;
 
+        if (sottoQualifica && qualifica != Istruzione.Qualifica.Medie)
+        {
+            titolo = InputPanel.AcceptDropdown<Istruzione.Titolo>(sottoQualifica);
+        }
+        else titolo = Istruzione.Titolo.Nessuno;
 
 
 
@@ -58,7 +64,7 @@ public class CVEntryPanel : MonoBehaviour
 
         if (InputPanel.fieldsClear && InputPanel.dropdownsClear)
         {
-            Istruzione istruzione = new(qualifica);
+            Istruzione istruzione = new(qualifica, titolo);
 
             CV = new(inputFields[0].text, inputFields[1].text, occupazione, genere, istruzione);
 
