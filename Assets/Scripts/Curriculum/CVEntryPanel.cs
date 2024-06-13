@@ -5,15 +5,26 @@ using UnityEngine;
 
 public class CVEntryPanel : MonoBehaviour
 {
-    // Contiene i vari inputField
-    public TMP_InputField[] inputFields;
-
-    public TMP_Dropdown[] dropdowns;
-    public GameObject rigaQualifica;
-    public TMP_Dropdown sottoQualifica;
-
     private CVEntry CV;
 
+    // Contiene i vari inputField
+    [Header("Campi liberi")]
+    public TMP_InputField[] inputFields;
+
+    // public TMP_Dropdown[] dropdowns;
+    [Header("Dropdown")]
+    public TMP_Dropdown genereDD;
+    public TMP_Dropdown occupazioneDD;
+    
+    public TMP_Dropdown qualificaDD;
+    public TMP_Dropdown titoloDD;
+
+    public TMP_Dropdown esperienzaDD;
+    public TMP_Dropdown linguaDD;
+    public TMP_Dropdown patenteDD;   
+    
+    [Header("GUI e altro")]
+    public GameObject rigaQualifica;
     public GameObject overwritePanel;
     public GameObject confirmPanel;
     private TextMeshProUGUI confirmMessage;
@@ -37,22 +48,22 @@ public class CVEntryPanel : MonoBehaviour
         // Possibile mettere un identificativo migliore senza rimuovere array?
         // Genderdropdown anziché dropdowns[0]
 
-        CVEntry.Genere genere = InputPanel.AcceptDropdown<CVEntry.Genere>(dropdowns[0]);
-        CVEntry.Occupazione occupazione = InputPanel.AcceptDropdown<CVEntry.Occupazione>(dropdowns[1]);
+        CVEntry.Genere genere = InputPanel.AcceptDropdown<CVEntry.Genere>(genereDD);
+        CVEntry.Occupazione occupazione = InputPanel.AcceptDropdown<CVEntry.Occupazione>(occupazioneDD);
 
-        Istruzione.Qualifica qualifica = InputPanel.AcceptDropdown<Istruzione.Qualifica>(dropdowns[2]);
+        Istruzione.Qualifica qualifica = InputPanel.AcceptDropdown<Istruzione.Qualifica>(qualificaDD);
         Istruzione.Titolo titolo;
 
 
-        if (sottoQualifica && qualifica != Istruzione.Qualifica.Medie)
+        if (titoloDD && qualifica != Istruzione.Qualifica.Medie)
         {
-            titolo = InputPanel.AcceptDropdown<Istruzione.Titolo>(sottoQualifica);
+            titolo = InputPanel.AcceptDropdown<Istruzione.Titolo>(titoloDD);
         }
         else titolo = Istruzione.Titolo.Nessuno;
 
-        CVEntry.Esperienza esperienza = InputPanel.AcceptDropdown<CVEntry.Esperienza>(dropdowns[3]);
-        CVEntry.Lingua lingua = InputPanel.AcceptDropdown<CVEntry.Lingua>(dropdowns[4]);
-        CVEntry.Patente patente = InputPanel.AcceptDropdown<CVEntry.Patente>(dropdowns[5]);
+        CVEntry.Esperienza esperienza = InputPanel.AcceptDropdown<CVEntry.Esperienza>(esperienzaDD);
+        CVEntry.Lingua lingua = InputPanel.AcceptDropdown<CVEntry.Lingua>(linguaDD);
+        CVEntry.Patente patente = InputPanel.AcceptDropdown<CVEntry.Patente>(patenteDD);
 
         if (InputPanel.fieldsClear && InputPanel.dropdownsClear)
         {
@@ -100,9 +111,9 @@ public class CVEntryPanel : MonoBehaviour
 
     public void ShowTitoloDropdown()
     {
-        Istruzione.Qualifica qualifica = InputPanel.AcceptDropdown<Istruzione.Qualifica>(dropdowns[2]);
+        Istruzione.Qualifica qualifica = InputPanel.AcceptDropdown<Istruzione.Qualifica>(qualificaDD);
 
-        sottoQualifica = rigaQualifica.GetComponentInChildren<TMP_Dropdown>();
+        titoloDD = rigaQualifica.GetComponentInChildren<TMP_Dropdown>();
 
         // Istruzione istruzione = new(qualifica);
         //Debug.Log(qualifica.Qualifica);
@@ -111,7 +122,7 @@ public class CVEntryPanel : MonoBehaviour
         if (qualificaText.Equals("Medie"))
         {
             // Debug.Log("medie");
-            sottoQualifica.ClearOptions();
+            titoloDD.ClearOptions();
             rigaQualifica.SetActive(false);
         }
         else //if (qualificaText.Equals("Superiori"))
@@ -124,7 +135,7 @@ public class CVEntryPanel : MonoBehaviour
 
     public void UpdateTitoloDropdownValues(string qualifica)
     {
-        sottoQualifica.ClearOptions();
+        titoloDD.ClearOptions();
         List<string> options = new();
 
         //{
@@ -157,7 +168,7 @@ public class CVEntryPanel : MonoBehaviour
             };
         }
 
-        sottoQualifica.AddOptions(options);
+        titoloDD.AddOptions(options);
     }
 
     // Carica il CV scelto e ne inserisce i dati nei campi di input per la modifica.
@@ -169,16 +180,19 @@ public class CVEntryPanel : MonoBehaviour
 
         inputFields[0].text = currentCV.name;
         inputFields[1].text = currentCV.surname;
+                
+        // Viene sommato 1 perché il valore 0 dei dropdown è la frase "Inserire ..." (non compatibile con enum)
 
-        // Debug.Log(((int)currentCV.genere));
-        // Viene sommato 1 perché il valore 0 del dropdown è la frase "Inserire Genere" (non compatibile con enum)
-        // Forse rimuovere inserire genere e +1 successivamente
+        genereDD.value = (int)currentCV.genere + 1;
+        occupazioneDD.value = (int)currentCV.occupazione + 1;
+        qualificaDD.value = (int)currentCV.istruzione.qualifica + 1;
 
-        dropdowns[0].value = (int)currentCV.genere + 1;
-        dropdowns[1].value = (int)currentCV.occupazione + 1;
-        dropdowns[2].value = (int)currentCV.istruzione.qualifica + 1;
+        // NOTA: Il campo titoloDD attualmente non può essere recuperato perché la dimensione / posizione delle sue opzioni è variabile 
 
-        // AGGIUNGERE CARICAMENTI DI ALTRI DROPDOWN
+        // Campi bonus facoltativi: Non hanno campo che obbliga a inserire un valore nel dropdown, quindi non è necessario incremento
+        esperienzaDD.value = (int)currentCV.esperienza;
+        linguaDD.value = (int)currentCV.secondaLingua;
+        patenteDD.value = (int)currentCV.patente;
 
         // Probabilmente non è possibile ricaricare il titolo di Istruzione perché le opzioni hanno indici diversi
     }
