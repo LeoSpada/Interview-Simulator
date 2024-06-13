@@ -155,7 +155,7 @@ public class Istruzione
     public Istruzione(Qualifica qualifica)
     {
         this.qualifica = qualifica;
-       // FilterTitolo();
+        // FilterTitolo();
     }
 
     public Istruzione(Qualifica qualifica, Titolo titolo) : this(qualifica)
@@ -181,7 +181,7 @@ public class Istruzione
 
 
     public enum Qualifica { Medie, Superiori, Laurea };
-    public enum Titolo { Nessuno, ITIS, IPSIA, Liceo, Scientifica, Umanistica, Economica, Sociale, Tecnologica};
+    public enum Titolo { Nessuno, ITIS, IPSIA, Liceo, Scientifica, Umanistica, Economica, Sociale, Tecnologica };
 
 
 }
@@ -195,41 +195,38 @@ public class CVEntry
     public Occupazione occupazione;
     public Genere genere;
     public Istruzione istruzione;
-    // public Istruzione.Qualifica qualifica;
-    //public Lingua linguaMadre;
-    //public Lingua linguaSecondaria;
-    // public Patente patente;
-    // AGGIUNGERE QUI TUTTI I CAMPI e rigenerare costruttore
-    // VEDERE DATI_CURRICULUM e altri
-
-
+    public Esperienza esperienza;
+    public Lingua secondaLingua;
+    public Patente patente;
     public CVEntry()
     {
 
     }
 
-    public CVEntry(string name, string surname, Occupazione occupazione, Genere genere, Istruzione istruzione)
+    public CVEntry(string name, string surname, Occupazione occupazione, Genere genere, Istruzione istruzione, Esperienza esperienza, Lingua secondaLingua, Patente patente)
     {
         this.name = name;
         this.surname = surname;
         this.occupazione = occupazione;
         this.genere = genere;
         this.istruzione = istruzione;
-        // this.qualifica = qualifica;
+        this.esperienza = esperienza;
+        this.secondaLingua = secondaLingua;
+        this.patente = patente;
     }
 
-    public enum Lingua { Nessuno, Italiano, Inglese, Francese, Tedesco, Spagnolo, Portoghese }
-
-    public enum Patente { Nessuna, A, A1, A2, B, C, D, E }
-
-    public enum Genere { M, F, Altro }
-
-    // L'ordine in cui sono disposte le occupazioni possibili incide parzialemente sullo studio richiesto.
+    // L'ordine in cui sono disposte le occupazioni possibili incide parzialmente sullo studio richiesto.
 
     // Prime due (0-1): Medie
     // Terza e quarta (2-3): Superiori
     // Quinta in poi (>4): Laurea
 
-    public enum Occupazione { Sarto, Estetista, Meccanico, Segretario, Sviluppatore, Insegnante, Avvocato, Medico };
-}
+    public enum Occupazione { Sarto, Estetista, Meccanico, Segretario, Sviluppatore, Insegnante, Avvocato, Medico }
 
+    public enum Genere { M, F, Altro }
+
+    // Sezioni bonus: se presenti, danno punti bonus
+    public enum Esperienza { Nessuna, Cameriere, Barista, Pulizie, Babysitting, Arbitro, Bagnino, Animatore }
+    public enum Lingua { Nessuna, Italiano, Inglese, Francese, Tedesco, Spagnolo, Portoghese }
+    public enum Patente { Nessuna, A, A1, A2, B, C, D, E }
+}

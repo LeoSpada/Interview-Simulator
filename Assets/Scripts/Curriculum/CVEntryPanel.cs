@@ -40,11 +40,9 @@ public class CVEntryPanel : MonoBehaviour
         CVEntry.Genere genere = InputPanel.AcceptDropdown<CVEntry.Genere>(dropdowns[0]);
         CVEntry.Occupazione occupazione = InputPanel.AcceptDropdown<CVEntry.Occupazione>(dropdowns[1]);
 
-        //CVEntry.Istruzione istruzione;
-
-
         Istruzione.Qualifica qualifica = InputPanel.AcceptDropdown<Istruzione.Qualifica>(dropdowns[2]);
         Istruzione.Titolo titolo;
+
 
         if (sottoQualifica && qualifica != Istruzione.Qualifica.Medie)
         {
@@ -52,21 +50,15 @@ public class CVEntryPanel : MonoBehaviour
         }
         else titolo = Istruzione.Titolo.Nessuno;
 
-
-
-        //Debug.Log(qualifica.Qualifica);
-        //
-
-        // AGGIUNGERE NUOVI DROPDOWN QUI
-        // FORSE FARE UNA FUNZIONE DA USARE CON OnValueChanged dei dropdown che svelano altri dropdown
-
-
+        CVEntry.Esperienza esperienza = InputPanel.AcceptDropdown<CVEntry.Esperienza>(dropdowns[3]);
+        CVEntry.Lingua lingua = InputPanel.AcceptDropdown<CVEntry.Lingua>(dropdowns[4]);
+        CVEntry.Patente patente = InputPanel.AcceptDropdown<CVEntry.Patente>(dropdowns[5]);
 
         if (InputPanel.fieldsClear && InputPanel.dropdownsClear)
         {
             Istruzione istruzione = new(qualifica, titolo);
 
-            CV = new(inputFields[0].text, inputFields[1].text, occupazione, genere, istruzione);
+            CV = new(inputFields[0].text, inputFields[1].text, occupazione, genere, istruzione, esperienza, lingua, patente);
 
             // Se un file con lo stesso nome è già presente, compare una finestra di conferma
             if (CVManager.CheckEntry(CV))
@@ -185,6 +177,8 @@ public class CVEntryPanel : MonoBehaviour
         dropdowns[0].value = (int)currentCV.genere + 1;
         dropdowns[1].value = (int)currentCV.occupazione + 1;
         dropdowns[2].value = (int)currentCV.istruzione.qualifica + 1;
+
+        // AGGIUNGERE CARICAMENTI DI ALTRI DROPDOWN
 
         // Probabilmente non è possibile ricaricare il titolo di Istruzione perché le opzioni hanno indici diversi
     }
