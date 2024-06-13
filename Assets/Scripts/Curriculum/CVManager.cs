@@ -95,7 +95,7 @@ public static class CVManager
         File.WriteAllText((GetCVFilePath(cvEntry.name, cvEntry.surname)), json);
 
         // COPIA IN CARTELLA BACKUP
-       // BackupManager.BackUpFolder(GetCVFolder(), saveFolder);
+        // BackupManager.BackUpFolder(GetCVFolder(), saveFolder);
     }
 
     public static void RemoveCVEntry(CVEntry cvEntry)
@@ -103,7 +103,7 @@ public static class CVManager
         if (CheckEntry(cvEntry))
             File.Delete(GetCVFilePath(cvEntry.name, cvEntry.surname));
 
-       // BackupManager.BackUpFolder(GetCVFolder(), saveFolder);
+        // BackupManager.BackUpFolder(GetCVFolder(), saveFolder);
     }
 
     public static bool CheckEntry(CVEntry cvEntry)
@@ -133,7 +133,7 @@ public static class CVManager
     // Usata per debug. Stampa a schermo il cv formattato.
     public static void DebugCV(CVEntry cv)
     {
-        Debug.Log("Nome: " + cv.name + " " + cv.surname + " , " + cv.gender + "\nOccupazione desiderata: " + cv.job);
+        Debug.Log("Nome: " + cv.name + " " + cv.surname + " , " + cv.genere + "\nOccupazione desiderata: " + cv.occupazione);
     }
 }
 
@@ -142,38 +142,91 @@ public static class CVManager
 
 // AGGIUNGERE CAMPI PER ISTRUZIONE ED ESPERIENZE PASSATE
 
+public class Istruzione
+{
+    public Qualifica qualifica;
+    public Titolo titolo;
+
+    public Istruzione()
+    {
+
+    }
+
+    public Istruzione(Qualifica qualifica)
+    {
+        this.qualifica = qualifica;
+        // FilterTitolo();
+    }
+
+    public Istruzione(Qualifica qualifica, Titolo titolo) : this(qualifica)
+    {
+        this.titolo = titolo;
+        // FilterTitolo();
+    }
+
+    //public void FilterTitolo()
+    //{
+    //    // Se ha fatto medie, il titolo è per forza "Nessuno"
+    //    if (qualifica.ToString().Equals("Medie"))
+    //    {
+    //        Debug.Log("Fatto medie");
+    //        titolo = Titolo.Nessuno;
+    //    }
+
+    //    if (!titolo.ToString().Equals("Nessuno"))
+    //    {
+    //        
+    //    }
+    //}
+
+
+    public enum Qualifica { Medie, Superiori, Laurea };
+    public enum Titolo { Nessuno, ITIS, IPSIA, Liceo, Scientifica, Umanistica, Economica, Sociale, Tecnologica };
+
+
+}
+
+[System.Serializable]
+
 public class CVEntry
 {
     public string name;
     public string surname;
-    public Occupazione job;
-    public Genere gender;
-    //public Lingua linguaMadre;
-    //public Lingua linguaSecondaria;
-    // public Patente patente;
-    // AGGIUNGERE QUI TUTTI I CAMPI e rigenerare costruttore
-    // VEDERE DATI_CURRICULUM e altri
-
-
+    public Occupazione occupazione;
+    public Genere genere;
+    public Istruzione istruzione;
+    public Esperienza esperienza;
+    public Lingua secondaLingua;
+    public Patente patente;
     public CVEntry()
     {
 
     }
 
-    public CVEntry(string name, string surname, Occupazione job, Genere gender)
+    public CVEntry(string name, string surname, Occupazione occupazione, Genere genere, Istruzione istruzione, Esperienza esperienza, Lingua secondaLingua, Patente patente)
     {
         this.name = name;
         this.surname = surname;
-        this.job = job;
-        this.gender = gender;
+        this.occupazione = occupazione;
+        this.genere = genere;
+        this.istruzione = istruzione;
+        this.esperienza = esperienza;
+        this.secondaLingua = secondaLingua;
+        this.patente = patente;
     }
 
-    public enum Lingua { Nessuno, Italiano, Inglese, Francese, Tedesco, Spagnolo, Portoghese }
+    // L'ordine in cui sono disposte le occupazioni possibili incide parzialmente sullo studio richiesto.
 
-    public enum Patente { Nessuna, A, A1, A2, B, C, D, E }
+    // Prime due (0-1): Medie
+    // Terza e quarta (2-3): Superiori
+    // Quinta in poi (>4): Laurea
+
+    public enum Occupazione { Sarto, Estetista, Meccanico, Segretario, Sviluppatore, Insegnante, Avvocato, Medico }
 
     public enum Genere { M, F, Altro }
 
-    public enum Occupazione { Sviluppatore, Medico };
+    // Sezioni bonus: se presenti, danno punti bonus
+    public enum Esperienza { Nessuna, Cameriere, Barista, Pulizie, Babysitting, Arbitro, Bagnino, Animatore }
+    public enum Lingua { Nessuna, Italiano, Inglese, Francese, Tedesco, Spagnolo, Portoghese }
+    public enum Patente { Nessuna, A, A1, A2, B, C, D, E }
 }
-
