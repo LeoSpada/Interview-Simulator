@@ -223,7 +223,7 @@ public class QuestionPanel : MonoBehaviour
 
         if (interviewInfo)
         {
-            questionNumber = questions.Count - 1;
+            questionNumber = questions.Count - 2;
             interviewInfo.gameObject.SetActive(true);
             interviewInfo.ReloadInfo();
         }
@@ -382,6 +382,7 @@ public class QuestionPanel : MonoBehaviour
         questionNumber++;
 
         startQuestions = QuestionLimit(startQuestions, startFolder);
+        //Debug.Log("caricate ");
         jobQuestions = QuestionLimit(startQuestions, currentJob);
         endQuestions = QuestionLimit(startQuestions, endFolder);
 
@@ -410,7 +411,7 @@ public class QuestionPanel : MonoBehaviour
 
         // Debug.Log("Ci sono domande n = " + questions.Count);
 
-        questionNumber = questions.Count - 1;
+        // questionNumber = questions.Count - 2;
         Setup(questions[index]);
     }
 
@@ -516,11 +517,9 @@ public class QuestionPanel : MonoBehaviour
             points++;
         }
 
-
-
         Answer[] answers = new Answer[4];
-        answers[0].text = "Continua";
-        answers[0].points = continueID;
+        answers[0].text = InputPanel.disabledText;
+        answers[0].points = 0;
 
         answers[1].text = InputPanel.disabledText;
         answers[1].points = 0;
@@ -533,6 +532,8 @@ public class QuestionPanel : MonoBehaviour
 
         Question question = new(questionText, answers, id);
         InterviewManager.AddQuestion(question, introFolder);
+        noPointAnswers++;
+        Invoke(nameof(NextQuestion), 5f);
         return question;
     }
 
@@ -670,7 +671,11 @@ public class QuestionPanel : MonoBehaviour
                 if (log) Debug.Log($"Domande richieste ({counter}) > Domande trovate in cartella '{folder}' ({folderSize}). Caricamento di tutte le domande in '{folder}'.");
                 return GetJobFolderSize(folder);
             }
-            else return counter;
+            else
+            {
+                if (log) Debug.Log($"Domande richieste ({counter}) <= Domande trovate in cartella '{folder}' ({folderSize}).");
+                return counter;
+            }
         }
     }
 
