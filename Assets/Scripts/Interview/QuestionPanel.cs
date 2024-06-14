@@ -661,7 +661,7 @@ public class QuestionPanel : MonoBehaviour
         return question;
     }
 
-    public int QuestionLimit(int counter, string folder, bool log = false)
+    public int QuestionLimit(int counter, string folder, bool log = true)
     {
         {
             int folderSize = GetJobFolderSize(folder);
