@@ -89,15 +89,15 @@ public class QuestionPanel : MonoBehaviour
 
             currentJob = cv.occupazione.ToString();
             currentJobID = (int)cv.occupazione;
-            Debug.Log("occupazione di valore " + currentJobID);
+            // Debug.Log("occupazione di valore " + currentJobID);
 
             currentEducation = cv.istruzione.qualifica.ToString();
             currentEducationID = (int)cv.istruzione.qualifica;
-            Debug.Log("educazione di valore " + currentEducationID);
+            // Debug.Log("educazione di valore " + currentEducationID);
 
             bonusPointsQuestion = GetBonusPointsQuestion();
 
-            Debug.Log(currentEducation);
+            // Debug.Log(currentEducation);
 
             if (cvInfo)
             {
@@ -114,7 +114,8 @@ public class QuestionPanel : MonoBehaviour
     public void Setup(Question q)
     {
 
-        Debug.Log(currentJob);
+        // Debug.Log(currentJob);
+
         // Se q è null, le domande sono finite.
         // Rimpiazzare questa parte con caricamento scena di calcolo punteggio??
 
@@ -222,7 +223,7 @@ public class QuestionPanel : MonoBehaviour
 
         if (interviewInfo)
         {
-            questionNumber = questions.Count - 1;
+            questionNumber = questions.Count - 2;
             interviewInfo.gameObject.SetActive(true);
             interviewInfo.ReloadInfo();
         }
@@ -381,6 +382,7 @@ public class QuestionPanel : MonoBehaviour
         questionNumber++;
 
         startQuestions = QuestionLimit(startQuestions, startFolder);
+        //Debug.Log("caricate ");
         jobQuestions = QuestionLimit(startQuestions, currentJob);
         endQuestions = QuestionLimit(startQuestions, endFolder);
 
@@ -409,12 +411,12 @@ public class QuestionPanel : MonoBehaviour
 
         // Debug.Log("Ci sono domande n = " + questions.Count);
 
-        questionNumber = questions.Count - 1;
+        // questionNumber = questions.Count - 2;
         Setup(questions[index]);
     }
 
     // SNELLIRE CODICE?? (Tante ripetizioni in tutte le funzioni Get...Question)
-  
+
     // Cambiare forse frasi e valori bonus e malus
 
     public Question GetBonusPointsQuestion()
@@ -515,11 +517,9 @@ public class QuestionPanel : MonoBehaviour
             points++;
         }
 
-
-
         Answer[] answers = new Answer[4];
-        answers[0].text = "Continua";
-        answers[0].points = continueID;
+        answers[0].text = InputPanel.disabledText;
+        answers[0].points = 0;
 
         answers[1].text = InputPanel.disabledText;
         answers[1].points = 0;
@@ -532,6 +532,8 @@ public class QuestionPanel : MonoBehaviour
 
         Question question = new(questionText, answers, id);
         InterviewManager.AddQuestion(question, introFolder);
+        noPointAnswers++;
+        Invoke(nameof(NextQuestion), 5f);
         return question;
     }
 
@@ -660,7 +662,7 @@ public class QuestionPanel : MonoBehaviour
         return question;
     }
 
-    public int QuestionLimit(int counter, string folder, bool log = false)
+    public int QuestionLimit(int counter, string folder, bool log = true)
     {
         {
             int folderSize = GetJobFolderSize(folder);
@@ -669,7 +671,11 @@ public class QuestionPanel : MonoBehaviour
                 if (log) Debug.Log($"Domande richieste ({counter}) > Domande trovate in cartella '{folder}' ({folderSize}). Caricamento di tutte le domande in '{folder}'.");
                 return GetJobFolderSize(folder);
             }
-            else return counter;
+            else
+            {
+                if (log) Debug.Log($"Domande richieste ({counter}) <= Domande trovate in cartella '{folder}' ({folderSize}).");
+                return counter;
+            }
         }
     }
 
