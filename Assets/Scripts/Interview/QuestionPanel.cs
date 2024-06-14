@@ -89,15 +89,15 @@ public class QuestionPanel : MonoBehaviour
 
             currentJob = cv.occupazione.ToString();
             currentJobID = (int)cv.occupazione;
-            Debug.Log("occupazione di valore " + currentJobID);
+            // Debug.Log("occupazione di valore " + currentJobID);
 
             currentEducation = cv.istruzione.qualifica.ToString();
             currentEducationID = (int)cv.istruzione.qualifica;
-            Debug.Log("educazione di valore " + currentEducationID);
+            // Debug.Log("educazione di valore " + currentEducationID);
 
             bonusPointsQuestion = GetBonusPointsQuestion();
 
-            Debug.Log(currentEducation);
+            // Debug.Log(currentEducation);
 
             if (cvInfo)
             {
@@ -114,7 +114,8 @@ public class QuestionPanel : MonoBehaviour
     public void Setup(Question q)
     {
 
-        Debug.Log(currentJob);
+        // Debug.Log(currentJob);
+
         // Se q è null, le domande sono finite.
         // Rimpiazzare questa parte con caricamento scena di calcolo punteggio??
 
@@ -414,7 +415,7 @@ public class QuestionPanel : MonoBehaviour
     }
 
     // SNELLIRE CODICE?? (Tante ripetizioni in tutte le funzioni Get...Question)
-  
+
     // Cambiare forse frasi e valori bonus e malus
 
     public Question GetBonusPointsQuestion()
