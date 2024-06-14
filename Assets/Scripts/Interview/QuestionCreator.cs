@@ -56,10 +56,10 @@ public class QuestionCreator : MonoBehaviour
                 i = UnityEngine.Random.Range(0, values.Count);
 
                 point.text = values[i].ToString();
-                Debug.Log("Rimuovo " + values[i]);
+                // Debug.Log("Rimuovo " + values[i]);
                 values.Remove(values[i]);
             }
-            else Debug.Log("Disabilitata risposta "+point.name);
+            // else Debug.Log("Nessun valore assegnato a risposta "+point.name+" (Risposta disabilitata)");
         }
     }
 
@@ -69,7 +69,7 @@ public class QuestionCreator : MonoBehaviour
 
         int size = int.Parse(answersSizeDropdown.captionText.text);
 
-        Debug.Log("Dim inserita = " + size);
+        // Debug.Log("Dim inserita = " + size);
 
 
         foreach (var ans in answerFields)
@@ -96,19 +96,34 @@ public class QuestionCreator : MonoBehaviour
 
     public void CheckAllInputs()
     {
+        // Debug.Log("Controllando input");
+
         InputPanel.AcceptInputField(questionField);
+        // Debug.Log("input controllato question: FIELDS CLEAR = " + InputPanel.fieldsClear);
         InputPanel.AcceptInputFields(answerFields);
+        // Debug.Log("input controllati answer: FIELDS CLEAR = " + InputPanel.fieldsClear);
         InputPanel.AcceptInputFields(pointFields);
+        // Debug.Log("input controllati points: FIELDS CLEAR = " + InputPanel.fieldsClear);
     }
 
     // Crea un CV a partire dai campi inseriti. Controlli su file esistenti e campi vuoti prima del salvataggio.
     public void Submit()
     {
 
+        // Debug.Log("Submit cliccato");
+
         CheckAllInputs();
 
+        // Debug.Log("input controllati: DDCLEAR ="+InputPanel.dropdownsClear);
+
+        // Debug.Log("Continuo submit...");
+
         // Se il dropdown è impostato su custom, controlla che il nome cartella inserito da utente sia valido
-        if (customActive) InputPanel.AcceptInputField(customFolder);
+        if (customActive)
+        {
+            InputPanel.AcceptInputField(customFolder);
+            // Debug.Log("input customFolder controllato: FIELDS CLEAR =" + InputPanel.fieldsClear);
+        }
         else
         {
             CVEntry.Occupazione occupazione = InputPanel.AcceptDropdown<CVEntry.Occupazione>(folderDropdown, false, true);
@@ -136,6 +151,7 @@ public class QuestionCreator : MonoBehaviour
                 // Debug.Log("Custom concesso: salvataggio andrà in " + folder);
             }
 
+            // Debug.Log("Salvataggio in corso...");
             SaveQuestion(folder);
         }
 
@@ -163,7 +179,7 @@ public class QuestionCreator : MonoBehaviour
     public void SaveQuestion(string folder)
     {
         InterviewManager.AddQuestion(question, folder);
-        Debug.Log("SALVATO CON SUCCESSO IN " + folder);
+        Debug.Log($"Domanda salvata con successo in cartella '{folder}'.");
 
         if (confirmPanel) confirmPanel.SetActive(true);
 
