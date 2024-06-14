@@ -62,12 +62,12 @@ public static class InterviewManager
         return dirs;
     }
 
-    public static int CountFolders()
+    public static int CountFolders(bool log = false)
     {
         var dirs = GetFoldersInfo();
         if (dirs == null) return 0;
 
-        Debug.Log("Numero di cartelle: " + dirs.Length);
+        if (log) Debug.Log("Numero di cartelle: " + dirs.Length);
 
         return dirs.Length;
     }
@@ -212,7 +212,7 @@ public static class InterviewManager
 
             q_id = CountQuestions();
             id = ++q_id;
-            Debug.Log("domanda " + id + " creata");
+            //  Debug.Log("domanda " + id + " creata");
         }
 
         public Question(string question, Answer[] answers, int id)
@@ -220,7 +220,7 @@ public static class InterviewManager
             this.question = question;
             this.answers = answers;
             this.id = id;
-            Debug.Log("Creata domanda con custom id " + id);
+            // Debug.Log("Creata domanda con custom id " + id);
         }
     }
 }

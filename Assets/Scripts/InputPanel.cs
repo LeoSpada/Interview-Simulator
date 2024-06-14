@@ -9,7 +9,7 @@ public static class InputPanel
     public static bool fieldsClear = true;
     public static bool dropdownsClear = true;
 
-    public static Color errorColor = new(0.5f,0,0,0.2f);
+    public static Color errorColor = new(0.5f, 0, 0, 0.2f);
 
     // Valore che il codice rimuove / ignora in alcuni contesti.
     // ATTENZIONE: deve essere un numero!
@@ -22,11 +22,11 @@ public static class InputPanel
         else return true;
     }
 
-    public static void AcceptInputField(TMP_InputField inputField, bool canColor = true, bool canBreak = true)
+    public static void AcceptInputField(TMP_InputField inputField, bool canColor = true, bool canBreak = true, bool log = false)
     {
         if (!inputField.isActiveAndEnabled)
         {
-            Debug.Log(inputField + " ignorato");
+            if (log) Debug.Log(inputField + " ignorato");
             return;
         }
         else if (!InputPanel.CheckInputField(inputField))
@@ -54,7 +54,7 @@ public static class InputPanel
 
     public static void DisableInputField(TMP_InputField field)
     {
-        Debug.Log("Ignorata");
+        // Debug.Log("Ignorata");
         field.text = disabledText;
         field.gameObject.SetActive(false);
     }
@@ -77,13 +77,13 @@ public static class InputPanel
         {
             if (canColor)
             {
-                dropdown.image.color = errorColor;               
+                dropdown.image.color = errorColor;
             }
 
             if (canBreak)
             {
                 dropdownsClear = false;
-               if(log) Debug.Log("Il valore del dropdown non è consentito nell'Enum.\nRicontrollare codice.");
+                if (log) Debug.Log("Il valore del dropdown non è consentito nell'Enum.\nRicontrollare codice.");
             }
             return default;
         }
@@ -97,7 +97,7 @@ public static class InputPanel
 
     //public static void ResetColor()
     //{
-        
+
     //}
 
     public static void ClearAll()
