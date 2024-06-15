@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 2248030729288738305}
   - component: {fileID: 6296383269949028723}
   - component: {fileID: 7232554837520783914}
+  - component: {fileID: 9203558564675469581}
   m_Layer: 5
-  m_Name: Modifica
+  m_Name: PULSANTE_Modifica
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,7 +100,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.8509804, g: 0.8352941, b: 0.8352941, a: 1}
-    m_HighlightedColor: {r: 0.24510825, g: 0.59599996, b: 0.30445024, a: 1}
+    m_HighlightedColor: {r: 0, g: 1, b: 0.16853929, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -133,6 +134,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &9203558564675469581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613900217941172599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 644b2f4a2545d2f4cbcfeb0a58df79dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  valore_audio: 1
 --- !u!1 &810943808308342432
 GameObject:
   m_ObjectHideFlags: 0
@@ -495,8 +509,9 @@ GameObject:
   - component: {fileID: 85819076708620}
   - component: {fileID: 2878471449931196480}
   - component: {fileID: 8048763503051823696}
+  - component: {fileID: 5314285746612961356}
   m_Layer: 5
-  m_Name: Carica
+  m_Name: PULSANTE_Carica
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -582,7 +597,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.8509804, g: 0.8352941, b: 0.8352941, a: 1}
-    m_HighlightedColor: {r: 0.22352938, g: 0.5737797, b: 0.8, a: 1}
+    m_HighlightedColor: {r: 0, g: 0.6054425, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -616,6 +631,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5314285746612961356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2419922693671513356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 644b2f4a2545d2f4cbcfeb0a58df79dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  valore_audio: 1
 --- !u!1 &3564050205860073824
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,7 +938,7 @@ GameObject:
   - component: {fileID: 1760133557734141802}
   - component: {fileID: 8862913590197403860}
   m_Layer: 5
-  m_Name: Info
+  m_Name: TESTI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -975,7 +1003,7 @@ GameObject:
   - component: {fileID: 4499900040880777254}
   - component: {fileID: 1355828532102726590}
   m_Layer: 5
-  m_Name: Nome
+  m_Name: TESTO_Nome
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1055,10 +1083,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
-  m_fontSizeBase: 36
+  m_fontSize: 42
+  m_fontSizeBase: 42
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -1108,8 +1136,9 @@ GameObject:
   - component: {fileID: 3234990974907476528}
   - component: {fileID: 1061042751846007663}
   - component: {fileID: 5827106989833867054}
+  - component: {fileID: 1216048222758617910}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: TESTO_Carica
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1189,10 +1218,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
-  m_fontSizeBase: 24
+  m_fontSize: 42
+  m_fontSizeBase: 42
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -1231,6 +1260,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1216048222758617910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4384993022433043096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 644b2f4a2545d2f4cbcfeb0a58df79dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  valore_audio: 1
 --- !u!1 &4655650417705279007
 GameObject:
   m_ObjectHideFlags: 0
@@ -1307,8 +1349,9 @@ GameObject:
   - component: {fileID: 7255661668688367682}
   - component: {fileID: 9049062099835943987}
   - component: {fileID: 5838092706738425612}
+  - component: {fileID: 3582054993371470746}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: TESTO_Modifica
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1388,10 +1431,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
-  m_fontSizeBase: 24
+  m_fontSize: 42
+  m_fontSizeBase: 42
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -1456,6 +1499,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
+--- !u!114 &3582054993371470746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5346889286323049198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 644b2f4a2545d2f4cbcfeb0a58df79dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  valore_audio: 1
 --- !u!1 &5377508392545081920
 GameObject:
   m_ObjectHideFlags: 0
@@ -1734,8 +1790,9 @@ GameObject:
   - component: {fileID: 6827536083306032472}
   - component: {fileID: 1331015813075905109}
   - component: {fileID: 2626370216811012343}
+  - component: {fileID: 8786855427190647191}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: TESTO_Elimina
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1815,10 +1872,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
-  m_fontSizeBase: 24
+  m_fontSize: 42
+  m_fontSizeBase: 42
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -1857,6 +1914,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8786855427190647191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7189219666544807058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 644b2f4a2545d2f4cbcfeb0a58df79dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  valore_audio: 1
 --- !u!1 &7433046789845764608
 GameObject:
   m_ObjectHideFlags: 0
@@ -1868,7 +1938,7 @@ GameObject:
   - component: {fileID: 1710535075341328869}
   - component: {fileID: 248425607263949135}
   m_Layer: 5
-  m_Name: Buttons
+  m_Name: PULSANTI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1912,7 +1982,7 @@ MonoBehaviour:
     m_Left: 25
     m_Right: 25
     m_Top: 0
-    m_Bottom: 25
+    m_Bottom: 30
   m_ChildAlignment: 4
   m_Spacing: 50
   m_ChildForceExpandWidth: 1
@@ -2038,7 +2108,7 @@ GameObject:
   - component: {fileID: 784001288081963868}
   - component: {fileID: 1079217368734661295}
   m_Layer: 5
-  m_Name: Cognome
+  m_Name: TESTO_Cognome
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2118,10 +2188,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
-  m_fontSizeBase: 36
+  m_fontSize: 42
+  m_fontSizeBase: 42
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -2172,8 +2242,9 @@ GameObject:
   - component: {fileID: 8063105051717736522}
   - component: {fileID: 7275132313196968160}
   - component: {fileID: 7389734148406399453}
+  - component: {fileID: 8328515492794503575}
   m_Layer: 5
-  m_Name: Elimina
+  m_Name: PULSANTE_Elimina
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2259,7 +2330,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.85098046, g: 0.8352942, b: 0.8352942, a: 1}
-    m_HighlightedColor: {r: 0.8018868, g: 0.22316661, b: 0.22316661, a: 1}
+    m_HighlightedColor: {r: 1, g: 0, b: 0, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -2283,7 +2354,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1272955850989150064}
         m_TargetAssemblyTypeName: CVUIListEntry, Assembly-CSharp
-        m_MethodName: DeleteButton
+        m_MethodName: DeleteEntry
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2293,3 +2364,16 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8328515492794503575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9136141398360578524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 644b2f4a2545d2f4cbcfeb0a58df79dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  valore_audio: 1

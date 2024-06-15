@@ -35,6 +35,7 @@ public class CVUIListEntry : MonoBehaviour
 
     public void EditEntry()
     {
+        Debug.Log("L'edit funziona");
         CVManager.editCurrent = true;
         CVManager.currentCV = CVEntry;
         GameManager.instance.LoadScene("Scena_Curriculum");
