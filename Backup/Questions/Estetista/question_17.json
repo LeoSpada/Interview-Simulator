@@ -1,1 +1,22 @@
-{"question":" Se un cliente le chiedesse un trattamento non adatto al suo tipo di pelle...","answers":[{"text":"Cercherei di convincerlo a fare comunque il trattamento.","points":0.25},{"text":"Spiegherei al cliente i rischi di un trattamento non adatto alla sua pelle e mi rifiuterei di eseguirlo.","points":1.0},{"text":"Spieghierei al cliente che il trattamento non è adatto alla sua pelle e gli proporrei un'alternativa.","points":0.5},{"text":"Suggerirei al cliente di consultare un dermatologo prima di procedere con qualsiasi trattamento.","points":0.75}],"id":17}
+{
+    "answers": [
+        {
+            "text": "Cercherei di convincerlo a fare comunque il trattamento.",
+            "points": 0.25
+        },
+        {
+            "text": "Spiegherei i rischi di un trattamento non adatto alla sua pelle e mi rifiuterei di eseguirlo.",
+            "points": 1.0
+        },
+        {
+            "text": "Spieghierei che il trattamento non è adatto alla sua pelle e gli proporrei un'alternativa.",
+            "points": 0.5
+        },
+        {
+            "text": "Suggerirei di consultare un dermatologo prima di procedere con qualsiasi trattamento.",
+            "points": 0.75
+        }
+    ],
+    "id": 17,
+    "question": " Se un cliente le chiedesse un trattamento non adatto al suo tipo di pelle..."
+}

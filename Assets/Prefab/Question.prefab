@@ -35,10 +35,10 @@ RectTransform:
   - {fileID: 4698590923179951780}
   m_Father: {fileID: 1409965905291844947}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 960, y: -550}
-  m_SizeDelta: {x: 1920, y: 520.8565}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -10}
+  m_SizeDelta: {x: 1920, y: -559.1435}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2063995997100766491
 MonoBehaviour:
@@ -56,12 +56,12 @@ MonoBehaviour:
     m_Left: 0
     m_Right: 0
     m_Top: 0
-    m_Bottom: 0
+    m_Bottom: 50
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 500, y: 100}
-  m_Spacing: {x: 780, y: 70}
+  m_CellSize: {x: 600, y: 160}
+  m_Spacing: {x: 600, y: 60}
   m_Constraint: 1
   m_ConstraintCount: 2
 --- !u!1 &2778609857304367723
@@ -156,10 +156,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -290,10 +290,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -558,10 +558,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -747,6 +747,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   valore_audio: 1
+  hasAudio: 0
+  button: {fileID: 0}
 --- !u!1 &6769439277719169207
 GameObject:
   m_ObjectHideFlags: 0
@@ -839,10 +841,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -1028,6 +1030,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   valore_audio: 1
+  hasAudio: 0
+  button: {fileID: 0}
 --- !u!1 &6877735067023216703
 GameObject:
   m_ObjectHideFlags: 0
@@ -1315,6 +1319,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   valore_audio: 1
+  hasAudio: 0
+  button: {fileID: 0}
 --- !u!1 &7244704904075020488
 GameObject:
   m_ObjectHideFlags: 0
@@ -1407,10 +1413,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -1596,3 +1602,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   valore_audio: 1
+  hasAudio: 0
+  button: {fileID: 0}
