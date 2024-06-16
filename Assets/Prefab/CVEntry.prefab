@@ -146,7 +146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644b2f4a2545d2f4cbcfeb0a58df79dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valore_audio: 1
 --- !u!1 &810943808308342432
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,7 +642,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644b2f4a2545d2f4cbcfeb0a58df79dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valore_audio: 1
 --- !u!1 &3564050205860073824
 GameObject:
   m_ObjectHideFlags: 0
@@ -1272,7 +1270,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644b2f4a2545d2f4cbcfeb0a58df79dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valore_audio: 1
 --- !u!1 &4655650417705279007
 GameObject:
   m_ObjectHideFlags: 0
@@ -1511,7 +1508,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644b2f4a2545d2f4cbcfeb0a58df79dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valore_audio: 1
 --- !u!1 &5377508392545081920
 GameObject:
   m_ObjectHideFlags: 0
@@ -1926,7 +1922,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644b2f4a2545d2f4cbcfeb0a58df79dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valore_audio: 1
 --- !u!1 &7433046789845764608
 GameObject:
   m_ObjectHideFlags: 0
@@ -2354,7 +2349,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1272955850989150064}
         m_TargetAssemblyTypeName: CVUIListEntry, Assembly-CSharp
-        m_MethodName: DeleteEntry
+        m_MethodName: DeleteButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2376,4 +2371,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644b2f4a2545d2f4cbcfeb0a58df79dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valore_audio: 1

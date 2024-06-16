@@ -1,41 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class AudioSFX : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
+public class AudioSFX : MonoBehaviour // , IPointerEnterHandler, IPointerClickHandler
 {
-    AudioManagerFinale audioManager;
+   // AudioManagerFinale audioManager;
     /*
      * Con il valore_audio si decide quale sfx far suonare a seconda del valore.
      * I suoni associati al valore_audio sono rispettivamente:
      *      * 1 = pulsante di conferma
      *      * 2 = pulsante di annullamento
      */
-    [Header("---------- Value ----------")]
-    public int valore_audio = 1;
+    //[Header("---------- Value ----------")]
+    //public int valore_audio = 1;
 
-    private void Awake()
-    {
-        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManagerFinale>();
-    }
+    //[Header("Debug")]
+    //public bool hasAudio = false;
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        audioManager.PlaySFX(audioManager.pulsante_seleziona);
-    }
+    //private void Awake()
+    //{
+    //   // Debug.Log("AUDIO");
+    //    //audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManagerFinale>();
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        switch (valore_audio)
-        {
-            case 1:
-                audioManager.PlaySFX(audioManager.pulsante_conferma);
-                break;
+    //    //if (audioManager != null)
+    //    //{
+    //    //    Debug.Log("L'audio manager e' " + audioManager);
+    //    //    hasAudio = true;
+    //    //}
+    //    //else Debug.Log("errore audio");
+    //}
 
-            case 2:
-                audioManager.PlaySFX(audioManager.pulsante_annulla);
-                break;
-        }
-    }
+    //public void OnPointerEnter(PointerEventData eventData)
+    //{
+    //    //if(hasAudio)
+    //    //audioManager.PlaySFX(audioManager.pulsante_seleziona);
+    //}
+
+    //public void OnPointerClick(PointerEventData eventData)
+    //{
+    ////    if(hasAudio)
+    ////    switch (valore_audio)
+    ////    {
+    ////        case 1:
+    ////            audioManager.PlaySFX(audioManager.pulsante_conferma);
+    ////            break;
+
+    ////        case 2:
+    ////            audioManager.PlaySFX(audioManager.pulsante_annulla);
+    ////            break;
+    ////    }
+    //}
 }

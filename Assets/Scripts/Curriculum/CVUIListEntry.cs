@@ -27,24 +27,30 @@ public class CVUIListEntry : MonoBehaviour
 
     public void LoadEntryScene()
     {
-       // CVManager.DebugCV(CVEntry);
+        // CVManager.DebugCV(CVEntry);
+        Debug.Log("load check 0");
         CVManager.currentCV = CVEntry;
+        Debug.Log("load check 1 (" + CVManager.currentCV.surname + ")");
         // GameManager.instance.LoadScene("Scena_Titolo");
         GameManager.instance.LoadScene("Scena_Colloquio");
     }
 
     public void EditEntry()
     {
-        Debug.Log("L'edit funziona");
+        Debug.Log("L'edit funziona (check 0)");
         CVManager.editCurrent = true;
         CVManager.currentCV = CVEntry;
+        Debug.Log("edit check 2");
         GameManager.instance.LoadScene("Scena_Curriculum");
     }
 
     public void DeleteEntry()
     {
+        Debug.Log("Delete check 0");
         CVManager.RemoveCVEntry(CVEntry);
+        Debug.Log("Delete check 1");
         GameManager.instance.LoadScene("Scena_Lista_CV");
+        Debug.Log("Delete check 2");
     }
 
     public void DeleteButton()

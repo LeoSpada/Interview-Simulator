@@ -10,8 +10,8 @@ public class FaceManager : MonoBehaviour
     public Texture[] Texture_Occhi;
     private int Indice_Texture_Attuale_Bocca = 0;
     private int Indice_Texture_Attuale_Occhi = 0;
-    private bool isKeyBoccaPressed = false;
-    private bool isKeyOcchiPressed = false;
+    // private bool isKeyBoccaPressed = false;
+    // private bool isKeyOcchiPressed = false;
 
     public QuestionPanel questionPanel;
 

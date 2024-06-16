@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44300595, g: 0.49219567, b: 0.57192516, a: 1}
+  m_IndirectSpecularColor: {r: 0.44300538, g: 0.49219513, b: 0.571924, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -335,7 +335,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: cdf4db6591feb5b4ea4cbb52b53db322, type: 3}
   - {fileID: 2800000, guid: eb3a8c3dc6dc1b8478b4c2b21e98f5a4, type: 3}
   - {fileID: 2800000, guid: f22da9c9edc04cf44b9097f7988f32aa, type: 3}
-  questionPanel: {fileID: 0}
+  questionPanel: {fileID: 1516041460}
 --- !u!1 &445139009
 GameObject:
   m_ObjectHideFlags: 0
@@ -1668,7 +1668,7 @@ PrefabInstance:
     - target: {fileID: 5140857130026757102, guid: 51249759dc5738c4fb5f82acbf0713b7, type: 3}
       propertyPath: questionPanel
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1516041460}
     - target: {fileID: 5238896378737784153, guid: 51249759dc5738c4fb5f82acbf0713b7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2093,6 +2093,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1409965905291844947, guid: 27ba5bc027cb67d479b41a014b9dc68d, type: 3}
   m_PrefabInstance: {fileID: 1370164194}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1516041460 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5641081431676163763, guid: 27ba5bc027cb67d479b41a014b9dc68d, type: 3}
+  m_PrefabInstance: {fileID: 1370164194}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84902e13807a06146a30e893baacb8e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1626155807
 GameObject:
   m_ObjectHideFlags: 0
