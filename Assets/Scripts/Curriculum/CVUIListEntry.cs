@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class CVUIListEntry : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class CVUIListEntry : MonoBehaviour
     private CVEntry CVEntry;
 
     public GameObject deleteConfirmPanel;
+
+    // public AudioClip sfx;
 
     // public Canvas entryPanel;
 
@@ -55,6 +58,7 @@ public class CVUIListEntry : MonoBehaviour
 
     public void DeleteButton()
     {
+        // AudioSource.PlayClipAtPoint(sfx, transform.position);
         deleteConfirmPanel.SetActive(true);
     }
 }
