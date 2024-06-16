@@ -10,7 +10,7 @@ public static class InterviewManager
 {
     public static TextMeshProUGUI text;
 
-    public static int score = 0;
+    // public static int score = 0;
 
     private const string saveFolder = "Questions";
 

@@ -123,14 +123,22 @@ public class QuestionPanel : MonoBehaviour
 
         if (q == null)
         {
-            question = null;
-            questionText.text = "Domande finite.\nPunteggio: " + points;
-            foreach (Button button in ansButtons)
-            {
-                button.name = "EmptyAns";
-                TextMeshProUGUI buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
-                buttonText.text = "-Reset-";
-            }
+            Debug.Log("Score = " + points);
+            Debug.Log("Average = " + average);
+            PlayerPrefs.SetFloat("score",points);
+            PlayerPrefs.SetFloat("average",average);
+
+            GameManager.instance.LoadScene("Scena_Punteggio");
+
+            //question = null;
+            //questionText.text = "Domande finite.\nPunteggio: " + points;
+            //foreach (Button button in ansButtons)
+            //{
+            //    button.name = "EmptyAns";
+            //    TextMeshProUGUI buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
+            //    buttonText.text = "-Reset-";
+            //}
+
             return;
         }
 
