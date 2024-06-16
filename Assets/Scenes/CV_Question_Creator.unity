@@ -3595,8 +3595,9 @@ GameObject:
   - component: {fileID: 796698536}
   - component: {fileID: 796698535}
   - component: {fileID: 796698534}
+  - component: {fileID: 796698537}
   m_Layer: 5
-  m_Name: Curriculum
+  m_Name: SchermataTitolo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3675,7 +3676,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Scena_Curriculum
+          m_StringArgument: Scena_Titolo
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &796698535
@@ -3716,6 +3717,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 796698532}
   m_CullTransparentMesh: 1
+--- !u!114 &796698537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796698532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 644b2f4a2545d2f4cbcfeb0a58df79dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  valore_audio: 1
+  hasAudio: 0
+  button: {fileID: 0}
 --- !u!1 &890554536
 GameObject:
   m_ObjectHideFlags: 0
@@ -7105,7 +7121,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Scena_Curriculum
+  m_text: "Men\xF9 principale"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7132,7 +7148,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 66.1
+  m_fontSize: 72
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7194,6 +7210,7 @@ GameObject:
   - component: {fileID: 1511015531}
   - component: {fileID: 1511015530}
   - component: {fileID: 1511015529}
+  - component: {fileID: 1511015532}
   m_Layer: 5
   m_Name: Salva
   m_TagString: Untagged
@@ -7315,6 +7332,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1511015527}
   m_CullTransparentMesh: 1
+--- !u!114 &1511015532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511015527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 644b2f4a2545d2f4cbcfeb0a58df79dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  valore_audio: 1
+  hasAudio: 0
+  button: {fileID: 0}
 --- !u!1 &1551342475
 GameObject:
   m_ObjectHideFlags: 0
@@ -8090,6 +8122,7 @@ GameObject:
   - component: {fileID: 1690036195}
   - component: {fileID: 1690036194}
   - component: {fileID: 1690036193}
+  - component: {fileID: 1690036196}
   m_Layer: 5
   m_Name: Backup
   m_TagString: Untagged
@@ -8211,6 +8244,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1690036191}
   m_CullTransparentMesh: 1
+--- !u!114 &1690036196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690036191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 644b2f4a2545d2f4cbcfeb0a58df79dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  valore_audio: 1
+  hasAudio: 0
+  button: {fileID: 0}
 --- !u!1 &1703073998
 GameObject:
   m_ObjectHideFlags: 0
