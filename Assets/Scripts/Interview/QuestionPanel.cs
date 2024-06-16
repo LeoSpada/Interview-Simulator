@@ -22,6 +22,7 @@ public class QuestionPanel : MonoBehaviour
     private int index = 0;
     public string startFolder = "Start";
     public string endFolder = "End";
+    public FaceManager faceManager;
 
     [Header("CV")]
     private CVEntry cv;
@@ -371,6 +372,9 @@ public class QuestionPanel : MonoBehaviour
 
             if (answered - noPointAnswers == 0) average = 0;
             else average = points / (answered - noPointAnswers);
+
+            // Cambio espressione
+            faceManager.ChangeExpression(average >= 0.75f);
 
             Invoke(nameof(NextQuestion), 1f);
         }

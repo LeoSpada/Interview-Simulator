@@ -289,7 +289,7 @@ PrefabInstance:
       objectReference: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 919132149155446097, guid: f0b8fef0236e36e4f8f27579574c4050, type: 3}
       propertyPath: m_Name
-      value: BussinessMan
+      value: BusinessMan
       objectReference: {fileID: 0}
     - target: {fileID: 6426933516809239221, guid: f0b8fef0236e36e4f8f27579574c4050, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -335,7 +335,6 @@ MonoBehaviour:
   - {fileID: 2800000, guid: cdf4db6591feb5b4ea4cbb52b53db322, type: 3}
   - {fileID: 2800000, guid: eb3a8c3dc6dc1b8478b4c2b21e98f5a4, type: 3}
   - {fileID: 2800000, guid: f22da9c9edc04cf44b9097f7988f32aa, type: 3}
-  questionPanel: {fileID: 1516041460}
 --- !u!1 &445139009
 GameObject:
   m_ObjectHideFlags: 0
@@ -2127,6 +2126,10 @@ PrefabInstance:
       propertyPath: cvInfo
       value: 
       objectReference: {fileID: 1742187897}
+    - target: {fileID: 5641081431676163763, guid: 27ba5bc027cb67d479b41a014b9dc68d, type: 3}
+      propertyPath: faceManager
+      value: 
+      objectReference: {fileID: 290068192}
     - target: {fileID: 5641081431676163763, guid: 27ba5bc027cb67d479b41a014b9dc68d, type: 3}
       propertyPath: interviewInfo
       value: 
