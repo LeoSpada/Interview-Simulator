@@ -2,13 +2,14 @@ using System;
 using TMPro;
 using UnityEngine;
 
+// Gestisce i controlli su inputField e Dropdown per segnalare valori non ammessi
 public static class InputPanel
 {
-
-    // public static bool allClear = true;
+    // Indicano che tutti i dati sono ammessi
     public static bool fieldsClear = true;
     public static bool dropdownsClear = true;
 
+    // Colore della casella con errore
     public static Color errorColor = new(0.5f, 0, 0, 0.2f);
 
     // Valore che il codice rimuove / ignora in alcuni contesti.
@@ -22,6 +23,7 @@ public static class InputPanel
         else return true;
     }
 
+    // Controlla che l'input field contenga dati utilizzabili e agisce di conseguenza con colori e/o interruzioni
     public static void AcceptInputField(TMP_InputField inputField, bool canColor = true, bool canBreak = true, bool log = false)
     {
         if (!inputField.isActiveAndEnabled)
@@ -37,6 +39,7 @@ public static class InputPanel
         else if (canColor) inputField.image.color = Color.white;
     }
 
+    // Variante di AcceptInputField per array
     public static void AcceptInputFields(TMP_InputField[] inputFields, bool canColor = true, bool canBreak = true)
     {
         foreach (TMP_InputField inputField in inputFields)
@@ -45,6 +48,7 @@ public static class InputPanel
         }
     }
 
+    // Rende attivo l'inputField
     public static void EnableInputField(TMP_InputField field)
     {
         field.ActivateInputField();
@@ -52,6 +56,7 @@ public static class InputPanel
         field.gameObject.SetActive(true);
     }
 
+    // Disattiva l'inputField e lo nasconde
     public static void DisableInputField(TMP_InputField field)
     {
         // Debug.Log("Ignorata");
@@ -64,7 +69,6 @@ public static class InputPanel
     {
         // Ottiene il valore del testo del dropdown
         string dropdownText = dropdown.options[dropdown.value].text;
-        // Debug.Log(dropdownText);
 
         T enumObj;
 
@@ -91,15 +95,10 @@ public static class InputPanel
         if (canColor)
             dropdown.image.color = Color.white;
 
-        // Debug.Log("Enumobj: " + enumObj);
         return enumObj;
     }
 
-    //public static void ResetColor()
-    //{
-
-    //}
-
+    // Reimposta i flag
     public static void ClearAll()
     {
         fieldsClear = true;

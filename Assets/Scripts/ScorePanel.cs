@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+// Gestisce la schermata finale con il risultato del colloquio.
 public class ScorePanel : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
-    // Start is called before the first frame update
+
     void Start()
     {
         ShowScore();
@@ -17,7 +16,7 @@ public class ScorePanel : MonoBehaviour
         CVEntry cv = CVManager.currentCV;
         if (PlayerPrefs.HasKey("score") && cv != null)
         {
-            float score = PlayerPrefs.GetFloat("score");
+            // float score = PlayerPrefs.GetFloat("score");
             float average = PlayerPrefs.GetFloat("average");
 
 
