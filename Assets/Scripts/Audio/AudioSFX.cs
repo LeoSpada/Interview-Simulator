@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+// Gestisce gli effetti sonori della UI (pulsanti)
 public class AudioSFX : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
 {
     AudioManagerFinale audioManager;

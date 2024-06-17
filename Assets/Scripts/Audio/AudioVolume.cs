@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
+// Gestisce l'impostazione del volume
 public class AudioVolume : MonoBehaviour
 {
     [SerializeField] private AudioMixer myMixer;
