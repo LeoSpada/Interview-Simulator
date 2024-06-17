@@ -474,6 +474,27 @@ public class QuestionPanel : MonoBehaviour
         questions.Add(GetDialogue(dialogue, dialogueAnswer, otherAnswers[0]));
         questionNumber++;
 
+        if (!cv.secondaLingua.ToString().Equals("Nessuna"))
+        {
+            dialogue = $"Noto inoltre che Lei parla anche {cv.secondaLingua}.\nComplimenti, sapere più lingue è un valore aggiunto che apprezziamo.";
+            dialogueAnswer = "La ringrazio";
+            otherAnswers[0] = "Conoscere più lingue mi appassiona";
+            questions.Add(GetDialogue(dialogue, dialogueAnswer, otherAnswers[0]));
+            questionNumber++;
+        }
+
+        if (!cv.patente.ToString().Equals("Nessuna"))
+        {
+            dialogue = $"Perfetto, ha anche una patente.\nPatente di tipo {cv.patente}, giusto? Potrebbe tornare utile.";
+            dialogueAnswer = "Giusto, confermo";
+            otherAnswers[0] = "Sì, sono automunito e disposto a viaggiare per lavoro";
+            questions.Add(GetDialogue(dialogue, dialogueAnswer, otherAnswers[0]));
+            questionNumber++;
+        }
+
+        questions.Add(GetDialogue("Perfetto, direi che possiamo iniziare con domande vere e proprie, per testare la sua preparazione.", "Sono pronto", "Perfetto"));
+        questionNumber++;
+
         startQuestions = QuestionLimit(startQuestions, startFolder);
         jobQuestions = QuestionLimit(startQuestions, currentJob);
         endQuestions = QuestionLimit(startQuestions, endFolder);
@@ -483,9 +504,18 @@ public class QuestionPanel : MonoBehaviour
 
         for (i = 0; i < startQuestions; i++) questions.Add(GetRandomQuestion(startFolder));
 
+        questions.Add(GetDialogue($"Parliamo adesso del lavoro che cerca.\nIn quanto aspirante {cv.occupazione}, dobbiamo testare la sua preparazione.", "Sono pronto", "Perfetto"));
+        questionNumber++;
+
         for (j = i; j < i + jobQuestions; j++) questions.Add(GetRandomQuestion(currentJob));
 
+        questions.Add(GetDialogue($"Abbiamo quasi finito.\nAltre {endQuestions} domande per decidere l'esito del colloquio.", "Sono pronto", "Perfetto"));
+        questionNumber++;
+
         for (k = j; k < j + endQuestions; k++) questions.Add(GetRandomQuestion(endFolder));
+
+        questions.Add(GetDialogue($"La ringraziamo per il Suo tempo, {cv.surname}.\nSaprà al più presto la nostra decisione.\nLe auguriamo buona giornata.", "Grazie a Lei, buona giornata."));
+        questionNumber++;
 
         // Aggiunge una domanda nulla per segnalare a setup la fine del colloquio
         questions.Add(null);
@@ -493,8 +523,6 @@ public class QuestionPanel : MonoBehaviour
         SetupInterviewInfo();
         Setup(questions[index]);
     }
-
-    // SNELLIRE CODICE?? (Tante ripetizioni in tutte le funzioni Get...Question)
 
     // Cambiare forse frasi e valori bonus e malus
 
@@ -609,17 +637,17 @@ public class QuestionPanel : MonoBehaviour
         //    points++;
         //}
 
-        if (!cv.secondaLingua.ToString().Equals("Nessuna"))
-        {
-            questionText += "\nVedo che parla anche " + cv.secondaLingua.ToString() + "...";
-            points++;
-        }
+        //if (!cv.secondaLingua.ToString().Equals("Nessuna"))
+        //{
+        //    questionText += "\nVedo che parla anche " + cv.secondaLingua.ToString() + "...";
+        //    points++;
+        //}
 
-        if (!cv.patente.ToString().Equals("Nessuna"))
-        {
-            questionText += "\nVedo che ha una patente " + cv.patente.ToString() + "...";
-            points++;
-        }
+        //if (!cv.patente.ToString().Equals("Nessuna"))
+        //{
+        //    questionText += "\nVedo che ha una patente " + cv.patente.ToString() + "...";
+        //    points++;
+        //}
 
         Answer[] answers = new Answer[4];
         answers[0].text = "InputPanel.disabledText";
