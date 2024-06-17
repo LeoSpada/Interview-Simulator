@@ -31,7 +31,7 @@ public class QuestionPanel : MonoBehaviour
     public string currentEducation;
     private int currentEducationID;
     private bool hasLowEducation = false;
-    private bool cvLoaded = false;
+    // private bool cvLoaded = false;
 
     [Header("Punteggi")]
     public float points = 0;
@@ -79,7 +79,7 @@ public class QuestionPanel : MonoBehaviour
         // Se è stato caricato correttamente un CV
         if (CVManager.currentCV != null)
         {
-            cvLoaded = true;
+           // cvLoaded = true;
 
             cv = CVManager.currentCV;
 
