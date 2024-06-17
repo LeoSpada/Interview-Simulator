@@ -387,6 +387,10 @@ public class QuestionPanel : MonoBehaviour
 
     public void SetupInterview()
     {
+
+        // FASE 0: Introduzione
+        // Dialoghi senza punti
+
         questions.Add(GetDialogue($"Lei è {cv.name} {cv.surname}, giusto?", "Sì, sono io."));
         questionNumber++;
 
@@ -396,6 +400,9 @@ public class QuestionPanel : MonoBehaviour
         //questions.Add(bonusPointsQuestion);
         //questionNumber++;
 
+        // FASE 1: Presentazioni
+        // Parte un loop in cui il giocatore può parlare di sè (pregi, difetti, soft skill) finché vuole.
+        // Incide sul punteggio.
         questions.Add(introQuestion);
         questionNumber++;
 
@@ -437,13 +444,13 @@ public class QuestionPanel : MonoBehaviour
 
     // Cambiare forse frasi e valori bonus e malus
 
-    public Question GetDialogue(string dialogue, string answer)
+    public Question GetDialogue(string dialogue, string answer, float points = 0)
     {
         int id = 1099;
 
         Answer[] answers = new Answer[4];
         answers[0].text = answer;
-        answers[0].points = 0;
+        answers[0].points = points;
 
         answers[1].text = InputPanel.disabledText;
         answers[1].points = 0;
@@ -622,16 +629,16 @@ public class QuestionPanel : MonoBehaviour
             string questionText = "Quali Soft Skill possiede?";
 
             Answer[] answers = new Answer[4];
-            answers[0].text = "Team Working";
+            answers[0].text = "Sono in grado di lavorare in team per raggiungere obiettivi comuni";
             answers[0].points = 1f;
 
-            answers[1].text = "Leadership";
+            answers[1].text = "Sono in grado di guidare e ispirare il mio team";
             answers[1].points = 1f;
 
-            answers[2].text = "Problem Solving";
+            answers[2].text = "Uso creatività e tenacia per trovare soluzioni efficaci alle sfide";
             answers[2].points = 1f;
 
-            answers[3].text = "Time Management";
+            answers[3].text = "Rispetto le scadenze pianificando con cura le attività e le loro priorità";
             answers[3].points = 1f;
 
             question = new(questionText, answers, id);
@@ -653,16 +660,16 @@ public class QuestionPanel : MonoBehaviour
             string questionText = "Quali pregi possiede?";
 
             Answer[] answers = new Answer[4];
-            answers[0].text = "Onestà";
+            answers[0].text = "Dico quello che penso senza troppi riguardi";
             answers[0].points = 1f;
 
-            answers[1].text = "Umiltà";
+            answers[1].text = "Sono bravo nel riconoscere i miei limiti";
             answers[1].points = 1f;
 
-            answers[2].text = "Affidabilità";
+            answers[2].text = "La gente si fida facilmente di me";
             answers[2].points = 1f;
 
-            answers[3].text = "Determinazione";
+            answers[3].text = "Faccio di tutto per ottenere i miei obiettivi";
             answers[3].points = 1f;
 
             question = new(questionText, answers, id);
@@ -684,17 +691,17 @@ public class QuestionPanel : MonoBehaviour
             string questionText = "Quali difetti possiede?";
 
             Answer[] answers = new Answer[4];
-            answers[0].text = "Rabbia";
-            answers[0].points = -1f;
+            answers[0].text = "Se provocato, mi arrabbio molto facilmente";
+            answers[0].points = 0.25f;
 
-            answers[1].text = "Pigrizia";
-            answers[1].points = -1f;
+            answers[1].text = "Spesso mi capita di non voler fare nulla";
+            answers[1].points = 0.25f;
 
-            answers[2].text = "Invidia";
-            answers[2].points = -1f;
+            answers[2].text = "A volte, desidero lo stesso successo degli altri";
+            answers[2].points = 0.25f;
 
-            answers[3].text = "Distrazione";
-            answers[3].points = -1f;
+            answers[3].text = "Molte volte ho la testa fra le nuvole";
+            answers[3].points = 0.25f;
 
             question = new(questionText, answers, id);
             InterviewManager.AddQuestion(question, introFolder);
