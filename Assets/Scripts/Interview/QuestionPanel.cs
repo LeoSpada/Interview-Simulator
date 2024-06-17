@@ -387,8 +387,14 @@ public class QuestionPanel : MonoBehaviour
 
     public void SetupInterview()
     {
-        questions.Add(bonusPointsQuestion);
+        questions.Add(GetDialogue($"Lei è {cv.name} {cv.surname}, giusto?", "Sì, sono io."));
         questionNumber++;
+
+        questions.Add(GetDialogue($"Molto bene, {cv.surname}. Le va di cominciare?", "Certo, va bene."));
+        questionNumber++;
+
+        //questions.Add(bonusPointsQuestion);
+        //questionNumber++;
 
         questions.Add(introQuestion);
         questionNumber++;
@@ -431,6 +437,30 @@ public class QuestionPanel : MonoBehaviour
 
     // Cambiare forse frasi e valori bonus e malus
 
+    public Question GetDialogue(string dialogue, string answer)
+    {
+        int id = 1099;
+
+        Answer[] answers = new Answer[4];
+        answers[0].text = answer;
+        answers[0].points = 0;
+
+        answers[1].text = InputPanel.disabledText;
+        answers[1].points = 0;
+
+        answers[2].text = InputPanel.disabledText;
+        answers[2].points = 0;
+
+        answers[3].text = InputPanel.disabledText;
+        answers[3].points = 0;
+
+        Question question = new(dialogue, answers, id);
+
+        return question;
+
+    }
+
+    // SEPARARE IN PIù METODI (forse usando solo GetDialogue, VEDI STRUTTURA EXCEL)
     public Question GetBonusPointsQuestion()
     {
         int id = 1100;
@@ -507,9 +537,6 @@ public class QuestionPanel : MonoBehaviour
         }
 
         // Sezione punti bonus
-        // MIGLIORARE INTERFACCIA (prefab Question) per far entrare tutto il testo (POTREBBE ESSERE MOLTO LUNGO)
-
-        // Se non funziona, fare più schede (una per "dato")
 
         if (!cv.esperienza.ToString().Equals("Nessuna"))
         {
@@ -530,7 +557,7 @@ public class QuestionPanel : MonoBehaviour
         }
 
         Answer[] answers = new Answer[4];
-        answers[0].text = InputPanel.disabledText;
+        answers[0].text = "InputPanel.disabledText";
         answers[0].points = 0;
 
         answers[1].text = InputPanel.disabledText;
@@ -544,8 +571,10 @@ public class QuestionPanel : MonoBehaviour
 
         Question question = new(questionText, answers, id);
         InterviewManager.AddQuestion(question, introFolder);
-        noPointAnswers++;
-        Invoke(nameof(NextQuestion), 5f);
+        
+       // noPointAnswers++;
+       // Invoke(nameof(NextQuestion), 5f);
+        
         return question;
     }
 
