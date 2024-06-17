@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44300538, g: 0.49219513, b: 0.571924, a: 1}
+  m_IndirectSpecularColor: {r: 0.44300595, g: 0.49219567, b: 0.57192516, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1830,7 +1830,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3998681462751805174, guid: 51249759dc5738c4fb5f82acbf0713b7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1183772140}
+    - targetCorrespondingSourceObject: {fileID: 3998681462751805174, guid: 51249759dc5738c4fb5f82acbf0713b7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1183772139}
   m_SourcePrefab: {fileID: 100100000, guid: 51249759dc5738c4fb5f82acbf0713b7, type: 3}
 --- !u!224 &1183772136 stripped
 RectTransform:
@@ -1842,12 +1848,55 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5140857130026757102, guid: 51249759dc5738c4fb5f82acbf0713b7, type: 3}
   m_PrefabInstance: {fileID: 1183772135}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1183772138}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0abaa8fcd8fbe55449d7633f7496e903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1183772138 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3998681462751805174, guid: 51249759dc5738c4fb5f82acbf0713b7, type: 3}
+  m_PrefabInstance: {fileID: 1183772135}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1183772139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1183772138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: aa2b11af19b25e84bb3a7df96856fa71, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1183772140
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1183772138}
+  m_CullTransparentMesh: 1
 --- !u!1 &1194700708
 GameObject:
   m_ObjectHideFlags: 0
