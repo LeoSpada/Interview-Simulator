@@ -31,8 +31,7 @@ public class QuestionPanel : MonoBehaviour
     public string currentEducation;
     private int currentEducationID;
     private bool hasLowEducation = false;
-    // private bool cvLoaded = false;
-
+   
     [Header("Punteggi")]
     public float points = 0;
     public int answered = 0;
@@ -78,9 +77,7 @@ public class QuestionPanel : MonoBehaviour
 
         // Se è stato caricato correttamente un CV
         if (CVManager.currentCV != null)
-        {
-            // cvLoaded = true;
-
+        {           
             cv = CVManager.currentCV;
 
             currentJob = cv.occupazione.ToString();
@@ -101,10 +98,21 @@ public class QuestionPanel : MonoBehaviour
         else Debug.Log("Nessun CV attualmente caricato. Caricare domanda tramite pulsanti.");
     }
 
+    // Disattiva la possibilità di rispondere e la riattiva
+    public void ActivateAnswers(bool enable = true)
+    {
+        if (!enable)
+        {
+            foreach (Button button in ansButtons) button.enabled = false;
+        }
+        else foreach (Button button in ansButtons) button.enabled = true;
+    }
+
     public void Setup(Question q)
     {
-        // Se q è null, le domande sono finite.
+        ActivateAnswers(true);
 
+        // Se q è null, le domande sono finite.
         if (q == null)
         {
             Debug.Log("Score = " + points);
@@ -217,6 +225,8 @@ public class QuestionPanel : MonoBehaviour
     public void OnButtonClick(Button button)
     {
         questionText.text = Feedback();
+
+        ActivateAnswers(false);
 
         if (question != null)
         {
