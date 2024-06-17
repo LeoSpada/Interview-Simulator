@@ -1,21 +1,23 @@
 using System.IO;
-using UnityEditor;
 using UnityEngine;
 
+// Gestisce il salvataggio e il caricamento dei Backup
 public static class BackupManager
 {
+    // Restituisce il percorso della cartella Backup
     public static string GetBackUpPath()
     {
         return Path.Combine(Directory.GetCurrentDirectory(), "Backup");
     }
 
-
+    // Fa il backup o il ripristino della cartella scelta
     public static void BackUpFolder(string folder, string backupFolder, bool restore = false)
     {
         string backUpPath = Path.Combine(GetBackUpPath(), backupFolder);
 
         string source, destination;
 
+        // Se restore è vero, l'operazione è di caricamento (ripristino) e non salvataggio
         if (!restore)
         {
             source = folder;
@@ -32,6 +34,7 @@ public static class BackupManager
         Debug.Log("Backup terminato");
     }
 
+    // Fa il backup dell'intera cartella (persistentDataPath)
     public static void BackUpAll(bool restore = false)
     {
 
@@ -40,11 +43,9 @@ public static class BackupManager
         string persistent = Path.Combine(UnityEngine.Device.Application.persistentDataPath);
         string backUpPath = GetBackUpPath();
 
-        //string backUpPath = Path.Combine(UnityEngine.Application.dataPath, "Backup");
-
-
         string source, destination;
 
+        // Se restore è vero, l'operazione è di caricamento (ripristino) e non salvataggio
         if (!restore)
         {
             source = persistent;
@@ -61,29 +62,31 @@ public static class BackupManager
         Debug.Log("Backup terminato");
     }
 
+    // Elimina la cartella di Backup
     public static void DeleteBackupDirectory()
     {
         Directory.Delete(GetBackUpPath(), true);
         Directory.CreateDirectory(GetBackUpPath());
     }
 
+    // Copia una cartella (ed eventualmente le sottocartelle) da una sorgente a una destinazione
     public static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
     {
 
-        // Get information about the source directory
+        // Prende informazioni della cartella sorgente
         var dir = new DirectoryInfo(sourceDir);
 
-        // Check if the source directory exists
+        // Controlla se source esiste
         if (!dir.Exists)
             throw new DirectoryNotFoundException($"Source directory not found: {dir.FullName}");
 
-        // Cache directories before we start copying
+        // Prende informazioni sottocartelle di source
         DirectoryInfo[] dirs = dir.GetDirectories();
 
-        // Create the destination directory
+        // Crea la cartella di destinazione
         Directory.CreateDirectory(destinationDir);
 
-        // Get the files in the source directory and copy to the destination directory
+        // Per ogni file, copia da sorgente a destinazione
         foreach (FileInfo file in dir.GetFiles())
         {
 
@@ -98,7 +101,7 @@ public static class BackupManager
             }
         }
 
-        // If recursive and copying subdirectories, recursively call this method
+        // Se ricorsivo, fa l'operazione di copia anche per le sottocartelle
         if (recursive)
         {
             foreach (DirectoryInfo subDir in dirs)
