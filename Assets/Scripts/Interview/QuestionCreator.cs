@@ -1,27 +1,25 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using static InterviewManager.Question;
 
+// Gestisce la creazione di nuove domande
 public class QuestionCreator : MonoBehaviour
 {
     private InterviewManager.Question question;
 
+    [Header("Campi di input")]
     public TMP_InputField questionField;
     public TMP_InputField[] answerFields;
     public TMP_InputField[] pointFields;
-
-    public TMP_InputField customFolder;
-
-    private bool customActive = false;
-
-    public TMP_Dropdown folderDropdown;
-
     public TMP_Dropdown answersSizeDropdown;
 
-    public GameObject confirmPanel;
+    [Header("Scelta cartella")]
+    public TMP_InputField customFolder;
+    private bool customActive = false;
+    public TMP_Dropdown folderDropdown;
 
+    public GameObject confirmPanel;
     private string folder = "";
 
     public void Start()
@@ -44,6 +42,7 @@ public class QuestionCreator : MonoBehaviour
         }
     }
 
+    // Rende casuali i punti per le varie risposte
     public void RandomizePointPosition()
     {
         List<float> values = new() { 0.25f, 0.5f, 0.75f, 1f };
@@ -51,33 +50,24 @@ public class QuestionCreator : MonoBehaviour
         foreach (var point in pointFields)
         {
             if (!point.text.Equals(InputPanel.disabledText))
-            {
-                // value = UnityEngine.Random.Range(0.25f, 1f);
+            {                
                 i = UnityEngine.Random.Range(0, values.Count);
 
-                point.text = values[i].ToString();
-                // Debug.Log("Rimuovo " + values[i]);
+                point.text = values[i].ToString();                
                 values.Remove(values[i]);
             }
-            // else Debug.Log("Nessun valore assegnato a risposta "+point.name+" (Risposta disabilitata)");
         }
     }
 
     // Usata da OnValueChanged di answersSizeDropdown
     public void ChangeAnswersSize()
     {
-
         int size = int.Parse(answersSizeDropdown.captionText.text);
-
-        // Debug.Log("Dim inserita = " + size);
-
 
         foreach (var ans in answerFields)
         {
-
             ans.DeactivateInputField(true);
             ans.enabled = false;
-
         }
 
         int i;
@@ -96,33 +86,20 @@ public class QuestionCreator : MonoBehaviour
 
     public void CheckAllInputs()
     {
-        // Debug.Log("Controllando input");
-
-        InputPanel.AcceptInputField(questionField);
-        // Debug.Log("input controllato question: FIELDS CLEAR = " + InputPanel.fieldsClear);
-        InputPanel.AcceptInputFields(answerFields);
-        // Debug.Log("input controllati answer: FIELDS CLEAR = " + InputPanel.fieldsClear);
-        InputPanel.AcceptInputFields(pointFields);
-        // Debug.Log("input controllati points: FIELDS CLEAR = " + InputPanel.fieldsClear);
+        InputPanel.AcceptInputField(questionField);        
+        InputPanel.AcceptInputFields(answerFields);        
+        InputPanel.AcceptInputFields(pointFields);        
     }
 
-    // Crea un CV a partire dai campi inseriti. Controlli su file esistenti e campi vuoti prima del salvataggio.
+    // Crea una nuova domanda a partire dai campi inseriti. Controlli su file esistenti e campi vuoti prima del salvataggio.
     public void Submit()
-    {
-
-        // Debug.Log("Submit cliccato");
-
-        CheckAllInputs();
-
-        // Debug.Log("input controllati: DDCLEAR ="+InputPanel.dropdownsClear);
-
-        // Debug.Log("Continuo submit...");
+    {      
+        CheckAllInputs();        
 
         // Se il dropdown è impostato su custom, controlla che il nome cartella inserito da utente sia valido
         if (customActive)
         {
-            InputPanel.AcceptInputField(customFolder);
-            // Debug.Log("input customFolder controllato: FIELDS CLEAR =" + InputPanel.fieldsClear);
+            InputPanel.AcceptInputField(customFolder);           
         }
         else
         {
@@ -131,8 +108,7 @@ public class QuestionCreator : MonoBehaviour
             // Se il dropdown non corrisponde ad una occupazione, usa il valore del dropdown come nome cartella
             if (!InputPanel.dropdownsClear)
             {
-                folder = folderDropdown.captionText.text;
-                // Debug.Log("Non è custom, ma " + folder);
+                folder = folderDropdown.captionText.text;               
             }
             else folder = occupazione.ToString();
         }
@@ -147,11 +123,9 @@ public class QuestionCreator : MonoBehaviour
             // Se il dropdown è impostato su custom, usa il valore dell'input field come nome cartella
             if (customActive)
             {
-                folder = customFolder.text;
-                // Debug.Log("Custom concesso: salvataggio andrà in " + folder);
+                folder = customFolder.text;                
             }
-
-            // Debug.Log("Salvataggio in corso...");
+           
             SaveQuestion(folder);
         }
 

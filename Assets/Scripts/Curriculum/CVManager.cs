@@ -2,17 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
-using UnityEditor;
 using UnityEngine;
 
+// Gestisce i curriculum con salvataggi, caricamenti, rimozioni e altre operazioni varie.
 public static class CVManager
 {
+    // L'attuale curriculum caricato
     public static CVEntry currentCV = null;
 
+    // Indica se il curriculum attualmente caricato può essere completamente modificato e sovrascritto
     public static bool editCurrent = false;
 
+    // Cartella in cui vengono salvati i curriculum
     private const string saveFolder = "Saves";
 
+    // Restituisce la cartella contenente i curriculum
     public static string GetCVFolder()
     {
         string folder = Path.Combine(Application.persistentDataPath, saveFolder);
@@ -32,11 +36,13 @@ public static class CVManager
         return Path.Combine(Application.persistentDataPath, saveFolder);
     }
 
+    // Restituisce il conteggio dei curriculum
     public static int GetCVFolderSize()
     {
         return GetAllCV().Count;
     }
 
+    // Restituisce le informazioni dei file nella cartella
     public static FileInfo[] GetFilesInfo()
     {
         DirectoryInfo mainDir = new(GetCVFolder());
@@ -44,6 +50,7 @@ public static class CVManager
         return files;
     }
 
+    // Restituisce il percorso di un determinato curriculum
     static string GetCVFilePath(string name, string surname)
     {
         string folder = GetCVFolder();
@@ -56,7 +63,6 @@ public static class CVManager
     {
         List<CVEntry> list = new();
 
-        // DirectoryInfo dir = new(Path.Combine(Application.persistentDataPath, saveFolder));
         FileInfo[] info = GetFilesInfo();
 
         foreach (FileInfo f in info)
@@ -69,6 +75,7 @@ public static class CVManager
         return list;
     }
 
+    // Restituisce un determinato curriculum
     public static CVEntry GetCVEntry(string name, string surname)
     {
         if (!File.Exists(GetCVFilePath(name, surname)))
@@ -83,29 +90,28 @@ public static class CVManager
         return loadedCV;
     }
 
+    // Restituisce un curriculum casuale
     public static CVEntry GetRandomCVEntry()
     {
         List<CVEntry> list = GetAllCV();
         return list[UnityEngine.Random.Range(0, list.Count)];
     }
 
+    // Salva il curriculum su file
     public static void AddCVEntry(CVEntry cvEntry)
     {
         string json = JsonConvert.SerializeObject(cvEntry);
         File.WriteAllText((GetCVFilePath(cvEntry.name, cvEntry.surname)), json);
-
-        // COPIA IN CARTELLA BACKUP
-        // BackupManager.BackUpFolder(GetCVFolder(), saveFolder);
     }
 
+    // Elimina il file corrisponde al curriculum scelto
     public static void RemoveCVEntry(CVEntry cvEntry)
     {
         if (CheckEntry(cvEntry))
             File.Delete(GetCVFilePath(cvEntry.name, cvEntry.surname));
-
-        // BackupManager.BackUpFolder(GetCVFolder(), saveFolder);
     }
 
+    // Controlla se esiste un file corrispondente al curriculum scelto
     public static bool CheckEntry(CVEntry cvEntry)
     {
         if (!File.Exists(GetCVFilePath(cvEntry.name, cvEntry.surname)))
@@ -113,6 +119,7 @@ public static class CVManager
         return true;
     }
 
+    // Controlla che il curriculum scelto sia quello attualmente caricato
     public static bool IsCurrentCV(string name, string surname)
     {
         if (currentCV.name != name || currentCV.surname != surname)
@@ -124,6 +131,7 @@ public static class CVManager
         else return true;
     }
 
+    // Rimuove da currentCV il curriculum
     public static void UnloadCurrentCV()
     {
         currentCV = null;
@@ -140,8 +148,7 @@ public static class CVManager
 
 [System.Serializable]
 
-// AGGIUNGERE CAMPI PER ISTRUZIONE ED ESPERIENZE PASSATE
-
+// Gestisce l'istruzione del candidato
 public class Istruzione
 {
     public Qualifica qualifica;
@@ -161,33 +168,15 @@ public class Istruzione
     public Istruzione(Qualifica qualifica, Titolo titolo) : this(qualifica)
     {
         this.titolo = titolo;
-        // FilterTitolo();
     }
-
-    //public void FilterTitolo()
-    //{
-    //    // Se ha fatto medie, il titolo è per forza "Nessuno"
-    //    if (qualifica.ToString().Equals("Medie"))
-    //    {
-    //        Debug.Log("Fatto medie");
-    //        titolo = Titolo.Nessuno;
-    //    }
-
-    //    if (!titolo.ToString().Equals("Nessuno"))
-    //    {
-    //        
-    //    }
-    //}
-
 
     public enum Qualifica { Medie, Superiori, Laurea };
     public enum Titolo { Nessuno, ITIS, IPSIA, Liceo, Scientifica, Umanistica, Economica, Sociale, Tecnologica };
-
-
 }
 
 [System.Serializable]
 
+// Gestisce il curriculum
 public class CVEntry
 {
     public string name;
@@ -198,6 +187,7 @@ public class CVEntry
     public Esperienza esperienza;
     public Lingua secondaLingua;
     public Patente patente;
+
     public CVEntry()
     {
 
@@ -226,7 +216,7 @@ public class CVEntry
     public enum Genere { M, F, Altro }
 
     // Sezioni bonus: se presenti, danno punti bonus
-    public enum Esperienza { Nessuna, Cameriere, Barista, Pulizie, Babysitting, Arbitro, Bagnino, Animatore }
+    public enum Esperienza { Nessuna, Cameriere, Barista, Pulizie, Babysitter, Arbitro, Bagnino, Animatore }
     public enum Lingua { Nessuna, Italiano, Inglese, Francese, Tedesco, Spagnolo, Portoghese }
     public enum Patente { Nessuna, A, A1, A2, B, C, D, E }
 }

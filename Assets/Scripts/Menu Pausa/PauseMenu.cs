@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Gestisce il menu di pausa all'interno del colloquio
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] GameObject pauseMenu;

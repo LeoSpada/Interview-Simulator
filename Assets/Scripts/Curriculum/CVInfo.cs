@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 
+// Mostra le informazioni del curriculum caricato
 public class CVInfo : MonoBehaviour
 {
     public TextMeshProUGUI nameField;
@@ -8,8 +9,7 @@ public class CVInfo : MonoBehaviour
     public TextMeshProUGUI jobField;
     public TextMeshProUGUI genderField;
 
-    // Update is called once per frame
-    public void reloadInfo()
+    public void ReloadInfo()
     {
         if (CVManager.currentCV != null)
         {

@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
+// Gestisce gli effetti sonori della UI (pulsanti)
 public class AudioSFX : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
 {
     AudioManagerFinale audioManager;
@@ -15,27 +15,42 @@ public class AudioSFX : MonoBehaviour, IPointerEnterHandler, IPointerClickHandle
     [Header("---------- Value ----------")]
     public int valore_audio = 1;
 
+    [Header("Debug")]
+    public bool hasAudio = false;
+
+    public Button button;
+
     private void Awake()
     {
-        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManagerFinale>();
+      //  Debug.Log("AUDIO di "+gameObject.name);      
+        
+        
+        if (GameObject.FindGameObjectWithTag("Audio").TryGetComponent<AudioManagerFinale>(out audioManager))
+        {
+        //    Debug.Log("L'audio manager e' " + audioManager);
+            hasAudio = true;
+        }
+        else Debug.Log("errore audio");
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        audioManager.PlaySFX(audioManager.pulsante_seleziona);
+        if (hasAudio)
+            audioManager.PlaySFX(audioManager.pulsante_seleziona);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        switch (valore_audio)
-        {
-            case 1:
-                audioManager.PlaySFX(audioManager.pulsante_conferma);
-                break;
+        if (hasAudio)
+            switch (valore_audio)
+            {
+                case 1:
+                    audioManager.PlaySFX(audioManager.pulsante_conferma);
+                    break;
 
-            case 2:
-                audioManager.PlaySFX(audioManager.pulsante_annulla);
-                break;
-        }
+                case 2:
+                    audioManager.PlaySFX(audioManager.pulsante_annulla);
+                    break;
+            }       
     }
 }

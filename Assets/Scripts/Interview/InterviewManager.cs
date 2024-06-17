@@ -6,14 +6,13 @@ using TMPro;
 using UnityEngine;
 using static InterviewManager.Question;
 
+// Gestisce le domande e le loro cartelle con salvataggi, caricamenti, rimozioni e altre operazioni varie.
 public static class InterviewManager
 {
-    public static TextMeshProUGUI text;
-
-    public static int score = 0;
-
+    // Cartella in cui vengono salvate le domande
     private const string saveFolder = "Questions";
 
+    // Restituisce il percorso della cartella principale
     public static string GetQuestionsFolder()
     {
         string folder = Path.Combine(Application.persistentDataPath, saveFolder);
@@ -33,16 +32,19 @@ public static class InterviewManager
         return folder;
     }
 
+    // Restituisce il percorso della cartella corrispondente all'occupazione / sezione scelta
     public static string GetJobFolder(string job)
     {
         return Path.Combine(GetQuestionsFolder(), job);
     }
 
+    // Restituisce la dimensione della cartella corrispondente all'occupazione / sezione scelta
     public static int GetJobFolderSize(string job)
     {
         return GetAllQuestionsInFolder(job).Count;
     }
 
+    // Restituisce le informazioni delle sottocartelle della principale 
     public static DirectoryInfo[] GetFoldersInfo()
     {
         DirectoryInfo mainDir = new(Path.Combine(Application.persistentDataPath, saveFolder));
@@ -61,7 +63,8 @@ public static class InterviewManager
 
         return dirs;
     }
-
+    
+    // Conta quante sottocartelle ci sono
     public static int CountFolders(bool log = false)
     {
         var dirs = GetFoldersInfo();
@@ -72,6 +75,7 @@ public static class InterviewManager
         return dirs.Length;
     }
 
+    // Conta le domande presenti su file
     public static int CountQuestions(bool log = false)
     {
         var dirs = GetFoldersInfo();
@@ -89,6 +93,7 @@ public static class InterviewManager
         return sum;
     }
 
+    // Ottiene il percorso della domanda scelta
     public static string GetQuestionFilePath(string job, int id)
     {
         string folder = GetJobFolder(job);
@@ -109,6 +114,7 @@ public static class InterviewManager
         return path;
     }
 
+    // Ottiene tutte le domande contenute nella sottocartella scelta
     public static List<Question> GetAllQuestionsInFolder(string job)
     {
         List<Question> list = new();
@@ -132,6 +138,7 @@ public static class InterviewManager
         return list;
     }
 
+    // Ottiene una domanda a caso della sottocartella scelta
     public static Question GetRandomQuestionInFolder(string job)
     {
         List<Question> list = GetAllQuestionsInFolder(job);
@@ -139,6 +146,7 @@ public static class InterviewManager
         return list[UnityEngine.Random.Range(0, list.Count)];
     }
 
+    // Restituisce la domanda scelta
     public static Question GetQuestion(string job, int id)
     {
         if (!File.Exists(GetQuestionFilePath(job, id)))
@@ -153,17 +161,14 @@ public static class InterviewManager
         return question;
     }
 
+    // Salva su file (nella sottocartella indicata) la domanda scelta
     public static void AddQuestion(Question question, string job)
     {
-        string json = JsonConvert.SerializeObject(question);
-        // Debug.Log(json);
+        string json = JsonConvert.SerializeObject(question);        
         File.WriteAllText(GetQuestionFilePath(job, question.id), json);
-
-        //  BackupManager.BackUpFolder(GetQuestionsFolder(), saveFolder);
-
-        // BackupManager.BackUpAll();
     }
 
+    // Conta quante risposte ha la domanda scelta
     public static int CountAnswers(Question question, bool log = false)
     {
         int counter = 0;
@@ -176,12 +181,13 @@ public static class InterviewManager
         return counter;
     }
 
-    // Usata per debug. Stampa ans schermo la domanda formattata.
+    // Usata per debug. Stampa a schermo la domanda formattata.
     public static void DebugQuestion(Question question)
     {
         Debug.Log($"Domanda: {question.question}\nRisposte: 1) {question.answers[0].text} [{question.answers[0].points} pt.]\t 2) {question.answers[1].text} [{question.answers[1].points} pt.]\t 3) {question.answers[2].text} [{question.answers[2].points} pt.]\t 3) {question.answers[3].text} [{question.answers[3].points} pt.]");
     }
 
+    // Classe della domanda, con risposte e id.
     [System.Serializable]
     public class Question
     {
@@ -196,6 +202,7 @@ public static class InterviewManager
             public float points;
         }
 
+        // Serve per rendere univoco l'id della domanda
         public static int q_id;
 
         public Question()
@@ -206,21 +213,19 @@ public static class InterviewManager
         public Question(string question, Answer[] answers)
         {
             this.question = question;
-            this.answers = answers;
+            this.answers = answers;           
 
-            // q_id = GetLastID();
-
+            // q_id prende il valore del conteggio più recente per evitare di sovrascrivere una domanda già esistente
             q_id = CountQuestions();
-            id = ++q_id;
-            //  Debug.Log("domanda " + id + " creata");
+            id = ++q_id;           
         }
 
+        // Costruttore alternativo con id scelto da utente
         public Question(string question, Answer[] answers, int id)
         {
             this.question = question;
             this.answers = answers;
-            this.id = id;
-            // Debug.Log("Creata domanda con custom id " + id);
+            this.id = id;          
         }
     }
 }
