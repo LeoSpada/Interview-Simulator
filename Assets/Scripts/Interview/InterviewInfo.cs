@@ -11,8 +11,8 @@ public class InterviewInfo : MonoBehaviour
 
     public void ReloadInfo()
     {
-        questionField.text = $"Domande risposte: {questionPanel.answered}/{questionPanel.questionNumber} [{questionPanel.currentJob}]";
-        pointsField.text = $"Punteggio {questionPanel.points}";
-        averageField.text = $"Media: {questionPanel.average}";
+       if(questionField) questionField.text = $"Domande risposte: {questionPanel.answered}/{questionPanel.questionNumber} [{questionPanel.currentJob}]";
+       if(pointsField) pointsField.text = $"Punteggio {questionPanel.points}";
+       if(averageField) averageField.text = $"Media: {questionPanel.average}";
     }
 }
