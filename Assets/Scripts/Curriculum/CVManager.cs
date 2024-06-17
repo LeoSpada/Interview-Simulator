@@ -226,7 +226,7 @@ public class CVEntry
     public enum Genere { M, F, Altro }
 
     // Sezioni bonus: se presenti, danno punti bonus
-    public enum Esperienza { Nessuna, Cameriere, Barista, Pulizie, Babysitting, Arbitro, Bagnino, Animatore }
+    public enum Esperienza { Nessuna, Cameriere, Barista, Pulizie, Babysitter, Arbitro, Bagnino, Animatore }
     public enum Lingua { Nessuna, Italiano, Inglese, Francese, Tedesco, Spagnolo, Portoghese }
     public enum Patente { Nessuna, A, A1, A2, B, C, D, E }
 }
