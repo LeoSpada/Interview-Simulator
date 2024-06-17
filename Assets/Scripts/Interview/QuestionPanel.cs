@@ -30,6 +30,7 @@ public class QuestionPanel : MonoBehaviour
     private int currentJobID;
     public string currentEducation;
     private int currentEducationID;
+    private bool hasLowEducation = false;
     private bool cvLoaded = false;
 
     [Header("Punteggi")]
@@ -428,7 +429,7 @@ public class QuestionPanel : MonoBehaviour
         // Il datore di lavoro nota la presenza o meno di altre esperienze sul CV.
         // Non influisce sul punteggio.
 
-        dialogue = "Leggendo il suo CV, ho notato che lei ";
+        dialogue = "Leggendo il suo CV, ho notato che Lei ";
 
         if (!cv.esperienza.ToString().Equals("Nessuna"))
         {
@@ -441,6 +442,8 @@ public class QuestionPanel : MonoBehaviour
         {
             dialogue += "non ha avuto alcuna esperienza lavorativa passata.";
             dialogueAnswer = "Non ho mai avuto l'occasione giusta";
+            otherAnswers[0] = "";
+            otherAnswers[1] = "";
         }
 
         dialogue += "\nMi può dire qualcosa a riguardo?";
@@ -448,6 +451,28 @@ public class QuestionPanel : MonoBehaviour
         questions.Add(GetDialogue(dialogue, dialogueAnswer, otherAnswers[0], otherAnswers[1]));
         questionNumber++;
 
+        // Fase 2 parte 2: Istruzione e formazione
+        // Il datore di lavoro nota la presenza o meno di un'istruzione adeguata al lavoro.
+        // Non influisce sul punteggio.
+
+        dialogue = "Leggendo il suo CV, ho notato che Lei ";
+        dialogue += GetEducationMessage();
+
+        if (hasLowEducation)
+        {
+            dialogueAnswer = "La prego, mi dia comunque una possibilità";
+            otherAnswers[0] = "Imparerò in fretta, ho tanta ambizione";
+        }
+        else
+        {
+            dialogueAnswer = "Con i miei studi, sono pronto ad affrontare la sfida";
+            otherAnswers[0] = "Il mio percorso formativo mi ha preparato per questo lavoro";
+        }
+
+        dialogue += "\nMi può dire qualcosa a riguardo?";
+
+        questions.Add(GetDialogue(dialogue, dialogueAnswer, otherAnswers[0]));
+        questionNumber++;
 
         startQuestions = QuestionLimit(startQuestions, startFolder);
         jobQuestions = QuestionLimit(startQuestions, currentJob);
@@ -516,65 +541,65 @@ public class QuestionPanel : MonoBehaviour
 
         string questionText = "";
 
-        // Solo terza media
-        if (currentEducationID == 0)
-        {
-            if (currentJobID <= 1)
-            {
-                questionText = "Lei ha solo la terza media... ma va bene.";
-                // points -= 0;
-            }
-            else if (currentJobID <= 3)
-            {
-                questionText = "Lei ha solo la terza media... pazienza.";
-                points -= 5;
-            }
-            else if (currentJobID >= 4)
-            {
-                questionText = "Lei ha solo la terza media... INAMMISSIBILE.";
-                points -= 50;
-            }
-        }
+        //// Solo terza media
+        //if (currentEducationID == 0)
+        //{
+        //    if (currentJobID <= 1)
+        //    {
+        //        questionText = "Lei ha solo la terza media... ma va bene.";
+        //        // points -= 0;
+        //    }
+        //    else if (currentJobID <= 3)
+        //    {
+        //        questionText = "Lei ha solo la terza media... pazienza.";
+        //        points -= 5;
+        //    }
+        //    else if (currentJobID >= 4)
+        //    {
+        //        questionText = "Lei ha solo la terza media... INAMMISSIBILE.";
+        //        points -= 50;
+        //    }
+        //}
 
-        // Solo superiori
-        if (currentEducationID == 1)
-        {
-            if (currentJobID <= 1)
-            {
-                questionText = "Lei ha un diploma di scuola superiore... Più che sufficiente.";
-                points += 5;
-            }
-            else if (currentJobID <= 3)
-            {
-                questionText = "Lei ha un diploma di scuola superiore...  perfetto.";
-                // points += 0;
-            }
-            else if (currentJobID >= 4)
-            {
-                questionText = "Lei non ha una laurea... Vedremo.";
-                points -= 10;
-            }
-        }
+        //// Solo superiori
+        //if (currentEducationID == 1)
+        //{
+        //    if (currentJobID <= 1)
+        //    {
+        //        questionText = "Lei ha un diploma di scuola superiore... Più che sufficiente.";
+        //        points += 5;
+        //    }
+        //    else if (currentJobID <= 3)
+        //    {
+        //        questionText = "Lei ha un diploma di scuola superiore...  perfetto.";
+        //        // points += 0;
+        //    }
+        //    else if (currentJobID >= 4)
+        //    {
+        //        questionText = "Lei non ha una laurea... Vedremo.";
+        //        points -= 10;
+        //    }
+        //}
 
-        // Laurea
-        if (currentEducationID == 2)
-        {
-            if (currentJobID <= 1)
-            {
-                questionText = "Lei ha una laurea... Molto qualificato.";
-                points += 10;
-            }
-            else if (currentJobID <= 3)
-            {
-                questionText = "Lei ha una laurea...  più che sufficiente.";
-                points += 5;
-            }
-            else if (currentJobID >= 4)
-            {
-                questionText = "Lei ha una laurea... Bene.";
-                // points -= 0;
-            }
-        }
+        //// Laurea
+        //if (currentEducationID == 2)
+        //{
+        //    if (currentJobID <= 1)
+        //    {
+        //        questionText = "Lei ha una laurea... Molto qualificato.";
+        //        points += 10;
+        //    }
+        //    else if (currentJobID <= 3)
+        //    {
+        //        questionText = "Lei ha una laurea...  più che sufficiente.";
+        //        points += 5;
+        //    }
+        //    else if (currentJobID >= 4)
+        //    {
+        //        questionText = "Lei ha una laurea... Bene.";
+        //        // points -= 0;
+        //    }
+        //}
 
         // Sezione punti bonus
 
@@ -616,6 +641,74 @@ public class QuestionPanel : MonoBehaviour
         // Invoke(nameof(NextQuestion), 5f);
 
         return question;
+    }
+
+    public string GetEducationMessage()
+    {
+        // Solo terza media
+        if (currentEducationID == 0)
+        {
+            if (currentJobID <= 1)
+            {
+                return "ha solo la terza media... ma va bene.";
+                // points -= 0;
+            }
+            else if (currentJobID <= 3)
+            {
+                hasLowEducation = true;
+                return "ha solo la terza media... pazienza.";
+                // points -= 5;
+            }
+            else if (currentJobID >= 4)
+            {
+                hasLowEducation = true;
+                return "ha solo la terza media.\nCiò non può essere sufficiente per la posizione richiesta.";
+                // points -= 50;
+            }
+        }
+
+        // Solo superiori
+        if (currentEducationID == 1)
+        {
+            if (currentJobID <= 1)
+            {
+                return "ha un diploma di scuola superiore.\nPiù che sufficiente.";
+                // points += 5;
+            }
+            else if (currentJobID <= 3)
+            {
+                return "ha un diploma di scuola superiore.\nPerfetto.";
+                // points += 0;
+            }
+            else if (currentJobID >= 4)
+            {
+                hasLowEducation = true;
+                return "non ha una laurea.\nVedremo di provvedere alla Sua formazione, per quanto possibile.";                
+                // points -= 10;
+            }
+        }
+
+        // Laurea
+        if (currentEducationID == 2)
+        {
+            if (currentJobID <= 1)
+            {
+                return "ha una laurea.\nMolto qualificato.";
+                // points += 10;
+            }
+            else if (currentJobID <= 3)
+            {
+                return "ha una laurea.\nPiù che sufficiente.";
+                // points += 5;
+            }
+            else if (currentJobID >= 4)
+            {
+                return $"ha una laurea.\nBene, la formazione è fondamentale per essere {cv.occupazione}.";
+                // points -= 0;
+            }
+        }
+
+        return "non sa leggere e scrivere. Quindi non sta leggendo il mio dialogo.";
     }
 
     public Question GetIntroQuestion()
