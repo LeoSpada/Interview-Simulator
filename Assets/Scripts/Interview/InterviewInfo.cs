@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 
+// Permette di stampare informazioni utili sul colloquio attuale
 public class InterviewInfo : MonoBehaviour
 {
     public TextMeshProUGUI pointsField;

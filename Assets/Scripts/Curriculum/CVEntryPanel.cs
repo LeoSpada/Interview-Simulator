@@ -1,8 +1,8 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+// Gestisce la creazione del curriculum
 public class CVEntryPanel : MonoBehaviour
 {
     [Header("Valori di input")]
@@ -15,14 +15,10 @@ public class CVEntryPanel : MonoBehaviour
     CVEntry.Lingua lingua;
     CVEntry.Patente patente;
 
-
-    // Inserire qui tutti quelli di submit
-
     // Contiene i vari inputField
     [Header("Campi liberi")]
     public TMP_InputField[] inputFields;
 
-    // public TMP_Dropdown[] dropdowns;
     [Header("Dropdown")]
     public TMP_Dropdown genereDD;
     public TMP_Dropdown occupazioneDD;
@@ -50,7 +46,6 @@ public class CVEntryPanel : MonoBehaviour
             confirmMessage = confirmPanel.GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    // FUNZIONANTE: TESTATO SOLO SU GENERE
     public void CheckAllInputs()
     {
         InputPanel.AcceptInputFields(inputFields);
@@ -66,13 +61,8 @@ public class CVEntryPanel : MonoBehaviour
     // Crea un CV a partire dai campi inseriti. Controlli su file esistenti e campi vuoti prima del salvataggio.
     public void Submit()
     {
-        //InputPanel.AcceptInputFields(inputFields);
-
         CheckAllInputs();
         
-        Istruzione.Titolo titolo;
-
-
         if (titoloDD && qualifica != Istruzione.Qualifica.Medie)
         {
             titolo = InputPanel.AcceptDropdown<Istruzione.Titolo>(titoloDD);
@@ -88,7 +78,6 @@ public class CVEntryPanel : MonoBehaviour
             // Se un file con lo stesso nome è già presente, compare una finestra di conferma
             if (CVManager.CheckEntry(CV))
             {
-                // Debug.Log("CV già presente.");
                 overwritePanel.SetActive(true);
             }
             else
@@ -115,8 +104,7 @@ public class CVEntryPanel : MonoBehaviour
 
             // Se il file durante la sovrascrittura ha cambiato nome
             if (!CVManager.IsCurrentCV(inputFields[0].text, inputFields[1].text))
-            {
-                Debug.Log("Il CV è stato sovrascritto e il file rinominato.\nElimino vecchio file");
+            {                
                 confirmMessage.text += "\nIl CV è stato sovrascritto e il file rinominato.";
                 CVManager.RemoveCVEntry(CVManager.currentCV);
             }
@@ -127,21 +115,17 @@ public class CVEntryPanel : MonoBehaviour
     {
         Istruzione.Qualifica qualifica = InputPanel.AcceptDropdown<Istruzione.Qualifica>(qualificaDD);
 
-        titoloDD = rigaQualifica.GetComponentInChildren<TMP_Dropdown>();
-
-        // Istruzione istruzione = new(qualifica);
-        //Debug.Log(qualifica.Qualifica);
+        titoloDD = rigaQualifica.GetComponentInChildren<TMP_Dropdown>();        
 
         string qualificaText = qualifica.ToString();
+
         if (qualificaText.Equals("Medie"))
-        {
-            // Debug.Log("medie");
+        {            
             titoloDD.ClearOptions();
             rigaQualifica.SetActive(false);
         }
-        else //if (qualificaText.Equals("Superiori"))
+        else
         {
-            // Debug.Log("SUPERIORI");
             rigaQualifica.SetActive(true);
             UpdateTitoloDropdownValues(qualificaText);
         }
@@ -152,13 +136,6 @@ public class CVEntryPanel : MonoBehaviour
         titoloDD.ClearOptions();
         List<string> options = new();
 
-        //{
-        //    "Nessuno",
-        //    "ITIS",
-        //    "IPSIA",
-        //    "Liceo"
-        //};
-
         if (qualifica.Equals("Superiori"))
         {
             options = new()
@@ -167,8 +144,6 @@ public class CVEntryPanel : MonoBehaviour
                 "ITIS",
                 "IPSIA"
             };
-
-
         }
         else if (qualifica.Equals("Laurea"))
         {
@@ -207,8 +182,6 @@ public class CVEntryPanel : MonoBehaviour
         esperienzaDD.value = (int)currentCV.esperienza;
         linguaDD.value = (int)currentCV.secondaLingua;
         patenteDD.value = (int)currentCV.patente;
-
-        // Probabilmente non è possibile ricaricare il titolo di Istruzione perché le opzioni hanno indici diversi
     }
 
     // Se la schermata viene disattivata, si esce dalla modalità modifica
