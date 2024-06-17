@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static InterviewManager;
 using static InterviewManager.Question;
 
+// Imposta la scena del colloquio e si occupa delle gestione completa delle domande e delle risposte
 public class QuestionPanel : MonoBehaviour
 {
     [Header("Domanda")]
@@ -40,29 +40,24 @@ public class QuestionPanel : MonoBehaviour
     public float average = 0f;
     public int questionNumber = 0;
 
-    // Sezione usata in IntroQuestion
-
+    [Header("Sezione introduttiva")]
     private readonly float softSkillID = 11.01f;
     private readonly float pregiID = 11.02f;
     private readonly float difettiID = 11.03f;
     private readonly float continueID = 11.04f;
     private readonly string introFolder = "Intro";
 
-    private Question bonusPointsQuestion;
     private Question introQuestion;
     private Question softSkillQuestion;
     private Question strengthQuestion;
     private Question weaknessQuestion;
 
-    // Sezione usata in Quiz Test
+    // Sezione usata in fase di test
     // CVInfo e InterviewInfo potrebbero essere usati anche in fase finale
-    // folderInput e metodi associati dovrebbero essere usati SOLO nella fase di testing
 
     [Header("Debug e altro")]
     public InterviewInfo interviewInfo;
     public CVInfo cvInfo;
-    public TMP_InputField folderInputField;
-    public GameObject folderInputGroup;
 
     void Start()
     {
@@ -85,21 +80,14 @@ public class QuestionPanel : MonoBehaviour
         if (CVManager.currentCV != null)
         {
             cvLoaded = true;
-            if (folderInputGroup) folderInputGroup.SetActive(false);
 
             cv = CVManager.currentCV;
 
             currentJob = cv.occupazione.ToString();
             currentJobID = (int)cv.occupazione;
-            // Debug.Log("occupazione di valore " + currentJobID);
 
             currentEducation = cv.istruzione.qualifica.ToString();
             currentEducationID = (int)cv.istruzione.qualifica;
-            // Debug.Log("educazione di valore " + currentEducationID);
-
-            // bonusPointsQuestion = GetBonusPointsQuestion();
-
-            // Debug.Log(currentEducation);
 
             if (cvInfo)
             {
@@ -115,13 +103,7 @@ public class QuestionPanel : MonoBehaviour
 
     public void Setup(Question q)
     {
-
-        // Debug.Log(currentJob);
-
         // Se q è null, le domande sono finite.
-        // Rimpiazzare questa parte con caricamento scena di calcolo punteggio??
-
-        // INSERIRE INVOCAZIONE SCENA PUNTEGGIO
 
         if (q == null)
         {
@@ -132,16 +114,6 @@ public class QuestionPanel : MonoBehaviour
 
             GameManager.instance.LoadScene("Scena_Punteggio");
             return;
-
-            //question = null;
-            //questionText.text = "Domande finite.\nPunteggio: " + points;
-            //foreach (Button button in ansButtons)
-            //{
-            //    button.name = "EmptyAns";
-            //    TextMeshProUGUI buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
-            //    buttonText.text = "-Reset-";
-            //return;
-            //}
         }
 
         question = q;
@@ -152,19 +124,16 @@ public class QuestionPanel : MonoBehaviour
         {
             if (CountAnswers(softSkillQuestion) == 0)
             {
-                // Debug.Log("Finite risposte per SoftSkillQ");
                 question.answers[0].text = InputPanel.disabledText;
             }
 
             if (CountAnswers(strengthQuestion) == 0)
             {
-                //  Debug.Log("Finite risposte per StrengthQ");
                 question.answers[1].text = InputPanel.disabledText;
             }
 
             if (CountAnswers(weaknessQuestion) == 0)
             {
-                //  Debug.Log("Finite risposte per WeaknessQ");
                 question.answers[2].text = InputPanel.disabledText;
             }
         }
@@ -182,7 +151,6 @@ public class QuestionPanel : MonoBehaviour
 
             if (buttonText.text.Equals(InputPanel.disabledText))
             {
-                // Debug.Log($"Risposta {button.name} rimossa");
                 button.gameObject.SetActive(false);
             }
             else
@@ -194,44 +162,15 @@ public class QuestionPanel : MonoBehaviour
 
     public void NextQuestion()
     {
-        // Rimosso -1 per test
         if (index <= questionNumber)
         {
             Setup(questions[++index]);
-            // Debug.Log("Index = " + index);
             SetupInterviewInfo();
         }
-
-        else Debug.Log("FINITE");
     }
-
-    // Usata solo in scena di test, commentare in versione finale
-    public void SubmitFolderInput()
-    {
-        if (cvLoaded) return;
-
-        if (folderInputField != null)
-            InputPanel.AcceptInputField(folderInputField);
-        else
-        {
-            Debug.Log("Nessun input field caricato.");
-            return;
-        }
-
-        if (InputPanel.fieldsClear)
-        {
-            currentJob = folderInputField.text;
-            folderInputGroup.SetActive(false);
-            SetupInterview();
-        }
-
-        InputPanel.ClearAll();
-    }
-
 
     public void SetupInterviewInfo()
     {
-
         if (interviewInfo)
         {
             questionNumber = questions.Count - 2;
@@ -242,14 +181,11 @@ public class QuestionPanel : MonoBehaviour
 
     public Question GetRandomQuestion(string job)
     {
-
         int i = 0;
 
         while (i <= GetJobFolderSize(job))
         {
             Question rand = GetRandomQuestionInFolder(job);
-
-            // DebugQuestion(rand);
 
             if (!prevID.Contains(rand.id))
             {
@@ -280,42 +216,31 @@ public class QuestionPanel : MonoBehaviour
 
     public void OnButtonClick(Button button)
     {
-
         questionText.text = Feedback();
 
         if (question != null)
         {
-
             // Se la domanda combacia con una delle tipologie di domande introduttive, disattiva la risposta scelta per quella domanda
 
             if (question.id == softSkillQuestion.id)
             {
-                int i = int.Parse(button.tag);
+                int i = int.Parse(button.tag);                
 
-                //  Debug.Log("rimossa 1 di soft " + softSkillQuestion.id);
-
-                softSkillQuestion.answers[i].text = InputPanel.disabledText;
-                //  DebugQuestion(softSkillQuestion);
+                softSkillQuestion.answers[i].text = InputPanel.disabledText;               
             }
 
             if (question.id == strengthQuestion.id)
             {
                 int i = int.Parse(button.tag);
 
-                // Debug.Log("rimossa 1 di strength " + strengthQuestion.id);
-
-                strengthQuestion.answers[i].text = InputPanel.disabledText;
-                //   DebugQuestion(strengthQuestion);
+                strengthQuestion.answers[i].text = InputPanel.disabledText;                
             }
 
             if (question.id == weaknessQuestion.id)
             {
                 int i = int.Parse(button.tag);
-
-                // Debug.Log("rimossa 1 di weakness " + weaknessQuestion.id);
-
-                weaknessQuestion.answers[i].text = InputPanel.disabledText;
-                //  DebugQuestion(weaknessQuestion);
+                
+                weaknessQuestion.answers[i].text = InputPanel.disabledText;                
             }
 
             float answerPoints = float.Parse(button.name);
@@ -325,8 +250,7 @@ public class QuestionPanel : MonoBehaviour
                 // Se la risposta combacia con l'id/punteggio associato alle sottocategorie, vengono aggiunte al colloquio le domande correlate 
 
                 if (answerPoints == softSkillID)
-                {
-                    // Debug.Log("SOFT");
+                {                   
                     noPointAnswers++;
 
                     questions.Insert(index + 1, softSkillQuestion);
@@ -335,8 +259,7 @@ public class QuestionPanel : MonoBehaviour
                     questionNumber++;
                 }
                 else if (answerPoints == pregiID)
-                {
-                    // Debug.Log("PREGI");
+                {                    
                     noPointAnswers++;
 
                     questions.Insert(index + 1, strengthQuestion);
@@ -346,8 +269,7 @@ public class QuestionPanel : MonoBehaviour
 
                 }
                 else if (answerPoints == difettiID)
-                {
-                    // Debug.Log("DIFETTI");
+                {                    
                     noPointAnswers++;
 
                     questions.Insert(index + 1, weaknessQuestion);
@@ -357,8 +279,7 @@ public class QuestionPanel : MonoBehaviour
 
                 }
                 else if (answerPoints == continueID)
-                {
-                    //  Debug.Log("CONTINUE");
+                {                    
                     noPointAnswers++;
                     questionNumber++;
                 }
@@ -367,6 +288,7 @@ public class QuestionPanel : MonoBehaviour
 
                 else points += answerPoints;
             }
+
             // Se il punteggio è 0, non deve incidere sulla media
             else noPointAnswers++;
 
@@ -380,25 +302,13 @@ public class QuestionPanel : MonoBehaviour
 
             Invoke(nameof(NextQuestion), 1f);
         }
-
-       // else Invoke(nameof(ResetInterview), 1f);
     }
 
     // Imposta il colloquio precaricando dialoghi e le domande da varie cartelle.
     // ATTENZIONE: attualmente carica da 3 cartelle, senza possibilità di cambiare. Si può cambiare però le 3 cartelle da cui caricare (VEDI VARIABILI SOPRA)
 
     public void SetupInterview()
-    {
-
-        string dialogue = "";
-        string dialogueAnswer = "";
-        string[] otherAnswers =
-        {
-            "",
-            "",
-            "",
-        };
-
+    {       
         Debug.Log("punteggio = " + points);
 
         if (questions == null)
@@ -416,12 +326,10 @@ public class QuestionPanel : MonoBehaviour
         questions.Add(GetDialogue($"Molto bene, {cv.surname}. Le va di cominciare?", "Certo, va bene."));
         questionNumber++;
 
-        //questions.Add(bonusPointsQuestion);
-        //questionNumber++;
-
         // FASE 1: Presentazioni
         // Parte un loop in cui il giocatore può parlare di sè (pregi, difetti, soft skill) finché vuole.
         // Incide sul punteggio.
+        
         questions.Add(introQuestion);
         questionNumber++;
 
@@ -429,7 +337,15 @@ public class QuestionPanel : MonoBehaviour
         // Il datore di lavoro nota la presenza o meno di altre esperienze sul CV.
         // Non influisce sul punteggio.
 
-        dialogue = "Leggendo il suo CV, ho notato che Lei ";
+        string dialogue = "Leggendo il suo CV, ho notato che Lei ";
+        string dialogueAnswer;
+
+        string[] otherAnswers =
+        {
+            "",
+            "",
+            "",
+        };
 
         if (!cv.esperienza.ToString().Equals("Nessuna"))
         {
@@ -532,7 +448,7 @@ public class QuestionPanel : MonoBehaviour
         Setup(questions[index]);
     }
 
-   // Domanda non salvata, usata per transizioni e commenti del datore
+    // Domanda non salvata, usata per transizioni e commenti del datore
     public Question GetDialogue(string dialogue, string answer0, string answer1 = "", string answer2 = "", string answer3 = "", float points = 0)
     {
         int id = 1099;
@@ -558,7 +474,7 @@ public class QuestionPanel : MonoBehaviour
 
         return question;
 
-    }    
+    }
 
     // Restituisce un messaggio per la differenza tra educazione e posizione, e segnala una differenza troppo negativa
     public string GetEducationMessage()
@@ -601,7 +517,7 @@ public class QuestionPanel : MonoBehaviour
             else if (currentJobID >= 4)
             {
                 hasLowEducation = true;
-                return "non ha una laurea.\nVedremo di provvedere alla Sua formazione, per quanto possibile.";                
+                return "non ha una laurea.\nVedremo di provvedere alla Sua formazione, per quanto possibile.";
                 // points -= 10;
             }
         }
@@ -666,6 +582,7 @@ public class QuestionPanel : MonoBehaviour
         return question;
     }
 
+    // Domanda sulle softSkill
     public Question GetSoftSkillQuestion()
     {
         int id = 1102;
@@ -774,13 +691,5 @@ public class QuestionPanel : MonoBehaviour
                 return counter;
             }
         }
-    }
-
-    // RIMUOVERE / COMMENTARE DA VERSIONE FINALE
-
-    public void ResetInterview()
-    {
-        // CVManager.UnloadCurrentCV();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

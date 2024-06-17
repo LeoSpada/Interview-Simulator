@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Gestisce le espressioni facciali del datore di lavoro
 public class FaceManager : MonoBehaviour
 {
     public Material Materiale_Bocca;
