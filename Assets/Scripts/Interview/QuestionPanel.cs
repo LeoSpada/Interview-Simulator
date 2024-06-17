@@ -79,7 +79,7 @@ public class QuestionPanel : MonoBehaviour
         // Se è stato caricato correttamente un CV
         if (CVManager.currentCV != null)
         {
-           // cvLoaded = true;
+            // cvLoaded = true;
 
             cv = CVManager.currentCV;
 
@@ -224,23 +224,23 @@ public class QuestionPanel : MonoBehaviour
 
             if (question.id == softSkillQuestion.id)
             {
-                int i = int.Parse(button.tag);                
+                int i = int.Parse(button.tag);
 
-                softSkillQuestion.answers[i].text = InputPanel.disabledText;               
+                softSkillQuestion.answers[i].text = InputPanel.disabledText;
             }
 
             if (question.id == strengthQuestion.id)
             {
                 int i = int.Parse(button.tag);
 
-                strengthQuestion.answers[i].text = InputPanel.disabledText;                
+                strengthQuestion.answers[i].text = InputPanel.disabledText;
             }
 
             if (question.id == weaknessQuestion.id)
             {
                 int i = int.Parse(button.tag);
-                
-                weaknessQuestion.answers[i].text = InputPanel.disabledText;                
+
+                weaknessQuestion.answers[i].text = InputPanel.disabledText;
             }
 
             float answerPoints = float.Parse(button.name);
@@ -250,7 +250,7 @@ public class QuestionPanel : MonoBehaviour
                 // Se la risposta combacia con l'id/punteggio associato alle sottocategorie, vengono aggiunte al colloquio le domande correlate 
 
                 if (answerPoints == softSkillID)
-                {                   
+                {
                     noPointAnswers++;
 
                     questions.Insert(index + 1, softSkillQuestion);
@@ -259,7 +259,7 @@ public class QuestionPanel : MonoBehaviour
                     questionNumber++;
                 }
                 else if (answerPoints == pregiID)
-                {                    
+                {
                     noPointAnswers++;
 
                     questions.Insert(index + 1, strengthQuestion);
@@ -269,7 +269,7 @@ public class QuestionPanel : MonoBehaviour
 
                 }
                 else if (answerPoints == difettiID)
-                {                    
+                {
                     noPointAnswers++;
 
                     questions.Insert(index + 1, weaknessQuestion);
@@ -279,7 +279,7 @@ public class QuestionPanel : MonoBehaviour
 
                 }
                 else if (answerPoints == continueID)
-                {                    
+                {
                     noPointAnswers++;
                     questionNumber++;
                 }
@@ -308,8 +308,8 @@ public class QuestionPanel : MonoBehaviour
     // ATTENZIONE: attualmente carica da 3 cartelle, senza possibilità di cambiare. Si può cambiare però le 3 cartelle da cui caricare (VEDI VARIABILI SOPRA)
 
     public void SetupInterview()
-    {       
-        Debug.Log("punteggio = " + points);
+    {
+        // Debug.Log("punteggio = " + points);
 
         if (questions == null)
         {
@@ -329,7 +329,7 @@ public class QuestionPanel : MonoBehaviour
         // FASE 1: Presentazioni
         // Parte un loop in cui il giocatore può parlare di sè (pregi, difetti, soft skill) finché vuole.
         // Incide sul punteggio.
-        
+
         questions.Add(introQuestion);
         questionNumber++;
 
@@ -676,7 +676,7 @@ public class QuestionPanel : MonoBehaviour
     }
 
     // Se sono state richieste più domande di quante ve ne siano nella cartella scelta, viene restituita la cartella scelta
-    public int QuestionLimit(int counter, string folder, bool log = true)
+    public int QuestionLimit(int counter, string folder, bool log = false)
     {
         {
             int folderSize = GetJobFolderSize(folder);
