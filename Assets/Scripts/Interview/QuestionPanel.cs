@@ -381,7 +381,7 @@ public class QuestionPanel : MonoBehaviour
             Invoke(nameof(NextQuestion), 1f);
         }
 
-        else Invoke(nameof(ResetInterview), 1f);
+       // else Invoke(nameof(ResetInterview), 1f);
     }
 
     // Imposta il colloquio precaricando dialoghi e le domande da varie cartelle.
@@ -474,6 +474,10 @@ public class QuestionPanel : MonoBehaviour
         questions.Add(GetDialogue(dialogue, dialogueAnswer, otherAnswers[0]));
         questionNumber++;
 
+        // Fase 2 parte 3: Dati aggiuntivi
+        // Il datore osserva dati aggiuntivi quali patente e seconda lingua.
+        // Non incide sul punteggio.
+
         if (!cv.secondaLingua.ToString().Equals("Nessuna"))
         {
             dialogue = $"Noto inoltre che Lei parla anche {cv.secondaLingua}.\nComplimenti, sapere più lingue è un valore aggiunto che apprezziamo.";
@@ -491,6 +495,10 @@ public class QuestionPanel : MonoBehaviour
             questions.Add(GetDialogue(dialogue, dialogueAnswer, otherAnswers[0]));
             questionNumber++;
         }
+
+        // Fase 3: Colloquio
+        // Fase a punti, vengono caricate le tre cartelle prefissate (1 per lavoro caricato da curriculum).
+        // Influisce su punteggio e media
 
         questions.Add(GetDialogue("Perfetto, direi che possiamo iniziare con domande vere e proprie, per testare la sua preparazione.", "Sono pronto", "Perfetto"));
         questionNumber++;
@@ -524,8 +532,7 @@ public class QuestionPanel : MonoBehaviour
         Setup(questions[index]);
     }
 
-    // Cambiare forse frasi e valori bonus e malus
-
+   // Domanda non salvata, usata per transizioni e commenti del datore
     public Question GetDialogue(string dialogue, string answer0, string answer1 = "", string answer2 = "", string answer3 = "", float points = 0)
     {
         int id = 1099;
@@ -551,126 +558,9 @@ public class QuestionPanel : MonoBehaviour
 
         return question;
 
-    }
+    }    
 
-    // SEPARARE IN PIù METODI (forse usando solo GetDialogue, VEDI STRUTTURA EXCEL)
-    public Question GetBonusPointsQuestion()
-    {
-        int id = 1100;
-
-        // Question question = null;
-        //= InterviewManager.GetQuestion(introFolder, id);
-
-        // Debug.Log("Valore Edu = " + currentEducationID + " - Valore Occp = " + currentJobID);
-
-        //int gap = currentJobID - currentEducationID;
-
-        //Debug.Log("differenza J-E = " + gap);
-
-        string questionText = "";
-
-        //// Solo terza media
-        //if (currentEducationID == 0)
-        //{
-        //    if (currentJobID <= 1)
-        //    {
-        //        questionText = "Lei ha solo la terza media... ma va bene.";
-        //        // points -= 0;
-        //    }
-        //    else if (currentJobID <= 3)
-        //    {
-        //        questionText = "Lei ha solo la terza media... pazienza.";
-        //        points -= 5;
-        //    }
-        //    else if (currentJobID >= 4)
-        //    {
-        //        questionText = "Lei ha solo la terza media... INAMMISSIBILE.";
-        //        points -= 50;
-        //    }
-        //}
-
-        //// Solo superiori
-        //if (currentEducationID == 1)
-        //{
-        //    if (currentJobID <= 1)
-        //    {
-        //        questionText = "Lei ha un diploma di scuola superiore... Più che sufficiente.";
-        //        points += 5;
-        //    }
-        //    else if (currentJobID <= 3)
-        //    {
-        //        questionText = "Lei ha un diploma di scuola superiore...  perfetto.";
-        //        // points += 0;
-        //    }
-        //    else if (currentJobID >= 4)
-        //    {
-        //        questionText = "Lei non ha una laurea... Vedremo.";
-        //        points -= 10;
-        //    }
-        //}
-
-        //// Laurea
-        //if (currentEducationID == 2)
-        //{
-        //    if (currentJobID <= 1)
-        //    {
-        //        questionText = "Lei ha una laurea... Molto qualificato.";
-        //        points += 10;
-        //    }
-        //    else if (currentJobID <= 3)
-        //    {
-        //        questionText = "Lei ha una laurea...  più che sufficiente.";
-        //        points += 5;
-        //    }
-        //    else if (currentJobID >= 4)
-        //    {
-        //        questionText = "Lei ha una laurea... Bene.";
-        //        // points -= 0;
-        //    }
-        //}
-
-        // Sezione punti bonus
-
-        //if (!cv.esperienza.ToString().Equals("Nessuna"))
-        //{
-        //    questionText += "\nVedo che ha lavorato in precedenza come " + cv.esperienza.ToString() + "...";
-        //    points++;
-        //}
-
-        //if (!cv.secondaLingua.ToString().Equals("Nessuna"))
-        //{
-        //    questionText += "\nVedo che parla anche " + cv.secondaLingua.ToString() + "...";
-        //    points++;
-        //}
-
-        //if (!cv.patente.ToString().Equals("Nessuna"))
-        //{
-        //    questionText += "\nVedo che ha una patente " + cv.patente.ToString() + "...";
-        //    points++;
-        //}
-
-        Answer[] answers = new Answer[4];
-        answers[0].text = "InputPanel.disabledText";
-        answers[0].points = 0;
-
-        answers[1].text = InputPanel.disabledText;
-        answers[1].points = 0;
-
-        answers[2].text = InputPanel.disabledText;
-        answers[2].points = 0;
-
-        answers[3].text = InputPanel.disabledText;
-        answers[3].points = 0;
-
-        Question question = new(questionText, answers, id);
-        InterviewManager.AddQuestion(question, introFolder);
-
-        // noPointAnswers++;
-        // Invoke(nameof(NextQuestion), 5f);
-
-        return question;
-    }
-
+    // Restituisce un messaggio per la differenza tra educazione e posizione, e segnala una differenza troppo negativa
     public string GetEducationMessage()
     {
         // Solo terza media
@@ -738,6 +628,10 @@ public class QuestionPanel : MonoBehaviour
 
         return "non sa leggere e scrivere. Quindi non sta leggendo il mio dialogo.";
     }
+
+    // Prepara la domanda introduttiva, in cui il candidato parla di sè.
+    // Usando gli ID, questa domanda diventa un menù.
+    // Ogni risposta porta ad una domanda diversa.
 
     public Question GetIntroQuestion()
     {
@@ -864,6 +758,7 @@ public class QuestionPanel : MonoBehaviour
         return question;
     }
 
+    // Se sono state richieste più domande di quante ve ne siano nella cartella scelta, viene restituita la cartella scelta
     public int QuestionLimit(int counter, string folder, bool log = true)
     {
         {

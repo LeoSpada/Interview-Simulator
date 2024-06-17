@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
-using UnityEditor;
 using UnityEngine;
 
 public static class CVManager
@@ -56,7 +55,6 @@ public static class CVManager
     {
         List<CVEntry> list = new();
 
-        // DirectoryInfo dir = new(Path.Combine(Application.persistentDataPath, saveFolder));
         FileInfo[] info = GetFilesInfo();
 
         foreach (FileInfo f in info)
@@ -93,17 +91,12 @@ public static class CVManager
     {
         string json = JsonConvert.SerializeObject(cvEntry);
         File.WriteAllText((GetCVFilePath(cvEntry.name, cvEntry.surname)), json);
-
-        // COPIA IN CARTELLA BACKUP
-        // BackupManager.BackUpFolder(GetCVFolder(), saveFolder);
     }
 
     public static void RemoveCVEntry(CVEntry cvEntry)
     {
         if (CheckEntry(cvEntry))
             File.Delete(GetCVFilePath(cvEntry.name, cvEntry.surname));
-
-        // BackupManager.BackUpFolder(GetCVFolder(), saveFolder);
     }
 
     public static bool CheckEntry(CVEntry cvEntry)
@@ -161,29 +154,10 @@ public class Istruzione
     public Istruzione(Qualifica qualifica, Titolo titolo) : this(qualifica)
     {
         this.titolo = titolo;
-        // FilterTitolo();
     }
-
-    //public void FilterTitolo()
-    //{
-    //    // Se ha fatto medie, il titolo è per forza "Nessuno"
-    //    if (qualifica.ToString().Equals("Medie"))
-    //    {
-    //        Debug.Log("Fatto medie");
-    //        titolo = Titolo.Nessuno;
-    //    }
-
-    //    if (!titolo.ToString().Equals("Nessuno"))
-    //    {
-    //        
-    //    }
-    //}
-
 
     public enum Qualifica { Medie, Superiori, Laurea };
     public enum Titolo { Nessuno, ITIS, IPSIA, Liceo, Scientifica, Umanistica, Economica, Sociale, Tecnologica };
-
-
 }
 
 [System.Serializable]
@@ -198,6 +172,7 @@ public class CVEntry
     public Esperienza esperienza;
     public Lingua secondaLingua;
     public Patente patente;
+
     public CVEntry()
     {
 
