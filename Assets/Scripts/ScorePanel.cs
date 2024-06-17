@@ -21,9 +21,9 @@ public class ScorePanel : MonoBehaviour
             float average = PlayerPrefs.GetFloat("average");
 
 
-            string message = $"Candidato {cv.name} {cv.surname}\nIn base al colloquio da Lei sostenuto, la informiamo che la sua candidatura è stata\n";
-            if (average >= 0.75f) message += $"ACCETTATA\nPunteggio: {score} Media: {average}";
-            else message += $"RESPINTA\nPunteggio: {score} Media: {average}";
+            string message = $"Candidato/a {cv.name} {cv.surname}\n\nIn base al colloquio da Lei sostenuto, la informiamo che la sua candidatura è stata\n\n";
+            if (average >= 0.75f) message += $"ACCETTATA!"/*\nPunteggio: {score} Media: {average}"*/; //Non serve mostrare il punetggio e la media
+            else message += $"RESPINTA..."/*\nPunteggio: {score} Media: {average}"*/; //Non serve mostrare il punteggio e la media
 
             scoreText.text = message;
         }

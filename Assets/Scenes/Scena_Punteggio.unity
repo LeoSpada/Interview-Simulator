@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -434,11 +434,11 @@ PrefabInstance:
       objectReference: {fileID: 1748578685}
     - target: {fileID: 3006233603130919234, guid: 377d76022d48d454aa10bb90ffaf440e, type: 3}
       propertyPath: m_text
-      value: "Men\xF9 principale"
+      value: "Men\xF9\nprincipale"
       objectReference: {fileID: 0}
     - target: {fileID: 3006233603130919234, guid: 377d76022d48d454aa10bb90ffaf440e, type: 3}
       propertyPath: m_fontSize
-      value: 31.05
+      value: 42
       objectReference: {fileID: 0}
     - target: {fileID: 3006233603130919234, guid: 377d76022d48d454aa10bb90ffaf440e, type: 3}
       propertyPath: m_fontStyle
@@ -457,6 +457,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3006233603130919234, guid: 377d76022d48d454aa10bb90ffaf440e, type: 3}
+      propertyPath: m_lineSpacing
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3006233603130919234, guid: 377d76022d48d454aa10bb90ffaf440e, type: 3}
       propertyPath: m_fontSizeBase
       value: 42
       objectReference: {fileID: 0}
@@ -469,8 +473,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
     - target: {fileID: 3006233603130919234, guid: 377d76022d48d454aa10bb90ffaf440e, type: 3}
+      propertyPath: m_characterSpacing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3006233603130919234, guid: 377d76022d48d454aa10bb90ffaf440e, type: 3}
       propertyPath: m_enableAutoSizing
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3006233603130919234, guid: 377d76022d48d454aa10bb90ffaf440e, type: 3}
       propertyPath: m_fontColor32.rgba
@@ -482,7 +490,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6001853156233916911, guid: 377d76022d48d454aa10bb90ffaf440e, type: 3}
       propertyPath: m_Name
-      value: Pulsante_Indietro
+      value: PULSANTE_Menu_Principale
       objectReference: {fileID: 0}
     - target: {fileID: 8374485281801639918, guid: 377d76022d48d454aa10bb90ffaf440e, type: 3}
       propertyPath: m_Icon
@@ -490,7 +498,7 @@ PrefabInstance:
       objectReference: {fileID: 2800000, guid: 2fd6421f253b4ef1a19526541f9ffc0c, type: 3}
     - target: {fileID: 8374485281801639918, guid: 377d76022d48d454aa10bb90ffaf440e, type: 3}
       propertyPath: m_Name
-      value: TESTO_Indietro
+      value: TESTO_Menu_Principale
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -667,7 +675,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 50, y: 50}
+  m_AnchoredPosition: {x: 63, y: 50}
   m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1307487400
@@ -940,11 +948,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2360582837582793130, guid: 04642d72648f3c14eae8a80ef328c5a6, type: 3}
       propertyPath: m_Name
-      value: TESTO_Carica
+      value: TESTO_Rigioca
       objectReference: {fileID: 0}
     - target: {fileID: 4682924878739045829, guid: 04642d72648f3c14eae8a80ef328c5a6, type: 3}
       propertyPath: m_Name
-      value: Replay
+      value: PULSANTE_Rigioca
       objectReference: {fileID: 0}
     - target: {fileID: 6751007718297998086, guid: 04642d72648f3c14eae8a80ef328c5a6, type: 3}
       propertyPath: m_TargetGraphic
