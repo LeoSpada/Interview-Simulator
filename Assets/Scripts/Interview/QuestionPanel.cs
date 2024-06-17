@@ -96,7 +96,7 @@ public class QuestionPanel : MonoBehaviour
             currentEducationID = (int)cv.istruzione.qualifica;
             // Debug.Log("educazione di valore " + currentEducationID);
 
-            bonusPointsQuestion = GetBonusPointsQuestion();
+            // bonusPointsQuestion = GetBonusPointsQuestion();
 
             // Debug.Log(currentEducation);
 
@@ -126,10 +126,11 @@ public class QuestionPanel : MonoBehaviour
         {
             Debug.Log("Score = " + points);
             Debug.Log("Average = " + average);
-            PlayerPrefs.SetFloat("score",points);
-            PlayerPrefs.SetFloat("average",average);
+            PlayerPrefs.SetFloat("score", points);
+            PlayerPrefs.SetFloat("average", average);
 
             GameManager.instance.LoadScene("Scena_Punteggio");
+            return;
 
             //question = null;
             //questionText.text = "Domande finite.\nPunteggio: " + points;
@@ -138,9 +139,8 @@ public class QuestionPanel : MonoBehaviour
             //    button.name = "EmptyAns";
             //    TextMeshProUGUI buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
             //    buttonText.text = "-Reset-";
+            //return;
             //}
-
-            return;
         }
 
         question = q;
@@ -151,19 +151,19 @@ public class QuestionPanel : MonoBehaviour
         {
             if (CountAnswers(softSkillQuestion) == 0)
             {
-                Debug.Log("Finite risposte per SoftSkillQ");
+                // Debug.Log("Finite risposte per SoftSkillQ");
                 question.answers[0].text = InputPanel.disabledText;
             }
 
             if (CountAnswers(strengthQuestion) == 0)
             {
-                Debug.Log("Finite risposte per StrengthQ");
+                //  Debug.Log("Finite risposte per StrengthQ");
                 question.answers[1].text = InputPanel.disabledText;
             }
 
             if (CountAnswers(weaknessQuestion) == 0)
             {
-                Debug.Log("Finite risposte per WeaknessQ");
+                //  Debug.Log("Finite risposte per WeaknessQ");
                 question.answers[2].text = InputPanel.disabledText;
             }
         }
@@ -204,6 +204,7 @@ public class QuestionPanel : MonoBehaviour
         else Debug.Log("FINITE");
     }
 
+    // Usata solo in scena di test, commentare in versione finale
     public void SubmitFolderInput()
     {
         if (cvLoaded) return;
@@ -290,30 +291,30 @@ public class QuestionPanel : MonoBehaviour
             {
                 int i = int.Parse(button.tag);
 
-                Debug.Log("rimossa 1 di soft (" + softSkillQuestion.id);
+                //  Debug.Log("rimossa 1 di soft " + softSkillQuestion.id);
 
                 softSkillQuestion.answers[i].text = InputPanel.disabledText;
-                DebugQuestion(softSkillQuestion);
+                //  DebugQuestion(softSkillQuestion);
             }
 
             if (question.id == strengthQuestion.id)
             {
                 int i = int.Parse(button.tag);
 
-                Debug.Log("rimossa 1 di strength " + strengthQuestion.id);
+                // Debug.Log("rimossa 1 di strength " + strengthQuestion.id);
 
                 strengthQuestion.answers[i].text = InputPanel.disabledText;
-                DebugQuestion(strengthQuestion);
+                //   DebugQuestion(strengthQuestion);
             }
 
             if (question.id == weaknessQuestion.id)
             {
                 int i = int.Parse(button.tag);
 
-                Debug.Log("rimossa 1 di weakness " + weaknessQuestion.id);
+                // Debug.Log("rimossa 1 di weakness " + weaknessQuestion.id);
 
                 weaknessQuestion.answers[i].text = InputPanel.disabledText;
-                DebugQuestion(weaknessQuestion);
+                //  DebugQuestion(weaknessQuestion);
             }
 
             float answerPoints = float.Parse(button.name);
@@ -382,11 +383,28 @@ public class QuestionPanel : MonoBehaviour
         else Invoke(nameof(ResetInterview), 1f);
     }
 
-    // Imposta il colloquio precaricando le domande da varie cartelle.
+    // Imposta il colloquio precaricando dialoghi e le domande da varie cartelle.
     // ATTENZIONE: attualmente carica da 3 cartelle, senza possibilità di cambiare. Si può cambiare però le 3 cartelle da cui caricare (VEDI VARIABILI SOPRA)
 
     public void SetupInterview()
     {
+
+        string dialogue = "";
+        string dialogueAnswer = "";
+        string[] otherAnswers =
+        {
+            "",
+            "",
+            "",
+        };
+
+        Debug.Log("punteggio = " + points);
+
+        if (questions == null)
+        {
+            Debug.Log("Lista nulla");
+            return;
+        }
 
         // FASE 0: Introduzione
         // Dialoghi senza punti
@@ -406,18 +424,35 @@ public class QuestionPanel : MonoBehaviour
         questions.Add(introQuestion);
         questionNumber++;
 
+        // FASE 2 parte 1: Vecchie carriere lavorative
+        // Il datore di lavoro nota la presenza o meno di altre esperienze sul CV.
+        // Non influisce sul punteggio.
+
+        dialogue = "Leggendo il suo CV, ho notato che lei ";
+
+        if (!cv.esperienza.ToString().Equals("Nessuna"))
+        {
+            dialogue += $"ha lavorato in precedenza come {cv.esperienza}.";
+            dialogueAnswer = "Mi ha aiutato nel mio percorso lavorativo";
+            otherAnswers[0] = "La rifarei se fosse possibile";
+            otherAnswers[1] = $"L'esperienza da {cv.esperienza} è stata impegnativa";
+        }
+        else
+        {
+            dialogue += "non ha avuto alcuna esperienza lavorativa passata.";
+            dialogueAnswer = "Non ho mai avuto l'occasione giusta";
+        }
+
+        dialogue += "\nMi può dire qualcosa a riguardo?";
+
+        questions.Add(GetDialogue(dialogue, dialogueAnswer, otherAnswers[0], otherAnswers[1]));
+        questionNumber++;
+
+
         startQuestions = QuestionLimit(startQuestions, startFolder);
-        //Debug.Log("caricate ");
         jobQuestions = QuestionLimit(startQuestions, currentJob);
         endQuestions = QuestionLimit(startQuestions, endFolder);
 
-        //questionNumber = startQuestions + jobQuestions + endQuestions;
-
-        if (questions == null)
-        {
-            Debug.Log("Lista nulla");
-            return;
-        }
 
         int i, j, k;
 
@@ -431,12 +466,6 @@ public class QuestionPanel : MonoBehaviour
         questions.Add(null);
 
         SetupInterviewInfo();
-
-        //DebugQuestion(questions[index]);
-
-        // Debug.Log("Ci sono domande n = " + questions.Count);
-
-        // questionNumber = questions.Count - 2;
         Setup(questions[index]);
     }
 
@@ -444,22 +473,26 @@ public class QuestionPanel : MonoBehaviour
 
     // Cambiare forse frasi e valori bonus e malus
 
-    public Question GetDialogue(string dialogue, string answer, float points = 0)
+    public Question GetDialogue(string dialogue, string answer0, string answer1 = "", string answer2 = "", string answer3 = "", float points = 0)
     {
         int id = 1099;
 
         Answer[] answers = new Answer[4];
-        answers[0].text = answer;
+        answers[0].text = answer0;
         answers[0].points = points;
 
-        answers[1].text = InputPanel.disabledText;
-        answers[1].points = 0;
+        if (answer1.Equals("")) answer1 = InputPanel.disabledText;
+        if (answer2.Equals("")) answer2 = InputPanel.disabledText;
+        if (answer3.Equals("")) answer3 = InputPanel.disabledText;
 
-        answers[2].text = InputPanel.disabledText;
-        answers[2].points = 0;
+        answers[1].text = answer1;
+        answers[1].points = points;
 
-        answers[3].text = InputPanel.disabledText;
-        answers[3].points = 0;
+        answers[2].text = answer2;
+        answers[2].points = points;
+
+        answers[3].text = answer3;
+        answers[3].points = points;
 
         Question question = new(dialogue, answers, id);
 
@@ -545,11 +578,11 @@ public class QuestionPanel : MonoBehaviour
 
         // Sezione punti bonus
 
-        if (!cv.esperienza.ToString().Equals("Nessuna"))
-        {
-            questionText += "\nVedo che ha lavorato in precedenza come " + cv.esperienza.ToString() + "...";
-            points++;
-        }
+        //if (!cv.esperienza.ToString().Equals("Nessuna"))
+        //{
+        //    questionText += "\nVedo che ha lavorato in precedenza come " + cv.esperienza.ToString() + "...";
+        //    points++;
+        //}
 
         if (!cv.secondaLingua.ToString().Equals("Nessuna"))
         {
@@ -578,10 +611,10 @@ public class QuestionPanel : MonoBehaviour
 
         Question question = new(questionText, answers, id);
         InterviewManager.AddQuestion(question, introFolder);
-        
-       // noPointAnswers++;
-       // Invoke(nameof(NextQuestion), 5f);
-        
+
+        // noPointAnswers++;
+        // Invoke(nameof(NextQuestion), 5f);
+
         return question;
     }
 
