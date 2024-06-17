@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Gestisce il caricamento e rimozione degli elementi caricati dai file nella lista di selezione curriculum
 public class CVUIList : MonoBehaviour
 {
     public GameObject entryPrefab;
@@ -16,7 +17,6 @@ public class CVUIList : MonoBehaviour
 
         foreach (var e in entries)
         {            
-           // CVManager.DebugCV(e);
             var newObj = Instantiate(entryPrefab, contentRoot);
             newObj.GetComponent<CVUIListEntry>().Setup(e);
         }

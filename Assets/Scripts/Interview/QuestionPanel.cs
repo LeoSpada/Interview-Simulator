@@ -104,7 +104,7 @@ public class QuestionPanel : MonoBehaviour
             if (cvInfo)
             {
                 cvInfo.gameObject.SetActive(true);
-                cvInfo.reloadInfo();
+                cvInfo.ReloadInfo();
             }
 
             SetupInterview();
