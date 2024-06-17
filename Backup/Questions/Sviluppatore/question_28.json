@@ -1,0 +1,22 @@
+{
+    "answers": [
+        {
+            "text": "Ho lavorato a un piccolo progetto durante la formazione",
+            "points": 0.5
+        },
+        {
+            "text": "Ho contribuito a un progetto di sviluppo di medie dimensioni con un team",
+            "points": 0.75
+        },
+        {
+            "text": "Non ho esperienza in progetti",
+            "points": 0.25
+        },
+        {
+            "text": " Ho guidato lo sviluppo di un progetto complesso e ho ottenuto risultati significativi",
+            "points": 1.0
+        }
+    ],
+    "id": 28,
+    "question": "Descriva un progetto a cui ha lavorato."
+}
